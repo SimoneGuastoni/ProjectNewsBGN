@@ -1,0 +1,211 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.SelectionInterestActivity"
+    android:background="@color/Tan">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/Gold">
+
+
+                <TextView
+                    android:id="@+id/selectCountryTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="20sp"
+                    android:gravity="center"
+                    android:text="@string/selectCountryString"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/Charcoal"
+                    app:drawableStartCompat="@drawable/ic_baseline_flag_24"
+                    app:drawableEndCompat="@drawable/ic_baseline_flag_24" />
+
+                <Spinner
+                    android:id="@+id/spinnerCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="20sp"
+                    android:tooltipText="Select Country"
+                    android:outlineAmbientShadowColor="@color/Charcoal"
+                    android:outlineSpotShadowColor="@color/Charcoal"
+                    android:minHeight="48dp"
+                    android:background="@color/Cream"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/selectInterestTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/please_select_topic_of_interest"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    android:layout_gravity="center"
+                    android:textColor="@color/Charcoal"
+                    />
+
+
+
+                <LinearLayout
+                    android:layout_width="301dp"
+                    android:layout_height="269dp"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopic1"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:textColor="@color/Charcoal"
+                            android:text="Topic1"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopic2"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:textColor="@color/Charcoal"
+                            android:text="Topic2"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopidc3"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:textColor="@color/Charcoal"
+                            android:text="Topic3"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:text="Topic X"
+                        />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/completeRegisterBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complete_registration"
+                    android:textColor="@color/Cream"
+                    android:layout_marginTop="20sp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/Charcoal"
+                    app:layout_constraintTop_toBottomOf="@+id/toggleBtnTopic2" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

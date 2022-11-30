@@ -1,8 +1,10 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.projectnewsbgn.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.login;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -11,12 +11,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.object.Account;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
@@ -28,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView profilePic;
     private CheckBox rememberCb;
     public static final String SHARED_PREFS ="SharedPrefs";
-
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
@@ -82,27 +82,35 @@ public class RegisterActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("name","true");
                                 editor.apply();
-                                Intent goToHome = new Intent(RegisterActivity.this, HomeActivity.class);
-                                startActivity(goToHome);
+                                Intent goToSelectInterest = new Intent(RegisterActivity.this, SelectionInterestActivity.class);
+                                Account account = new Account(accountString,emailString,pswString,"",false,false,false);
+                                goToSelectInterest.putExtra("user",account);
+                                /* goToSelectInterest.putExtra("name",accountString);
+                                goToSelectInterest.putExtra("email",emailString);
+                                goToSelectInterest.putExtra("psw",pswString);
+                                goToSelectInterest.putExtra("icon",profilePic.get);*/
+                                startActivity(goToSelectInterest);
                                 finish();
                             } else {
                                 Toast.makeText(this, "You will not be remembered", Toast.LENGTH_SHORT).show();
-                                Intent gotoHome = new Intent(RegisterActivity.this, HomeActivity.class);
-                                startActivity(gotoHome);
+                                Intent goToSelectInterest = new Intent(RegisterActivity.this, SelectionInterestActivity.class);
+                                Account account = new Account(accountString,emailString,pswString,"",false,false,false);
+                                goToSelectInterest.putExtra("user",account);
+                                startActivity(goToSelectInterest);
                                 finish();
                             }
                         }
                         else
-                            Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
+                            confirmPsw.setError("Passwords doesn't match");
                         }
                     else
-                        Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
+                        psw.setError("Invalid password");
                     }
                 else
-                    Toast.makeText(this, "Invalid E-mail", Toast.LENGTH_SHORT).show();
+                    email.setError("Invalid email");
                 }
             else
-                Toast.makeText(this, "Invalid account name", Toast.LENGTH_SHORT).show();
+                accountName.setError("Invalid account name");
         });
 
     }

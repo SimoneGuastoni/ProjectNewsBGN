@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectnewsbgn.homepage.MainActivity;
+import com.example.projectnewsbgn.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,13 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         loadData();
 
         createAccountTxt.setOnClickListener(view -> {
-            Intent intentRegister = new Intent(LoginActivity.this,RegisterActivity.class);
+            Intent intentRegister = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intentRegister);
             finish();
         });
 
         forgotPswTxt.setOnClickListener(view -> {
-            Intent intentForgotPsw = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+            Intent intentForgotPsw = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intentForgotPsw);
             finish();
         });
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (booleanPsw) {
                     if (rememberCb.isChecked()) {
                         Toast.makeText(this, "You will be remembered", Toast.LENGTH_SHORT).show();
-                        Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                        Intent goToHome = new Intent(LoginActivity.this, MainActivity.class);
                         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("name","true");
@@ -69,15 +71,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         Toast.makeText(this, "You will not be remembered", Toast.LENGTH_SHORT).show();
-                        Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                        Intent goToHome = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(goToHome);
                         finish();
                     }
                 } else
-                    Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
+                    psw.setError("Invalid Password");
             }
             else
-                Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                email.setError("Invalid E-mail");
 
         });
 
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String data = sharedPreferences.getString("name", "");
         if (data.equals("true")) {
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

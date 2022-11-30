@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:background="@color/purple_700">
+    tools:context=".login.LoginActivity"
+    android:background="@color/Tan">
+
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="221dp"
-        android:layout_height="152dp"
+        android:layout_width="160dp"
+        android:layout_height="83dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,38 +26,49 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/welcomeText"
-        android:background="@color/purple_200">
+        android:background="@color/Charcoal">
 
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:hint="@string/e_mail"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/Charcoal"
+                android:textColorHint="@color/Charcoal"
+                app:hintTextColor="@color/Charcoal"
+                app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+                app:startIconTint="@color/Charcoal">
 
-        <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/Charcoal"
+                    android:background="@color/Cream"
+                    android:hint="@string/e_mail" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pswLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconMode="password_toggle"
+            app:endIconTint="@color/Charcoal"
+            android:textColorHint="@color/Charcoal"
             app:layout_constraintTop_toBottomOf="@id/emailLayout"
-            app:startIconDrawable="@drawable/ic_baseline_shield_24">
+            app:startIconDrawable="@drawable/ic_baseline_shield_24"
+            app:startIconTint="@color/Charcoal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -66,8 +78,22 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:hint="@string/password"
+                android:textColor="@color/Charcoal"
+                android:background="@color/Cream"
                 android:minHeight="48dp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/forgotPswText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/forgotPswText"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/Cream"
+                android:layout_gravity="right"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -79,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:text="@string/welcomeText"
-        android:textColor="@color/white"
+        android:textColor="@color/Charcoal"
         android:textSize="20sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,30 +113,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-    <TextView
-        android:id="@+id/forgotPswText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/forgotPswText"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
-
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@color/black"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@color/Charcoal"
         android:text="@string/login"
+        android:textColor="@color/Cream"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rememberCb" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <TextView
         android:id="@+id/registerText"
@@ -118,14 +132,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/registerText"
+        android:textColor="@color/Charcoal"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn"
-        app:layout_constraintVertical_bias="0.051"
-        android:textColor="@color/white"/>
+        app:layout_constraintVertical_bias="0.492" />
 
     <CheckBox
         android:id="@+id/rememberCb"
@@ -133,8 +148,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/remember_me"
-        app:layout_constraintEnd_toStartOf="@id/forgotPswText"
-        app:layout_constraintHorizontal_bias="0.08"
+        android:textColor="@color/Charcoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/loginBtn"
+        android:background="@color/Cream"
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
