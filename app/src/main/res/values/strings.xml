@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ProjectNewsBGN</string>
-    <string name="welcomeText">Welcome to the app, please login</string>
+    <string name="welcomeText">Welcome to BGN</string>
     <string name="e_mail">E-mail</string>
     <string name="password">Password</string>
-    <string name="forgotPswText">Forgot password? Click HERE.</string>
+    <string name="forgotPswText">Forget password? Click HERE.</string>
     <string name="login">Login</string>
     <string name="registerText">Don\'t have any account yet? Please register HERE.</string>
     <string name="remember_me">Remember me</string>

@@ -53,12 +53,9 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="20sp"
-                    android:tooltipText="Select Country"
-                    android:outlineAmbientShadowColor="@color/Charcoal"
-                    android:outlineSpotShadowColor="@color/Charcoal"
                     android:minHeight="48dp"
-                    android:background="@color/Cream"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:background="@color/Charcoal"
+                     />
 
                 <TextView
                     android:id="@+id/selectInterestTxt"
@@ -199,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/complete_registration"
                     android:textColor="@color/Cream"
-                    android:layout_marginTop="20sp"
+                    android:layout_marginTop="80dp"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/Charcoal"
                     app:layout_constraintTop_toBottomOf="@+id/toggleBtnTopic2" />

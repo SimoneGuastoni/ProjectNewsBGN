@@ -1,18 +1,20 @@
 package com.example.projectnewsbgn.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.homepage.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.homepage.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -103,10 +105,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         private boolean checkEmail (String emailString){
-            if (emailString.equals(""))
-                return false;
-            else
+            if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailString).matches())
                 return true;
+            else
+                return false;
         }
 
 }
