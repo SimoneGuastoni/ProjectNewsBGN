@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!--<androidx.fragment.app.FragmentContainerView
+     -->
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity"
-    android:background="@color/Tan">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.example.projectnewsbgn.login.LoginFragment"
+    android:id="@+id/login_fragment_container_view"
+    android:background="@color/Tan"
+    tools:layout="@layout/fragment_login">
 
-
+    >
     <ImageView
         android:id="@+id/logo"
         android:layout_width="162dp"
@@ -179,5 +184,5 @@
         app:layout_constraintTop_toBottomOf="@id/loginBtn" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout><!--
+</androidx.fragment.app.FragmentContainerView>-->

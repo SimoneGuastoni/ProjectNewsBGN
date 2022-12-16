@@ -15,7 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.login.LoginActivity;
+/*import com.example.projectnewsbgn.login.LoginActivity;*/
+import com.example.projectnewsbgn.login.UserAccessActivity;
 import com.example.projectnewsbgn.object.Account;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 changeRemember();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, UserAccessActivity.class);
                 startActivity(intent);
                 finish();
             default:

@@ -1,16 +1,11 @@
 package com.example.projectnewsbgn.login;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.projectnewsbgn.R;
 
-public class NewLoginActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+public class ForgotPasswordFragment extends Fragment {
+    public ForgotPasswordFragment(){
+        super(R.layout.fragment_forgot_password);
     }
 }

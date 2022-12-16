@@ -1,68 +1,64 @@
 package com.example.projectnewsbgn.login;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.object.Account;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.IOException;
+public class RegisterFragment extends Fragment {
 
-public class RegisterActivity extends AppCompatActivity {
+    public RegisterFragment() {
+        super(R.layout.fragment_register);
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_register, container, false);
 
+    }
     private TextInputLayout accountName,email,psw,confirmPsw;
     private Button registerBtn;
     private ImageView profilePic;
     private CheckBox rememberCb;
     public static final String SHARED_PREFS ="SharedPrefs";
+    public final FragmentActivity act = getActivity();
 
-    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
-                @Override
-                public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        ((ImageView) findViewById(R.id.profileIcon)).setImageBitmap(bitmap);
-                        /* Creo un elemento bitmap in cui salvo l'immagine, con la seconda riga trovo un imageView e gli carico l'immagine selezionata */
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
+
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onViewCreated(View OnCreateView,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        //setContentView(R.layout.fragment_register);
+        View v = getView();
+        profilePic = v.findViewById(R.id.profileIcon);
+        registerBtn = v.findViewById(R.id.registerBtn);
+        rememberCb = v.findViewById(R.id.rememberCbRegister);
+        accountName = v.findViewById(R.id.account);
+        email = v.findViewById(R.id.email);
+        psw = v.findViewById(R.id.psw);
+        confirmPsw = v.findViewById(R.id.confirmPsw);
 
-        profilePic = findViewById(R.id.profileIcon);
-        registerBtn = findViewById(R.id.registerBtn);
-        rememberCb = findViewById(R.id.rememberCbRegister);
-        accountName = findViewById(R.id.account);
-        email = findViewById(R.id.email);
-        psw = findViewById(R.id.psw);
-        confirmPsw = findViewById(R.id.confirmPsw);
-
-
-        profilePic.setOnClickListener(view -> {
-            mGetContent.launch("image/*");
-        });
+// forzare l'activityLauncher per gestire le immagini su un fragment è probabilemnte una
+// cattiva idea
+        /*profilePic.setOnClickListener(view -> {
+            UserAccessActivity.mGetContent.launch("image/*");
+        });*/
 
        registerBtn.setOnClickListener(view -> {
             String emailString,pswString,pswStringConf,accountString;
@@ -77,12 +73,12 @@ public class RegisterActivity extends AppCompatActivity {
                     if(controlPsw(pswString) && controlPsw(pswStringConf)){
                         if (comparePsw(pswString,pswStringConf)) {
                             if (rememberCb.isChecked()) {
-                                Toast.makeText(this, "You will be remembered", Toast.LENGTH_SHORT).show();
-                                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                                Toast.makeText(act, "You will be remembered", Toast.LENGTH_SHORT).show();
+                                SharedPreferences sharedPreferences = act.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("name","true");
                                 editor.apply();
-                                Intent goToSelectInterest = new Intent(RegisterActivity.this, SelectionInterestActivity.class);
+                                Intent goToSelectInterest = new Intent(act, SelectionInterestActivity.class);
                                 Account account = new Account(accountString,emailString,pswString,"",false,false,false);
                                 goToSelectInterest.putExtra("user",account);
                                 /* goToSelectInterest.putExtra("name",accountString);
@@ -90,14 +86,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 goToSelectInterest.putExtra("psw",pswString);
                                 goToSelectInterest.putExtra("icon",profilePic.get);*/
                                 startActivity(goToSelectInterest);
-                                finish();
+                                act.finish();
                             } else {
-                                Toast.makeText(this, "You will not be remembered", Toast.LENGTH_SHORT).show();
-                                Intent goToSelectInterest = new Intent(RegisterActivity.this, SelectionInterestActivity.class);
+                                Toast.makeText(act, "You will not be remembered", Toast.LENGTH_SHORT).show();
+                                Intent goToSelectInterest = new Intent(act, SelectionInterestActivity.class);
                                 Account account = new Account(accountString,emailString,pswString,"",false,false,false);
                                 goToSelectInterest.putExtra("user",account);
                                 startActivity(goToSelectInterest);
-                                finish();
+                                act.finish();
                             }
                         }
                         else

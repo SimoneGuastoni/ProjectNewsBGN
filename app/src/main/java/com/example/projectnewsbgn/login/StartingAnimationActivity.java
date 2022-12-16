@@ -44,7 +44,7 @@ public class StartingAnimationActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(StartingAnimationActivity.this,LoginActivity.class);
+                    Intent intent = new Intent(StartingAnimationActivity.this,UserAccessActivity.class);
 
                     Pair[] pairs = new Pair[2];
                     pairs[0] = new Pair<View,String>(icon,"logo_image");
