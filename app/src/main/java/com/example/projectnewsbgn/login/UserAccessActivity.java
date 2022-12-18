@@ -1,5 +1,7 @@
 package com.example.projectnewsbgn.login;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.homepage.MainActivity;
 
 import java.io.IOException;
 
@@ -38,10 +41,9 @@ public class UserAccessActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_access);
-        if(savedInstanceState==null){
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.ua_fragment_container_view, LoginFragment.class,  null).commit();
-        }
+
+        getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view, LoginFragment.class,  null).commit();
+
     }
 
 }

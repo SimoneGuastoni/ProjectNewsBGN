@@ -28,6 +28,15 @@
                 android:orientation="vertical"
                 android:background="@color/Gold">
 
+                <ImageView
+                    android:id="@+id/profileIcon"
+                    android:layout_width="103dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:transitionName="profile_image"
+                    android:background="@color/Cream"
+                    app:srcCompat="@drawable/ic_baseline_account_box_24" />
 
                 <TextView
                     android:id="@+id/selectCountryTxt"
@@ -49,19 +58,19 @@
                     android:id="@+id/spinnerCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20sp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="20sp"
-                    android:minHeight="48dp"
                     android:background="@color/Charcoal"
-                     />
+                    android:contentDescription="@string/countryList"
+                    android:minHeight="48dp" />
 
                 <TextView
                     android:id="@+id/selectInterestTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="5dp"
                     android:text="@string/please_select_topic_of_interest"
                     android:textSize="15sp"
                     android:textStyle="italic"
@@ -192,13 +201,13 @@
 
                 <Button
                     android:id="@+id/completeRegisterBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/complete_registration"
-                    android:textColor="@color/Cream"
-                    android:layout_marginTop="80dp"
+                    android:layout_width="371dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/Charcoal"
+                    android:text="@string/complete_registration"
+                    android:textColor="@color/Cream"
                     app:layout_constraintTop_toBottomOf="@+id/toggleBtnTopic2" />
 
             </LinearLayout>

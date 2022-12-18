@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         HomeFragment homeFragment = new HomeFragment();
         AccountFragment accountFragment = new AccountFragment();
         FavouritesFragment favouritesFragment = new FavouritesFragment();
@@ -43,11 +44,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentWindow = findViewById(R.id.container);
 
         Account user = getIntent().getParcelableExtra("finalUser");
-
-        SharedPreferences sharedPreferences2 = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences2.edit();
-        editor.putString("name","true");
-        editor.apply();
+        
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
 

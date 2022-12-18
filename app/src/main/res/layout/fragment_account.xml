@@ -1,19 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homepage.AccountFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".homepage.MainActivity"
+    android:orientation="vertical"
     android:background="@color/Tan">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Account Fragment"
-        android:textColor="@color/Charcoal"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:layout_height="match_parent" >
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="20dp"
+                android:background="@color/Gold">
+
+                <ImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_baseline_account_circle_24"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account name"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_toEndOf="@id/profilePic"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-70dp"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:padding="20dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_height="125dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    cardElevation="20dp">
+
+                    <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:background="@color/Cream">
+                        <ImageView
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="30dp"
+                            android:layout_width="30dp"
+                            android:src="@drawable/ic_baseline_favorite_24" />
+
+                        <TextView
+                            android:id="@+id/favouriteTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:includeFontPadding="false"
+                            android:text="Favourite articles:"
+                            android:textColor="@color/Charcoal"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/numberFavouriteArticles"
+                            android:includeFontPadding="false"
+                            android:layout_below="@id/favouriteTxt"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="XYZ"
+                            android:textColor="@color/Charcoal"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/account"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Account name"
+                        android:editable="false"
+                        android:drawableStart="@drawable/ic_baseline_account_box_24"
+                        android:drawablePadding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/e_mail"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="E-Mail"
+                        android:editable="false"
+                        android:drawableStart="@drawable/ic_baseline_alternate_email_24"
+                        android:drawablePadding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="***********"
+                        android:editable="false"
+                        android:drawableStart="@drawable/ic_baseline_shield_24"
+                        android:drawablePadding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Country"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:editable="false"
+                        android:drawableStart="@drawable/ic_baseline_flag_24"
+                        android:drawablePadding="10dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/selectInterestTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Topic of interst"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    android:layout_gravity="center"
+                    />
+
+                <LinearLayout
+                    android:layout_width="301dp"
+                    android:layout_height="269dp"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopic1"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic1"
+                            android:enabled="false"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopic2"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic2"
+                            android:enabled="false"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/toggleBtnTopidc3"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic3"
+                            android:enabled="false"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:text="Topic X"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/udpateBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:textColor="@color/Cream"
+                    android:backgroundTint="@color/Charcoal"
+                    android:layout_marginBottom="200dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

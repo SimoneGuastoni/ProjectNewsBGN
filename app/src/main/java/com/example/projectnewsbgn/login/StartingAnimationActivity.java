@@ -18,7 +18,7 @@ import com.example.projectnewsbgn.R;
 
 public class StartingAnimationActivity extends AppCompatActivity {
 
-    private static int Splash_animation = 3000;
+    private static int Splash_animation = 2000;
 
     Animation topAnim,bottomAnim;
     ImageView icon;
