@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.SelectionInterestActivity"
+            android:name=".login.SelectionInterestFragment"
             android:theme="@style/Theme.Design.NoActionBar"
             android:exported="false">
             <meta-data

@@ -2,6 +2,9 @@ package com.example.projectnewsbgn.login;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,8 +37,9 @@ public class RegisterFragment extends Fragment {
     private Button registerBtn;
     private ImageView profilePic;
     private CheckBox rememberCb;
-    public static final String SHARED_PREFS ="SharedPrefs";
     public final FragmentActivity act = getActivity();
+    SelectionInterestFragment selectionInterestFragment = new SelectionInterestFragment();
+    boolean checked = false;
 
 
 
@@ -53,6 +57,7 @@ public class RegisterFragment extends Fragment {
         email = v.findViewById(R.id.email);
         psw = v.findViewById(R.id.psw);
         confirmPsw = v.findViewById(R.id.confirmPsw);
+
 
 // forzare l'activityLauncher per gestire le immagini su un fragment è probabilemnte una
 // cattiva idea
@@ -73,28 +78,36 @@ public class RegisterFragment extends Fragment {
                     if(controlPsw(pswString) && controlPsw(pswStringConf)){
                         if (comparePsw(pswString,pswStringConf)) {
                             if (rememberCb.isChecked()) {
-                                Toast.makeText(act, "You will be remembered", Toast.LENGTH_SHORT).show();
-                                SharedPreferences sharedPreferences = act.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                //TODO
+                                //Toast.makeText(act, "You will be remembered", Toast.LENGTH_SHORT).show();
+                                /*SharedPreferences sharedPreferences = act.getSharedPreferences(SHARED_PREFS, getContext().MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();/*
                                 editor.putString("name","true");
-                                editor.apply();
-                                Intent goToSelectInterest = new Intent(act, SelectionInterestActivity.class);
+                                editor.commit();*/
+                                checked = true;
+                                Bundle result = new Bundle();
+                                result.putBoolean("booleankey", checked);
+                                requireActivity().getSupportFragmentManager().setFragmentResult("bundleKey", result);
+                                /*Intent goToSelectInterest = new Intent(act, SelectionInterestFragment.class);
+
                                 Account account = new Account(accountString,emailString,pswString,"",false,false,false);
-                                goToSelectInterest.putExtra("user",account);
+                                goToSelectInterest.putExtra("user",account);*/
                                 /* goToSelectInterest.putExtra("name",accountString);
                                 goToSelectInterest.putExtra("email",emailString);
                                 goToSelectInterest.putExtra("psw",pswString);
                                 goToSelectInterest.putExtra("icon",profilePic.get);*/
-                                startActivity(goToSelectInterest);
-                                act.finish();
+                                /*startActivity(goToSelectInterest);
+                                act.finish();*/
                             } else {
-                                Toast.makeText(act, "You will not be remembered", Toast.LENGTH_SHORT).show();
-                                Intent goToSelectInterest = new Intent(act, SelectionInterestActivity.class);
+                                //Toast.makeText(act, "You will not be remembered", Toast.LENGTH_SHORT).show();
+                                /* Intent goToSelectInterest = new Intent(act, SelectionInterestFragment.class);
                                 Account account = new Account(accountString,emailString,pswString,"",false,false,false);
-                                goToSelectInterest.putExtra("user",account);
-                                startActivity(goToSelectInterest);
-                                act.finish();
+                                goToSelectInterest.putExtra("user",account);*/
+                                /*startActivity(goToSelectInterest);
+                                act.finish();*/
                             }
+                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view,selectionInterestFragment).commit();
+
                         }
                         else
                             confirmPsw.setError("Passwords doesn't match");

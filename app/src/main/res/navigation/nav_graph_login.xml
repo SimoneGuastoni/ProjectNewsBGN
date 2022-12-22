@@ -24,5 +24,14 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.projectnewsbgn.login.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_selectionInterestFragment"
+            app:destination="@id/selectionInterestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectionInterestFragment"
+        android:name="com.example.projectnewsbgn.login.SelectionInterestFragment"
+        android:label="fragment_selection_interest"
+        tools:layout="@layout/fragment_selection_interest" />
 </navigation>
