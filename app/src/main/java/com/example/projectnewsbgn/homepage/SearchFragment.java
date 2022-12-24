@@ -1,66 +1,210 @@
 package com.example.projectnewsbgn.homepage;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
+import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
+import com.example.projectnewsbgn.Interface.OnFetchDataListener;
+import com.example.projectnewsbgn.Interface.SelectListener;
+import com.example.projectnewsbgn.Models.News;
+import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SearchFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class SearchFragment extends Fragment implements SelectListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    RecyclerView recyclerView;
+    NewsSmallAdapter newsSmallAdapter;
+    ImageView businessTopic,scienceTopic,generalTopic,healthTopic,sportTopic,entertainmentTopic,technologyTopic;
+    ProgressDialog dialog;
+    String category = "general",country;
+    SearchView searchView;
+    Spinner countrySpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.recyclerViewSearch);
+
+        businessTopic = view.findViewById(R.id.businessTopic);
+        scienceTopic = view.findViewById(R.id.scienceTopic);
+        technologyTopic = view.findViewById(R.id.technologyTopic);
+        generalTopic = view.findViewById(R.id.generalTopic);
+        entertainmentTopic = view.findViewById(R.id.entertainmentTopic);
+        healthTopic = view.findViewById(R.id.healthTopic);
+        sportTopic = view.findViewById(R.id.sportTopic);
+
+        countrySpinner = view.findViewById(R.id.spinnerCountrySearch);
+
+        searchView = view.findViewById(R.id.searchBar);
+
+        country = getContext().getString(R.string.countryAccount);
+
+        dialog = new ProgressDialog(getContext());
+        RequestManager manager = new RequestManager(getContext());
+        manager.getNewsHeadlines(listener, "general", null,country);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.CountryList, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countrySpinner.setAdapter(adapter);
+
+        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String countrySelected = countrySpinner.getSelectedItem().toString();
+                if (countrySelected.equals("Italy")){
+                    country = "it";
+                    manager.getNewsHeadlines(listener,"general",null,country);
+                }
+                if (countrySelected.equals("France")){
+                    country = "fr";
+                    manager.getNewsHeadlines(listener,"general",null,country);
+                }
+                if (countrySelected.equals("England")){
+                    country = "gb";
+                    manager.getNewsHeadlines(listener,"general",null,country);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                dialog.setTitle("Search of:" + query);
+                dialog.show();
+                RequestManager queryManager = new RequestManager(getContext());
+                queryManager.getNewsHeadlines(listener,category,query,country);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        businessTopic.setOnClickListener(v -> {
+            category = "business";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        healthTopic.setOnClickListener(v -> {
+            category = "health";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        sportTopic.setOnClickListener(v -> {
+            category = "sport";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        entertainmentTopic.setOnClickListener(v -> {
+            category = "entertainment";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        technologyTopic.setOnClickListener(v -> {
+            category = "technology";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        generalTopic.setOnClickListener(v -> {
+            category = "general";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+        scienceTopic.setOnClickListener(v -> {
+            category = "science";
+            dialog.setTitle("Fetching news about:" + category);
+            dialog.show();
+            RequestManager managerSearch = new RequestManager(getContext());
+            managerSearch.getNewsHeadlines(listener, category, null,country);
+        });
+
+    }
+
+    private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
+        @Override
+        public void onFetchData(List<News> data, String message) {
+            if (data.isEmpty()) {
+                Toast.makeText(getContext(), "No Data Found!", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+            else{
+                showNews(data);
+                dialog.dismiss();
+            }
+
+        }
+
+        @Override
+        public void onError(String message) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void showNews(List<News> newsList) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        newsSmallAdapter = new NewsSmallAdapter(getContext(), newsList,this);
+        recyclerView.setAdapter(newsSmallAdapter);
+
+    }
+
+    @Override
+    public void OnNewsClicked(News news) {
+        Intent goToNews = new Intent(getActivity(),FullDisplayNews.class).putExtra("news",news);
+        startActivity(goToNews);
+        getActivity().finish();
     }
 }

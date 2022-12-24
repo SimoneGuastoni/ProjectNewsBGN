@@ -2,6 +2,7 @@ package com.example.projectnewsbgn.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
+import com.example.projectnewsbgn.login.LoginFragment;
 import com.example.projectnewsbgn.login.UserAccessActivity;
 import com.example.projectnewsbgn.object.Account;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentWindow = findViewById(R.id.container);
 
         Account user = getIntent().getParcelableExtra("finalUser");
-        
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

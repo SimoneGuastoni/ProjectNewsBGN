@@ -1,9 +1,11 @@
 package com.example.projectnewsbgn.Models;
 
+import java.io.Serializable;
+
 import javax.xml.transform.Source;
 
-public class News {
-    Source source = null;
+public class News implements Serializable {
+    NewsSource source = null;
     String author = "";
     String title = "";
     String description = "";
@@ -12,11 +14,11 @@ public class News {
     String publishedAt = "";
     String content = "";
 
-    public Source getSource() {
+    public NewsSource getSource() {
         return source;
     }
 
-    public void setSource(Source source) {
+    public void setSource(NewsSource source) {
         this.source = source;
     }
 

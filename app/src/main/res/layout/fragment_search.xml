@@ -29,291 +29,265 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp" />
 
-            <SearchView
+            <Spinner
+                android:id="@+id/spinnerCountrySearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10sp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="20sp"
+                android:background="@color/Charcoal"
+                android:contentDescription="@string/countryList"
+                android:minHeight="48dp" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:inputType="text"
-                android:queryHint="Search on BGN"
-                android:backgroundTint="@color/Cream"/>
+                app:defaultQueryHint="Search News"
+                app:iconifiedByDefault="false"
+                />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="10dp"
+                >
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
+                            android:layout_marginTop="20sp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal">
 
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
 
-            </LinearLayout>
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
 
-            <LinearLayout
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Business"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/businessTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Science"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/scienceTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Entertainment"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/entertainmentTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Health"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/healthTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Sport"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/sportTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Technology"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/technologyTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:backgroundTint="@color/Cream"
+                                android:layout_marginRight="10dp"
+                                app:cardElevation="15dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10sp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="General"
+                                        android:textColor="@color/Charcoal"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold"/>
+                                    <ImageView
+                                        android:id="@+id/generalTopic"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/logo" />
+
+                                </FrameLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="180dp"
-                    android:layout_height="190dp"
-                    android:backgroundTint="@color/Cream"
-                    android:layout_marginRight="10dp"
-                    app:cardElevation="15dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10sp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Topic X"
-                            android:textColor="@color/Charcoal"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo" />
-
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-
+                android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

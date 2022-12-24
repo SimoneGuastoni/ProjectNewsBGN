@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="600dp"
+    android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:orientation="vertical">
 
@@ -17,8 +17,9 @@
     
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/Cream">
     
             <TextView
                 android:id="@+id/title"
@@ -28,7 +29,7 @@
                 android:text="Title"
                 android:textColor="@color/Charcoal"
                 android:textStyle="bold"
-                android:textSize="40sp" />
+                android:textSize="25sp" />
     
             <TextView
                 android:id="@+id/author"
@@ -38,7 +39,7 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/Charcoal"
                 android:textStyle="italic"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
@@ -46,17 +47,16 @@
                 android:text="__/__/____"
                 android:textColor="@color/Charcoal"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp" />
-    
+                android:textSize="10sp" />
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="Description:"
                 android:textColor="@color/Charcoal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="50dp"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
     
         </LinearLayout>
     
@@ -71,7 +71,7 @@
                 android:background="@color/Charcoal">
     
                 <ImageButton
-                    android:id="@+id/btnExample"
+                    android:id="@+id/btnDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="228dp"
@@ -91,7 +91,7 @@
                     android:backgroundTint="@color/Cream"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
-                    app:layout_constraintStart_toEndOf="@+id/btnExample"
+                    app:layout_constraintStart_toEndOf="@+id/btnDelete"
                     app:layout_constraintTop_toTopOf="parent" />
     
                 <ImageButton

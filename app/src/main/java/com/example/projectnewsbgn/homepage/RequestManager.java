@@ -1,9 +1,10 @@
-package com.example.projectnewsbgn.util;
+package com.example.projectnewsbgn.homepage;
 
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.Listeners.OnFetchDataListener;
+
+import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
 
@@ -16,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public class RequestManager {
+
     Context context;
 
     Retrofit retrofit = new Retrofit.Builder()
@@ -23,18 +25,25 @@ public class RequestManager {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public void getNews(OnFetchDataListener listener,String category,String query){
+    public RequestManager(Context context) {
+        this.context = context;
+    }
+
+    public void getNewsHeadlines(OnFetchDataListener<NewsApiResponse> listener, String category, String query,String country){
+
         CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);
-        Call<NewsApiResponse> call = callNewsApi.callHeadlines("us",category,query,context.getString(R.string.api_key));
+
+        Call<NewsApiResponse> call = callNewsApi.callHeadlines(country, category, query, context.getString(R.string.api_key));
 
         try {
             call.enqueue(new Callback<NewsApiResponse>() {
                 @Override
                 public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
-                    if(!response.isSuccessful()){
+                    if (!response.isSuccessful()){
                         Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                     }
-                    listener.onFetchData(response.body().getArticles(),response.message());
+
+                    listener.onFetchData(response.body().getArticles(), response.message());
                 }
 
                 @Override
@@ -44,22 +53,18 @@ public class RequestManager {
             });
         }
         catch (Exception e){
-             e.printStackTrace();
+            e.printStackTrace();
         }
+
     }
 
-    public RequestManager(Context context) {
-        this.context = context;
-    }
-
-    public interface CallNewsApi{
+    public interface CallNewsApi {
         @GET("top-headlines")
         Call<NewsApiResponse> callHeadlines(
-                @Query("country") String country,
-                @Query("category") String category,
-                @Query("q") String query,
-                @Query("apiKey") String api_key
+                @Query("country")String country,
+                @Query("category")String category,
+                @Query("q")String query,
+                @Query("apiKey")String apiKey
         );
     }
-
 }
