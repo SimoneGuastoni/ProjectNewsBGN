@@ -40,7 +40,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<CustomViewHolder>{
         holder.text_date.setText(newsList.get(position).getPublishedAt());
         holder.text_description.setText(newsList.get(position).getDescription());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.materialCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.OnNewsClicked(newsList.get(position));

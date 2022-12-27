@@ -9,107 +9,118 @@
     android:orientation="vertical"
     android:background="@color/Tan">
 
-    <ScrollView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Cream"
+        app:cardElevation="20sp"
+        android:layout_margin="5dp"
+        >
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" >
 
-            <ImageView
-                android:id="@+id/iconFullNews"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:src="@drawable/not_found"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titleFullNews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title"
-                android:textStyle="bold"
-                android:textColor="@color/Charcoal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:textSize="40sp"/>
-            <TextView
-                android:id="@+id/dateFullNews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="__/__/____"
-                android:textColor="@color/Charcoal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:textStyle="italic"
-                android:textSize="15sp"/>
-            <TextView
-                android:id="@+id/contentFullNews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Content"
-                android:textSize="20sp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/Charcoal"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="20sp"
-                android:layout_marginBottom="10dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ImageView
+                    android:id="@+id/iconFullNews"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@color/Charcoal">
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/not_found"/>
 
-                    <ImageButton
-                        android:id="@+id/btnDelete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="228dp"
-                        android:contentDescription="Delete"
-                        android:backgroundTint="@color/Cream"
-                        android:src="@drawable/ic_baseline_delete_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/titleFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textStyle="bold"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="40sp"/>
+                <TextView
+                    android:id="@+id/dateFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="__/__/____"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="italic"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/contentFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Content"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/Charcoal"/>
 
-                    <ImageButton
-                        android:id="@+id/btnShare"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="Share"
-                        android:src="@drawable/ic_baseline_share_24"
-                        android:backgroundTint="@color/Cream"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
-                        app:layout_constraintStart_toEndOf="@+id/btnDelete"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="20sp"
+                    android:layout_marginBottom="10dp">
 
-                    <ImageButton
-                        android:id="@+id/btnFavourite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/favourites"
-                        android:backgroundTint="@color/Cream"
-                        android:src="@drawable/ic_baseline_favorite_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/Charcoal">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <ImageButton
+                            android:id="@+id/btnDelete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="228dp"
+                            android:contentDescription="Delete"
+                            android:backgroundTint="@color/Cream"
+                            android:src="@drawable/ic_baseline_delete_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/btnShare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:contentDescription="Share"
+                            android:src="@drawable/ic_baseline_share_24"
+                            android:backgroundTint="@color/Cream"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
+                            app:layout_constraintStart_toEndOf="@+id/btnDelete"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-    </ScrollView>
+                        <ImageButton
+                            android:id="@+id/btnFavourite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:contentDescription="@string/favourites"
+                            android:backgroundTint="@color/Cream"
+                            android:src="@drawable/ic_baseline_favorite_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </LinearLayout>

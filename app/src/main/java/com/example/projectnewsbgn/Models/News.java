@@ -1,18 +1,35 @@
 package com.example.projectnewsbgn.Models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
 import javax.xml.transform.Source;
 
+@Entity (tableName = "news_table")
 public class News implements Serializable {
-    NewsSource source = null;
-    String author = "";
-    String title = "";
-    String description = "";
-    String url = "";
-    String urlToImage = "";
-    String publishedAt = "";
-    String content = "";
+
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private NewsSource source = null;
+    private String author = "";
+    private String title = "";
+    private String description = "";
+    private String url = "";
+    private String urlToImage = "";
+    private String publishedAt = "";
+    private String content = "";
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public NewsSource getSource() {
         return source;

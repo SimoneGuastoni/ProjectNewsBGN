@@ -1,5 +1,4 @@
 <resources>
-    <string name="api_key">7c0d484ec8d8410182e6ce2ea2c02f36</string>
     <string name="app_name">ProjectNewsBGN</string>
     <string name="welcomeText">Welcome to BGN</string>
     <string name="e_mail">E-mail</string>

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectnewsbgn.R;
+import com.google.android.material.card.MaterialCardView;
 
 public class CustomViewHolder extends RecyclerView.ViewHolder {
     public TextView text_title;
@@ -18,7 +19,7 @@ public class CustomViewHolder extends RecyclerView.ViewHolder {
     public TextView text_date;
     public TextView text_description;
     public ImageView img_headline;
-    public LinearLayout linearLayout;
+    public MaterialCardView materialCardView;
 
     public CustomViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,7 +29,7 @@ public class CustomViewHolder extends RecyclerView.ViewHolder {
         text_date = itemView.findViewById(R.id.date);
         text_description = itemView.findViewById(R.id.description);
         img_headline = itemView.findViewById(R.id.newsPic);
-        linearLayout = itemView.findViewById(R.id.containerListNews);
+        materialCardView = itemView.findViewById(R.id.containerListNews);
         
         itemView.findViewById(R.id.btnFavourite).setOnClickListener(new View.OnClickListener() {
             @Override

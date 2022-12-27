@@ -29,9 +29,9 @@ public class SelectionInterestFragment extends Fragment {
     private TextView selectCountryTxt,selectTopicsTxt;
     private Button completeRegistrationBtn;
     private Spinner countrySpinner;
-    private CheckBox btnTopic1,btnTopic2,btnTopic3;
+    private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
     private String name,email,psw,country;
-    private Boolean topic1 = false ,topic2 = false ,topic3 = false, remember= false;
+    private Boolean topic1 = false ,topic2 = false ,topic3 = false,topic4 = false,topic5 = false,topic6 = false, remember= false;
     SelectionInterestFragment() {super(R.layout.fragment_selection_interest);}
 
     @Override
@@ -77,7 +77,11 @@ public class SelectionInterestFragment extends Fragment {
         countrySpinner = act.findViewById(R.id.spinnerCountry);
         btnTopic1 = act.findViewById(R.id.toggleBtnTopic1);
         btnTopic2 = act.findViewById(R.id.toggleBtnTopic2);
-        btnTopic3 = act.findViewById(R.id.toggleBtnTopidc3);
+        btnTopic3 = act.findViewById(R.id.toggleBtnTopic3);
+        btnTopic4 = act.findViewById(R.id.toggleBtnTopic4);
+        btnTopic5 = act.findViewById(R.id.toggleBtnTopic5);
+        btnTopic6 = act.findViewById(R.id.toggleBtnTopic6);
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.CountryList, android.R.layout.simple_spinner_item);
@@ -86,7 +90,7 @@ public class SelectionInterestFragment extends Fragment {
 
         completeRegistrationBtn.setOnClickListener(view -> {
 
-            if (btnTopic1.isChecked() || btnTopic2.isChecked() || btnTopic3.isChecked()){
+            if (btnTopic1.isChecked() || btnTopic2.isChecked() || btnTopic3.isChecked() || btnTopic4.isChecked() || btnTopic5.isChecked() || btnTopic6.isChecked() ){
                 country = countrySpinner.toString();
                 if (btnTopic1.isChecked())
                     topic1=true;
@@ -100,6 +104,18 @@ public class SelectionInterestFragment extends Fragment {
                     topic3=true;
                 else
                     topic3= false;
+                if (btnTopic4.isChecked())
+                    topic4=true;
+                else
+                    topic4= false;
+                if (btnTopic5.isChecked())
+                    topic5=true;
+                else
+                    topic5= false;
+                if (btnTopic6.isChecked())
+                    topic6=true;
+                else
+                    topic6= false;
                 Toast.makeText(getActivity(), "You've been successfully registered", Toast.LENGTH_SHORT).show();
               /* account.setTopic1(topic1);
                 account.setTopic2(topic2);

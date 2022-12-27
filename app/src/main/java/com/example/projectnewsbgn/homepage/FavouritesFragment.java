@@ -34,7 +34,6 @@ public class FavouritesFragment extends Fragment {
 
         recyclerViewFav = view.findViewById(R.id.recyclerViewFavourite);
 
-
     }
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,177 +7,182 @@
     tools:context=".login.RegisterFragment"
     android:background="@color/Tan">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/Gold"
-            android:layout_margin="16dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:backgroundTint="@color/Gold"
+                android:layout_margin="16dp"
+                app:cardElevation="40dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/Charcoal"
-                    android:text="@string/welcome_here_you_can_create_an_account"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    />
-
-                <ImageView
-                    android:id="@+id/profileIcon"
-                    android:layout_width="103dp"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center"
-                    android:background="@color/Cream"
-                    app:srcCompat="@drawable/ic_baseline_account_box_24" />
-
-                <TextView
-                    android:id="@+id/avatarSelectTExt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/Charcoal"
-                    android:text="@string/avatarSelectText"
-                    android:layout_gravity="center"
-                     />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/account"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20sp"
-                    android:layout_marginBottom="20sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/Charcoal"
-                    app:startIconTint="@color/Charcoal"
-                    app:hintTextColor="@color/Charcoal"
-                    android:textColorHint="@color/Charcoal"
-                    app:startIconDrawable="@drawable/ic_baseline_account_box_24">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/Cream"
-                        android:hint="@string/account_name"
+                        android:layout_marginTop="15dp"
                         android:textColor="@color/Charcoal"
+                        android:text="@string/welcome_here_you_can_create_an_account"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
                         />
-                </com.google.android.material.textfield.TextInputLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconMode="clear_text"
-                    app:endIconTint="@color/Charcoal"
-                    app:startIconTint="@color/Charcoal"
-                    app:hintTextColor="@color/Charcoal"
-                    android:textColorHint="@color/Charcoal"
-                    app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/profileIcon"
+                        android:layout_width="103dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
                         android:background="@color/Cream"
-                        android:inputType="textEmailAddress"
-                        android:hint="@string/e_mail"                    android:textColor="@color/Charcoal"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:srcCompat="@drawable/ic_baseline_account_box_24" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/psw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="password_toggle"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconTint="@color/Charcoal"
-                    app:startIconTint="@color/Charcoal"
-                    android:textColorHint="@color/Charcoal"
-                    app:startIconDrawable="@drawable/ic_baseline_shield_24">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/avatarSelectTExt"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/Cream"
-                        android:inputType="textPassword"
-                        android:hint="@string/password"
+                        android:layout_marginTop="8dp"
                         android:textColor="@color/Charcoal"
+                        android:text="@string/avatarSelectText"
+                        android:layout_gravity="center"
                         />
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/confirmPsw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:endIconMode="password_toggle"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:endIconTint="@color/Charcoal"
-                    android:textColorHint="@color/Charcoal"
-                    app:startIconTint="@color/Charcoal"
-                    app:startIconDrawable="@drawable/ic_baseline_shield_24">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/account"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="20sp"
+                        android:layout_marginBottom="20sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/Charcoal"
+                        app:startIconTint="@color/Charcoal"
+                        app:hintTextColor="@color/Charcoal"
+                        android:textColorHint="@color/Charcoal"
+                        app:startIconDrawable="@drawable/ic_baseline_account_box_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Cream"
+                            android:hint="@string/account_name"
+                            android:textColor="@color/Charcoal"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconMode="clear_text"
+                        app:endIconTint="@color/Charcoal"
+                        app:startIconTint="@color/Charcoal"
+                        app:hintTextColor="@color/Charcoal"
+                        android:textColorHint="@color/Charcoal"
+                        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Cream"
+                            android:inputType="textEmailAddress"
+                            android:hint="@string/e_mail"
+                            android:textColor="@color/Charcoal"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/psw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="password_toggle"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconTint="@color/Charcoal"
+                        app:startIconTint="@color/Charcoal"
+                        android:textColorHint="@color/Charcoal"
+                        app:startIconDrawable="@drawable/ic_baseline_shield_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Cream"
+                            android:inputType="textPassword"
+                            android:hint="@string/password"
+                            android:textColor="@color/Charcoal"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/confirmPsw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="password_toggle"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:endIconTint="@color/Charcoal"
+                        android:textColorHint="@color/Charcoal"
+                        app:startIconTint="@color/Charcoal"
+                        app:startIconDrawable="@drawable/ic_baseline_shield_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/Cream"
+                            android:inputType="textPassword"
+                            android:hint="@string/confirm_password"
+                            android:textColor="@color/Charcoal"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/registerBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register"
+                        android:layout_marginTop="60sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/Cream"
+                        android:backgroundTint="@color/Charcoal"
+                        android:layout_gravity="center"/>
+
+                    <CheckBox
+                        android:id="@+id/rememberCbRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:background="@color/Cream"
-                        android:inputType="textPassword"
-                        android:hint="@string/confirm_password"
+                        android:text="@string/remember_me"
                         android:textColor="@color/Charcoal"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginBottom="10dp"/>
 
-                <Button
-                    android:id="@+id/registerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register"
-                    android:layout_marginTop="60sp"
-                    android:textColor="@color/Cream"
-                    android:backgroundTint="@color/Charcoal"
-                    android:layout_gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/rememberCbRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/Cream"
-                    android:text="@string/remember_me"
-                    android:textColor="@color/Charcoal"
-                    app:layout_constraintVertical_bias="0.095" />
+    </ScrollView>
 
-            </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

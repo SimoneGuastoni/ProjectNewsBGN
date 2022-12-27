@@ -1,117 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.google.android.material.card.MaterialCardView
     android:id="@+id/containerListNews"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:selectableItemBackground"
-    android:orientation="vertical">
+    app:cardElevation="20sp"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
 
-        <ImageView
-                android:id="@+id/newsPic"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+            <ImageView
+                    android:id="@+id/newsPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:scaleType="centerCrop"
+                    android:background="@color/Cream"
+                    android:src="@drawable/not_found" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:src="@drawable/not_found" />
-    
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/Cream">
-    
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Title"
-                android:textColor="@color/Charcoal"
-                android:textStyle="bold"
-                android:textSize="25sp" />
-    
-            <TextView
-                android:id="@+id/author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Author"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/Charcoal"
-                android:textStyle="italic"
-                android:textSize="15sp" />
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="__/__/____"
-                android:textColor="@color/Charcoal"
-                android:layout_marginLeft="5dp"
-                android:textSize="10sp" />
+                android:orientation="vertical"
+                android:background="@color/Cream">
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Description:"
-                android:textColor="@color/Charcoal"
-                android:textSize="15sp" />
-    
-        </LinearLayout>
-    
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="20sp">
-    
-            <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Title"
+                    android:textColor="@color/Charcoal"
+                    android:textStyle="bold"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Author"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/Charcoal"
+                    android:textStyle="italic"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="__/__/____"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Description:"
+                    android:textColor="@color/Charcoal"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/Charcoal">
-    
-                <ImageButton
-                    android:id="@+id/btnDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="228dp"
-                    android:contentDescription="Delete"
-                    android:backgroundTint="@color/Cream"
-                    android:src="@drawable/ic_baseline_delete_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-    
-                <ImageButton
-                    android:id="@+id/btnShare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Share"
-                    android:src="@drawable/ic_baseline_share_24"
-                    android:backgroundTint="@color/Cream"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
-                    app:layout_constraintStart_toEndOf="@+id/btnDelete"
-                    app:layout_constraintTop_toTopOf="parent" />
-    
-                <ImageButton
-                    android:id="@+id/btnFavourite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="@string/favourites"
-                    android:backgroundTint="@color/Cream"
-                    android:src="@drawable/ic_baseline_favorite_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-    
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-    
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/black" />
+                android:layout_height="wrap_content"
+                app:cardElevation="20sp">
 
-</LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/Charcoal">
+
+                    <ImageButton
+                        android:id="@+id/btnDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="228dp"
+                        android:contentDescription="Delete"
+                        android:backgroundTint="@color/Cream"
+                        android:src="@drawable/ic_baseline_delete_24"
+                        android:layout_marginEnd="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/btnShare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Share"
+                        android:src="@drawable/ic_baseline_share_24"
+                        android:backgroundTint="@color/Cream"
+                        android:layout_marginEnd="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
+                        app:layout_constraintStart_toEndOf="@+id/btnDelete"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/btnFavourite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="@string/favourites"
+                        android:backgroundTint="@color/Cream"
+                        android:src="@drawable/ic_baseline_favorite_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
