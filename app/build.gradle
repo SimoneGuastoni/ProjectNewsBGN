@@ -51,6 +51,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata:2.5.1"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.5.1"
-
+    implementation 'com.klinkerapps:link_builder:2.0.5'
 
 }

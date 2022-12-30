@@ -2,7 +2,9 @@ package com.example.projectnewsbgn.login;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.projectnewsbgn.login.UserAccessActivity.COUNTRY;
 import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
+import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +27,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginFragment extends Fragment {
 
+    private TextInputLayout email, psw;
+    private CheckBox rememberCb;
+    private Button loginBtn;
+    private TextView forgotPswTxt, createAccountTxt;
+    private ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+    RegisterFragment registerFragment = new RegisterFragment();
+
     public LoginFragment() {
         super(R.layout.fragment_login);
     }
@@ -35,18 +44,10 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    //setContentView(R.layout.activity_login);
     @Override
     public void onViewCreated(View onCreateView,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*private*/ TextInputLayout email, psw;
-        /*private*/ CheckBox rememberCb;
-        /*private*/ Button loginBtn;
-        /*private*/ TextView forgotPswTxt, createAccountTxt;
-        /*private*/ ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
-        RegisterFragment registerFragment = new RegisterFragment();
 
-        /*public static*/
         View v = getView();
         email = v.findViewById(R.id.emailLayout);
         psw = v.findViewById(R.id.pswLayout);
@@ -55,7 +56,7 @@ public class LoginFragment extends Fragment {
         forgotPswTxt = v.findViewById(R.id.forgotPswText);
         createAccountTxt = v.findViewById(R.id.registerText);
 
-        loadData();
+        clearCountry();
 
         createAccountTxt.setOnClickListener(view -> {
             getView().findViewById(R.id.action_loginFragment_to_registerFragment);
@@ -103,15 +104,11 @@ public class LoginFragment extends Fragment {
 
     }
 
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String data = sharedPreferences.getString("name", "");
-        if (data.equals("true")) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
+    private void clearCountry() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(COUNTRY,"it");
+        editor.apply();
     }
 
         private boolean checkPsw (String pswString){

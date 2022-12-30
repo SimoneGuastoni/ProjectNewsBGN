@@ -23,6 +23,17 @@ public class News implements Serializable {
     private String publishedAt = "";
     private String content = "";
 
+    private boolean favourite = false;
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
+
     public int getId() {
         return id;
     }

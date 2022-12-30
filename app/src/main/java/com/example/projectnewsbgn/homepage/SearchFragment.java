@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
 import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Interface.SelectListener;
@@ -203,7 +202,7 @@ public class SearchFragment extends Fragment implements SelectListener {
 
     @Override
     public void OnNewsClicked(News news) {
-        Intent goToNews = new Intent(getActivity(),FullDisplayNews.class).putExtra("news",news);
+        Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
         startActivity(goToNews);
         getActivity().finish();
     }

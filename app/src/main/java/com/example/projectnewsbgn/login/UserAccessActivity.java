@@ -21,6 +21,8 @@ import java.io.IOException;
 
 public class UserAccessActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "SharedPrefs";
+    public static final String SHARED_PREFS_COUNTRY = "SharedPrefsCountry";
+    public static final String COUNTRY = "country";
 
     public  ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {

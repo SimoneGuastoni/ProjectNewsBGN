@@ -2,7 +2,6 @@ package com.example.projectnewsbgn.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,26 +9,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
-import com.example.projectnewsbgn.login.LoginFragment;
 import com.example.projectnewsbgn.login.UserAccessActivity;
-import com.example.projectnewsbgn.object.Account;
+import com.example.projectnewsbgn.Models.Account;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout fragmentWindow;
     public static final String SHARED_PREFS ="SharedPrefs";
-
+    public static final String SHARED_PREFS_FETCH ="SharedPrefsFetch";
+    public static final long TIME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomMenu);
         fragmentWindow = findViewById(R.id.container);
 
-        Account user = getIntent().getParcelableExtra("finalUser");
 
         getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
 

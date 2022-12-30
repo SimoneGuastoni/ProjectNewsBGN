@@ -16,7 +16,7 @@
         android:theme="@style/Theme.ProjectNewsBGN"
         tools:targetApi="31">
         <activity
-            android:name=".homepage.FullDisplayNews"
+            android:name=".homepage.FullDisplayNewsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -1,9 +1,12 @@
 package com.example.projectnewsbgn.login;
 
+import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -15,10 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.homepage.MainActivity;
 
 public class StartingAnimationActivity extends AppCompatActivity {
 
+    public static final String SHARED_PREFS = "SharedPrefs";
+
     private static int Splash_animation = 2000;
+
+    boolean logged;
 
     Animation topAnim,bottomAnim;
     ImageView icon;
@@ -41,20 +49,38 @@ public class StartingAnimationActivity extends AppCompatActivity {
             welcome.setAnimation(bottomAnim);
             slogan.setAnimation(bottomAnim);
 
+            loadData();
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(StartingAnimationActivity.this,UserAccessActivity.class);
 
-                    Pair[] pairs = new Pair[2];
-                    pairs[0] = new Pair<View,String>(icon,"logo_image");
-                    pairs[1] = new Pair<View,String>(welcome,"logo_txt");
+                        Intent intent;
 
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StartingAnimationActivity.this,pairs);
-                    startActivity(intent,options.toBundle());
-                }
+                        if(logged){
+                             intent = new Intent(StartingAnimationActivity.this,MainActivity.class);
+                        }
+                        else{
+                             intent = new Intent(StartingAnimationActivity.this,UserAccessActivity.class);
+                        }
+
+                        Pair[] pairs = new Pair[2];
+                        pairs[0] = new Pair<View,String>(icon,"logo_image");
+                        pairs[1] = new Pair<View,String>(welcome,"logo_txt");
+
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StartingAnimationActivity.this,pairs);
+                        startActivity(intent,options.toBundle());
+                    }
             },Splash_animation);
 
         }
 
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String data = sharedPreferences.getString("name", "");
+        if (data.equals("true")) {
+            logged = true;
+        }
     }
+
+}

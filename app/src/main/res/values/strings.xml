@@ -27,11 +27,8 @@
     <string name="countryAccount">it</string>
 
     <string-array name="CountryList">
-        <item>Italy</item>
-        <item>France</item>
-        <item>USA</item>
-        <item>Germany</item>
         <item>England</item>
-        <item>China</item>
+        <item>France</item>
+        <item>Italy</item>
     </string-array>
 </resources>

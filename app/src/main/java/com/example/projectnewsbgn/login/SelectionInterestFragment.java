@@ -1,8 +1,10 @@
 package com.example.projectnewsbgn.login;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.projectnewsbgn.login.UserAccessActivity.COUNTRY;
 import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
+import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
@@ -22,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.object.Account;
 
 public class SelectionInterestFragment extends Fragment {
 
@@ -32,6 +33,7 @@ public class SelectionInterestFragment extends Fragment {
     private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
     private String name,email,psw,country;
     private Boolean topic1 = false ,topic2 = false ,topic3 = false,topic4 = false,topic5 = false,topic6 = false, remember= false;
+
     SelectionInterestFragment() {super(R.layout.fragment_selection_interest);}
 
     @Override
@@ -52,24 +54,6 @@ public class SelectionInterestFragment extends Fragment {
             }
         });
         Activity act = getActivity();
-
-
-
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        */
-
-        //Account account = act.getIntent().getParcelableExtra("user");
-
-
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            name = extras.getString("name");
-            email = extras.getString("email");
-            psw = extras.getString("psw");
-        }*/
 
         selectCountryTxt = act.findViewById(R.id.selectCountryTxt);
         selectTopicsTxt = act.findViewById(R.id.selectInterestTxt);
@@ -116,13 +100,13 @@ public class SelectionInterestFragment extends Fragment {
                     topic6=true;
                 else
                     topic6= false;
+
                 Toast.makeText(getActivity(), "You've been successfully registered", Toast.LENGTH_SHORT).show();
-              /* account.setTopic1(topic1);
-                account.setTopic2(topic2);
-                account.setTopic3(topic3);
-                account.setCountry(country);*/
+
                 Intent goToHome = new Intent(getActivity(), MainActivity.class);
-                /*goToHome.putExtra("finalUser",account);*/
+
+                saveCountry(countrySpinner.getSelectedItem().toString());
+
                 if(remember) {
                     Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
                     SharedPreferences sharedPreferences = act.getSharedPreferences(SHARED_PREFS, getContext().MODE_PRIVATE);
@@ -138,5 +122,28 @@ public class SelectionInterestFragment extends Fragment {
                 selectTopicsTxt.setError("");
             }
         });
+    }
+
+    private void saveCountry(String selectedCountry) {
+
+        String countryId;
+
+        switch (selectedCountry){
+            case "Italy" :
+                countryId = "it";
+                break;
+            case "France" :
+                countryId = "fr";
+                break;
+            case "England" :
+                countryId = "gb";
+                break;
+            default: countryId = "it";
+        }
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(COUNTRY,countryId);
+        editor.apply();
     }
 }
