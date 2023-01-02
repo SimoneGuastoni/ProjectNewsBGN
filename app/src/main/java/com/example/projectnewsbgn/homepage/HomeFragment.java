@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
     INewsRepository iNewsRepository;
     NewsHomeAdapter newsRecyclerViewAdapter;
     ProgressDialog dialog;
-    RequestManager manager;
+    /*RequestManager manager;*/
     String country;
     List<News> newsList;
 
@@ -54,8 +54,8 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        manager = new RequestManager(getContext());
-        iNewsRepository =new NewsRepository(requireActivity().getApplication(),manager,this);
+        /*manager = new RequestManager(getContext());*/
+        iNewsRepository =new NewsRepository(requireActivity().getApplication(),this);
 
         newsList = new ArrayList<>();
     }
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.RecyclerViewcontainer);
+        /*recyclerView = view.findViewById(R.id.RecyclerViewcontainer);*/
 
         country = loadSavedCountry();
 
@@ -100,8 +100,8 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
 
             iNewsRepository.fetchNews(country,0,timePassedFromFetch);
 
-            /* Vecchio metodo? */
-            manager.getNewsHeadlines(listener, "general", null,country);
+            /* Vecchio metodo?
+            manager.getNewsHeadlines(listener, "general", null,country);*/
         }
 
     }
@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
         return savedCountry;
     }
 
-    private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
+    /*private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
         @Override
         public void onFetchData(List<News> data, String message) {
             dialog.dismiss();
@@ -142,15 +142,15 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
         public void onError(String message) {
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         }
-    };
+    };*/
 
-    private void showNews(List<News> newsList) {
+   /* private void showNews(List<News> newsList) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(), newsList,this);
         recyclerView.setAdapter(newsRecyclerViewAdapter);
 
-    }
+    }*/
 
     @Override
     public void OnNewsClicked(News news) {

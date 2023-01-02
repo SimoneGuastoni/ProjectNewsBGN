@@ -19,7 +19,7 @@ public abstract class NewsDatabase extends RoomDatabase {
 
     private static NewsDatabase instance;
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
-    private static final ExecutorService dataBaseWriteExecutor =
+    public static final ExecutorService dataBaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     /* Metodo per accedere al DAO

@@ -12,7 +12,7 @@ import javax.xml.transform.Source;
 public class News implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     @Embedded(prefix = "news_source")
     private NewsSource source;
     private String author;
@@ -26,7 +26,7 @@ public class News implements Serializable {
 
     public News(){}
 
-    public News(int id, NewsSource source, String author, String title, String description, String url,
+    public News(long id, NewsSource source, String author, String title, String description, String url,
                 String urlToImage, String publishedAt, String content, boolean favourite) {
         this.id = id;
         this.source = source;
@@ -49,11 +49,11 @@ public class News implements Serializable {
     }
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -9,6 +9,7 @@ import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.homepage.RequestManager;
+import com.example.projectnewsbgn.NewsDatabase;
 
 import java.util.List;
 
@@ -18,23 +19,22 @@ import retrofit2.Response;
 
 public class NewsRepository implements INewsRepository {
 
-    private Application application;
-    private RequestManager manager;
-    private ResponseCallback responseCallback;
-    private CallNewsApi callNewsApi;
-    private NewsDao newsDao;
-    private LiveData<List<News>> newsList;
+    private final Application application;
+    /*private RequestManager manager;*/
+    private final ResponseCallback responseCallback;
+    private final CallNewsApi callNewsApi;
+    private final NewsDao newsDao;
+    private List<News> newsList;
 
 
-    public NewsRepository(Application application, RequestManager manager,
+    public NewsRepository(Application application, /*RequestManager manager,*/
                           ResponseCallback responseCallback) {
         this.application = application;
-        this.manager = manager;
-        this.responseCallback = responseCallback;
+        /*this.manager = manager;*/
         this.callNewsApi =ServiceLocator.getInstance().getNewsApiService();
         NewsDatabase newsDatabase = ServiceLocator.getInstance().getNewsDao(application);
         this.newsDao = newsDatabase.newsDao();
-        this.newsList = newsList;
+        this.responseCallback = responseCallback;
     }
 
     @Override
@@ -45,22 +45,18 @@ public class NewsRepository implements INewsRepository {
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
                 @Override
                 public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
-                    if (!response.isSuccessful()){
                         if (response.body() != null && response.isSuccessful() &&
-                                !response.body().getStatus().equals("error")) {
-                            List<News> newsList = response.body().getArticles();
+                                !response.body().getStatus().equals("errorStatusResponseBody")) {
+                            newsList = response.body().getArticles();
                             saveDataInDatabase(newsList);
                         } else {
-                            responseCallback.onFailure("FEtch_Error2");
+                            responseCallback.onFailure("Fetch_Error_onFailure");
                         }
-                    }
-
-                    listener.onFetchData(response.body().getArticles(), response.message());
                 }
 
                 @Override
                 public void onFailure(Call<NewsApiResponse> call, Throwable t) {
-                    listener.onError("Request Failed");
+                    responseCallback.onFailure(t.getMessage());
                 }
             });
         }
@@ -88,17 +84,20 @@ public class NewsRepository implements INewsRepository {
         return NewsDatabase.getInstanceDatabase(application);
     }*/
 
-    private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
-        @Override
-        public void onFetchData(List<News> data, String message) {
-        }
-
-        @Override
-        public void onError(String message) {
-        }
-    };
 
     private void saveDataInDatabase(List<News> newsList) {
-
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            List<News> allNewsFromDb = newsDao.getAll();
+            for(News news : allNewsFromDb){
+                if(newsList.contains(news)){
+                    newsList.set(newsList.indexOf(news),news);
+                }
+            }
+            List<Long> insertedNewsId = newsDao.insertNewsList(newsList);
+            for(int i=0 ; i < newsList.size() ; i++){
+                newsList.get(i).setId(insertedNewsId.get(i));
+            }
+            responseCallback.onSuccess(newsList,System.currentTimeMillis());
+        });
     }
 }
