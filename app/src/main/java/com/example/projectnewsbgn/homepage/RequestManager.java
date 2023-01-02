@@ -8,11 +8,10 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 
+import com.example.projectnewsbgn.CallNewsApi;
 import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
-
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,13 +72,20 @@ public class RequestManager {
 
     }
 
-    public interface CallNewsApi {
-        @GET("top-headlines")
-        Call<NewsApiResponse> callHeadlines(
-                @Query("country")String country,
-                @Query("category")String category,
-                @Query("q")String query,
-                @Query("apiKey")String apiKey
-        );
+    public Call<NewsApiResponse> getNewsHeadlinesRepository(OnFetchDataListener<NewsApiResponse> listener, String category, String query, String country){
+
+        /* Shared pref che mi permette di calcolare il tempo tra le fetch*/
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_FETCH,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        time = System.currentTimeMillis();
+        editor.putLong(String.valueOf(TIME),time);
+        editor.apply();
+
+        CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);
+
+        Call<NewsApiResponse> call = callNewsApi.callHeadlines(country, category, query, context.getString(R.string.api_key));
+
+        return call;
     }
+
 }

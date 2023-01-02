@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -23,24 +24,41 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
+import com.example.projectnewsbgn.INewsRepository;
 import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Interface.SelectListener;
 import com.example.projectnewsbgn.Models.News;
+import com.example.projectnewsbgn.NewsRepository;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
+import com.example.projectnewsbgn.ResponseCallback;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements SelectListener {
+public class HomeFragment extends Fragment implements SelectListener, ResponseCallback {
 
     RecyclerView recyclerView;
+    INewsRepository iNewsRepository;
     NewsHomeAdapter newsRecyclerViewAdapter;
     ProgressDialog dialog;
+    RequestManager manager;
     String country;
+    List<News> newsList;
 
     long timePassedFromFetch;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        manager = new RequestManager(getContext());
+        iNewsRepository =new NewsRepository(requireActivity().getApplication(),manager,this);
+
+        newsList = new ArrayList<>();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,11 +83,24 @@ public class HomeFragment extends Fragment implements SelectListener {
 
         /*timePassedFromFetch = calculateTimeFromFetch();*/
 
+        RecyclerView recyclerViewTest = view.findViewById(R.id.RecyclerViewcontainer);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
+
+        newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(),newsList,this);
+
+        recyclerViewTest.setLayoutManager(layoutManager);
+        recyclerViewTest.setAdapter(newsRecyclerViewAdapter);
+
+
         if((timePassedFromFetch ==0) || (System.currentTimeMillis() - timePassedFromFetch > 20000) ){
             dialog = new ProgressDialog(getContext());
             dialog.setTitle("Fetching news...");
             dialog.show();
-            RequestManager manager = new RequestManager(getContext());
+
+            iNewsRepository.fetchNews(country,0,timePassedFromFetch);
+
+            /* Vecchio metodo? */
             manager.getNewsHeadlines(listener, "general", null,country);
         }
 
@@ -126,5 +157,20 @@ public class HomeFragment extends Fragment implements SelectListener {
         Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
         startActivity(goToNews);
         getActivity().finish();
+    }
+
+    @Override
+    public void onSuccess(List<News> newsList, long lastUpdate) {
+
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onNewsFavoriteStatusChange(News news) {
+
     }
 }

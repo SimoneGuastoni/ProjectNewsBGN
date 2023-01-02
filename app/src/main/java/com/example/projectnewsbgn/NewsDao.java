@@ -25,8 +25,15 @@ public interface NewsDao {
     @Insert
     void insertNews(News news);
 
+    /* Update LIVEDATA? TODO */
     @Update
     void updateNews(News news);
+
+    @Update
+    void updateFavouriteNews(News news);
+
+    @Delete
+    void deleteAllFavouriteNews(News news);
 
     @Delete
     void deleteNews(News news);

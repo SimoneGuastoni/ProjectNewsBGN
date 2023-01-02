@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Models;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,20 +11,34 @@ import javax.xml.transform.Source;
 @Entity (tableName = "news_table")
 public class News implements Serializable {
 
-
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @Embedded(prefix = "news_source")
+    private NewsSource source;
+    private String author;
+    private String title;
+    private String description;
+    private String url;
+    private String urlToImage;
+    private String publishedAt;
+    private String content;
+    private boolean favourite;
 
-    private NewsSource source = null;
-    private String author = "";
-    private String title = "";
-    private String description = "";
-    private String url = "";
-    private String urlToImage = "";
-    private String publishedAt = "";
-    private String content = "";
+    public News(){}
 
-    private boolean favourite = false;
+    public News(int id, NewsSource source, String author, String title, String description, String url,
+                String urlToImage, String publishedAt, String content, boolean favourite) {
+        this.id = id;
+        this.source = source;
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.urlToImage = urlToImage;
+        this.publishedAt = publishedAt;
+        this.content = content;
+        this.favourite = favourite;
+    }
 
     public boolean isFavourite() {
         return favourite;
