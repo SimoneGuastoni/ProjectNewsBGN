@@ -41,12 +41,13 @@ import java.util.List;
 public class HomeFragment extends Fragment implements SelectListener, ResponseCallback {
 
     RecyclerView recyclerView;
-    INewsRepository iNewsRepository;
+    NewsRepository iNewsRepository;
     NewsHomeAdapter newsRecyclerViewAdapter;
     ProgressDialog dialog;
     /*RequestManager manager;*/
     String country;
     List<News> newsList;
+    Toast toast;
 
     long timePassedFromFetch;
 
@@ -102,7 +103,19 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
 
             /* Vecchio metodo?
             manager.getNewsHeadlines(listener, "general", null,country);*/
+
+            //chiediamo a newsRepository di darci le notizie salvate in locale
+
+            iNewsRepository.getNewsList();
+
+            toast = new Toast(getContext());
+            toast.makeText(getContext(),"ciaooo",Toast.LENGTH_SHORT).show();
+
+
         }
+
+
+
 
     }
 

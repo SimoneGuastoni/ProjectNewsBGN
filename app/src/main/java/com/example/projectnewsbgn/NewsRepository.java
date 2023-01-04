@@ -68,6 +68,8 @@ public class NewsRepository implements INewsRepository {
         }
     }
 
+
+
     @Override
     public void updateNews(News news) {
 
@@ -82,6 +84,24 @@ public class NewsRepository implements INewsRepository {
     public void deleteFavouriteNews() {
 
     }
+
+    //metodo per effettuare getnews, restituisce List<News>
+
+    public List<News> getNewsList() {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {  //perchè in maiuscolo??????
+           newsList=newsDao.getAll();
+        });
+        return newsList;
+}
+
+    /*@Override
+    public void getNews() {
+        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
+        newsCallback.onSuccessFromLocal(newsDao.getAll());
+    });
+}*/
+
+
 /*
     private NewsDatabase createDatabase(Application application) {
         return NewsDatabase.getInstanceDatabase(application);
