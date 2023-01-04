@@ -16,14 +16,14 @@
         android:theme="@style/Theme.ProjectNewsBGN"
         tools:targetApi="31">
         <activity
-            android:name=".homepage.FullDisplayNewsActivity"
+            android:name=".UI.homepage.FullDisplayNewsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.StartingAnimationActivity"
+            android:name=".UI.login.StartingAnimationActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
@@ -37,7 +37,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.SelectionInterestFragment"
+            android:name=".UI.login.SelectionInterestFragment"
             android:exported="false"
             android:theme="@style/Theme.Design.NoActionBar">
             <meta-data
@@ -45,14 +45,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".homepage.MainActivity"
+            android:name=".UI.homepage.MainActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".login.UserAccessActivity"
+            android:name=".UI.login.UserAccessActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <meta-data

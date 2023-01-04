@@ -1,14 +1,12 @@
-package com.example.projectnewsbgn.homepage;
-
-import static com.example.projectnewsbgn.homepage.MainActivity.SHARED_PREFS_FETCH;
-import static com.example.projectnewsbgn.homepage.MainActivity.TIME;
+package com.example.projectnewsbgn.Utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
 
-import com.example.projectnewsbgn.CallNewsApi;
+import com.example.projectnewsbgn.UI.homepage.MainActivity;
+import com.example.projectnewsbgn.Utility.CallNewsApi;
 import com.example.projectnewsbgn.Interface.OnFetchDataListener;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
@@ -18,8 +16,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public class RequestManager {
 
@@ -39,10 +35,10 @@ public class RequestManager {
     public void getNewsHeadlines(OnFetchDataListener<NewsApiResponse> listener, String category, String query,String country){
 
         /* Shared pref che mi permette di calcolare il tempo tra le fetch*/
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_FETCH,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         time = System.currentTimeMillis();
-        editor.putLong(String.valueOf(TIME),time);
+        editor.putLong(String.valueOf(MainActivity.TIME),time);
         editor.apply();
 
         CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);
@@ -75,10 +71,10 @@ public class RequestManager {
     public Call<NewsApiResponse> getNewsHeadlinesRepository(OnFetchDataListener<NewsApiResponse> listener, String category, String query, String country){
 
         /* Shared pref che mi permette di calcolare il tempo tra le fetch*/
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS_FETCH,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         time = System.currentTimeMillis();
-        editor.putLong(String.valueOf(TIME),time);
+        editor.putLong(String.valueOf(MainActivity.TIME),time);
         editor.apply();
 
         CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);

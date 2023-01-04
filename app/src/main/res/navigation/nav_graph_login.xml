@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.projectnewsbgn.login.LoginFragment"
+        android:name="com.example.projectnewsbgn.UI.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.projectnewsbgn.login.ForgotPasswordFragment"
+        android:name="com.example.projectnewsbgn.UI.login.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.projectnewsbgn.login.RegisterFragment"
+        android:name="com.example.projectnewsbgn.UI.login.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_selectionInterestFragment"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectionInterestFragment"
-        android:name="com.example.projectnewsbgn.login.SelectionInterestFragment"
+        android:name="com.example.projectnewsbgn.UI.login.SelectionInterestFragment"
         android:label="fragment_selection_interest"
         tools:layout="@layout/fragment_selection_interest" />
 </navigation>

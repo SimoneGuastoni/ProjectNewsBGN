@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Utility;
 
 import com.example.projectnewsbgn.Models.News;
 

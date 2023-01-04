@@ -1,16 +1,18 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Repository;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
+import androidx.room.Database;
 
-import com.example.projectnewsbgn.Interface.OnFetchDataListener;
+import com.example.projectnewsbgn.Utility.CallNewsApi;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
-import com.example.projectnewsbgn.homepage.RequestManager;
-import com.example.projectnewsbgn.NewsDatabase;
+import com.example.projectnewsbgn.Database.NewsDao;
+import com.example.projectnewsbgn.Database.NewsDatabase;
+import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.Utility.ResponseCallback;
+import com.example.projectnewsbgn.Utility.ServiceLocator;
 
 import java.util.List;
 
@@ -21,7 +23,6 @@ import retrofit2.Response;
 public class NewsRepository implements INewsRepository {
 
     private final Application application;
-    /*private RequestManager manager;*/
     private final ResponseCallback responseCallback;
     private final CallNewsApi callNewsApi;
     private final NewsDao newsDao;
@@ -29,25 +30,30 @@ public class NewsRepository implements INewsRepository {
     private Context context;
 
 
-    public NewsRepository(Application application, /*RequestManager manager,*/
+    public NewsRepository(Application application,
                           ResponseCallback responseCallback) {
         this.application = application;
-        /*this.manager = manager;*/
-        this.callNewsApi =ServiceLocator.getInstance().getNewsApiService();
+        this.callNewsApi = ServiceLocator.getInstance().getNewsApiService();
         NewsDatabase newsDatabase = ServiceLocator.getInstance().getNewsDao(application);
         this.newsDao = newsDatabase.newsDao();
         this.responseCallback = responseCallback;
         context = application.getBaseContext();
     }
 
+
     @Override
     public void fetchNews(String country, int page, long lastUpdate) {
-        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country,"general","", application.getString(R.string.api_key));
 
-        try {
-            newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
-                @Override
-                public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+        long currentTime = System.currentTimeMillis();
+
+        if(lastUpdate == 0 || currentTime - lastUpdate > 20000) {
+
+            Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, "general", "", application.getString(R.string.api_key));
+
+            try {
+                newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
+                    @Override
+                    public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                         if (response.body() != null && response.isSuccessful() &&
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
                             newsList = response.body().getArticles();
@@ -55,16 +61,19 @@ public class NewsRepository implements INewsRepository {
                         } else {
                             responseCallback.onFailure("Fetch_Error_onFailure");
                         }
-                }
+                    }
 
-                @Override
-                public void onFailure(Call<NewsApiResponse> call, Throwable t) {
-                    responseCallback.onFailure(t.getMessage());
-                }
-            });
+                    @Override
+                    public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+                        responseCallback.onFailure(t.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e){
-            e.printStackTrace();
+        else{
+            readDataFromDatabase(lastUpdate);
         }
     }
 
@@ -72,11 +81,21 @@ public class NewsRepository implements INewsRepository {
 
     @Override
     public void updateNews(News news) {
-
+        if (news.getFavourite()){
+            news.setFavourite(false);
+            updateDatabase(news,news.getFavourite());
+        }
+        else {
+            news.setFavourite(true);
+            updateDatabase(news,news.getFavourite());
+        }
     }
 
     @Override
     public void getFavouriteNews() {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            responseCallback.onSuccess(newsDao.getFavouriteNews(),System.currentTimeMillis());
+        });
 
     }
 
@@ -84,6 +103,7 @@ public class NewsRepository implements INewsRepository {
     public void deleteFavouriteNews() {
 
     }
+
 
     //metodo per effettuare getnews, restituisce List<News>
 
@@ -93,20 +113,6 @@ public class NewsRepository implements INewsRepository {
         });
         return newsList;
 }
-
-    /*@Override
-    public void getNews() {
-        NewsRoomDatabase.databaseWriteExecutor.execute(() -> {
-        newsCallback.onSuccessFromLocal(newsDao.getAll());
-    });
-}*/
-
-
-/*
-    private NewsDatabase createDatabase(Application application) {
-        return NewsDatabase.getInstanceDatabase(application);
-    }*/
-
 
     private void saveDataInDatabase(List<News> newsList) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
@@ -121,6 +127,19 @@ public class NewsRepository implements INewsRepository {
                 newsList.get(i).setId(insertedNewsId.get(i));
             }
             responseCallback.onSuccess(newsList,System.currentTimeMillis());
+        });
+    }
+
+    private void readDataFromDatabase(long lastUpdate) {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            responseCallback.onSuccess(newsDao.getAll(), lastUpdate);
+        });
+    }
+
+    private void updateDatabase(News news, boolean favourite) {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            newsDao.updateFavouriteNews(news);
+            responseCallback.onNewsFavoriteStatusChange(news);
         });
     }
 }

@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

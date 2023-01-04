@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.homepage;
+package com.example.projectnewsbgn.UI.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,7 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
-import com.example.projectnewsbgn.login.UserAccessActivity;
-import com.example.projectnewsbgn.Models.Account;
+import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

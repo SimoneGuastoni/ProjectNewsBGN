@@ -1,9 +1,9 @@
-package com.example.projectnewsbgn.login;
+package com.example.projectnewsbgn.UI.login;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.projectnewsbgn.login.UserAccessActivity.COUNTRY;
-import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
-import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
+import static com.example.projectnewsbgn.UI.login.UserAccessActivity.COUNTRY;
+import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
+import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
@@ -22,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.homepage.MainActivity;
+import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
 
 public class SelectionInterestFragment extends Fragment {

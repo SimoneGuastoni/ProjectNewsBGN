@@ -23,16 +23,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.CustomViewHolderHome>{
+public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderHome>{
     public INewsRepository inewsRepository;
     private Context context;
     private List<News> newsList;
     private SelectListener listener;
 
-    public NewsHomeAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsFavAdapter(Context context, List<News> newsList, SelectListener listener,INewsRepository iNewsRepository) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
+        this.inewsRepository = iNewsRepository;
     }
 
     @NonNull

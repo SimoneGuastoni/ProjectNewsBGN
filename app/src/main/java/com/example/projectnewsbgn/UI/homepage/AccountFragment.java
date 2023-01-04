@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.homepage;
+package com.example.projectnewsbgn.UI.homepage;
 
 import android.os.Bundle;
 

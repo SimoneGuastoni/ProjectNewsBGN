@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Database;
 
 import android.content.Context;
 
@@ -8,7 +8,6 @@ import androidx.room.RoomDatabase;
 
 import com.example.projectnewsbgn.Models.News;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

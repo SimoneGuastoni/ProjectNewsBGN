@@ -1,6 +1,4 @@
-package com.example.projectnewsbgn.login;
-
-import static com.example.projectnewsbgn.login.UserAccessActivity.SHARED_PREFS;
+package com.example.projectnewsbgn.UI.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.homepage.MainActivity;
+import com.example.projectnewsbgn.UI.homepage.MainActivity;
 
 public class StartingAnimationActivity extends AppCompatActivity {
 
@@ -58,7 +56,7 @@ public class StartingAnimationActivity extends AppCompatActivity {
                         Intent intent;
 
                         if(logged){
-                             intent = new Intent(StartingAnimationActivity.this,MainActivity.class);
+                             intent = new Intent(StartingAnimationActivity.this, MainActivity.class);
                         }
                         else{
                              intent = new Intent(StartingAnimationActivity.this,UserAccessActivity.class);

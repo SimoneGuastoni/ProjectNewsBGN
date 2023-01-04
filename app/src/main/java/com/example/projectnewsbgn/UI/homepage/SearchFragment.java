@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.homepage;
+package com.example.projectnewsbgn.UI.homepage;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import com.example.projectnewsbgn.Interface.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.Utility.RequestManager;
 
 import java.util.List;
 

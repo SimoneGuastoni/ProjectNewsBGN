@@ -1,6 +1,8 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Utility;
 
 import android.app.Application;
+
+import com.example.projectnewsbgn.Database.NewsDatabase;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

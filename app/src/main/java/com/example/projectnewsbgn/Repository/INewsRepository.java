@@ -1,8 +1,11 @@
-package com.example.projectnewsbgn;
+package com.example.projectnewsbgn.Repository;
 
 import com.example.projectnewsbgn.Models.News;
 
+import java.util.List;
+
 public interface INewsRepository {
+
 
     enum JsonParserType{
         JSON_READER,
@@ -11,6 +14,7 @@ public interface INewsRepository {
         JSON_ERROR
     };
 
+
     void fetchNews(String country,int page,long lastUpdate);
 
     void updateNews(News news);
@@ -18,4 +22,5 @@ public interface INewsRepository {
     void getFavouriteNews();
 
     void deleteFavouriteNews();
+
 }

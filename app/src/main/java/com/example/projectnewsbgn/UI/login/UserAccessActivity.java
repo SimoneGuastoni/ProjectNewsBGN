@@ -1,7 +1,5 @@
-package com.example.projectnewsbgn.login;
+package com.example.projectnewsbgn.UI.login;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.homepage.MainActivity;
 
 import java.io.IOException;
 

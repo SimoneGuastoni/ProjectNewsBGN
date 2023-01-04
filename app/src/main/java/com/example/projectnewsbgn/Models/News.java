@@ -40,7 +40,7 @@ public class News implements Serializable {
         this.favourite = favourite;
     }
 
-    public boolean isFavourite() {
+    public boolean getFavourite() {
         return favourite;
     }
 

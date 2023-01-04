@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.login;
+package com.example.projectnewsbgn.UI.login;
 
 import androidx.fragment.app.Fragment;
 

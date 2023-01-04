@@ -7,6 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ua_fragment_container_view"
-        android:name="com.example.projectnewsbgn.login.LoginFragment"
+        android:name="com.example.projectnewsbgn.UI.login.LoginFragment"
         tools:layout="@layout/fragment_login"></androidx.fragment.app.FragmentContainerView>
 </LinearLayout>
