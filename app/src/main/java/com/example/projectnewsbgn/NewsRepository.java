@@ -1,6 +1,7 @@
 package com.example.projectnewsbgn;
 
 import android.app.Application;
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -25,6 +26,7 @@ public class NewsRepository implements INewsRepository {
     private final CallNewsApi callNewsApi;
     private final NewsDao newsDao;
     private List<News> newsList;
+    private Context context;
 
 
     public NewsRepository(Application application, /*RequestManager manager,*/
@@ -35,11 +37,12 @@ public class NewsRepository implements INewsRepository {
         NewsDatabase newsDatabase = ServiceLocator.getInstance().getNewsDao(application);
         this.newsDao = newsDatabase.newsDao();
         this.responseCallback = responseCallback;
+        context = application.getBaseContext();
     }
 
     @Override
     public void fetchNews(String country, int page, long lastUpdate) {
-        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country,"general","", String.valueOf(R.string.api_key));
+        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country,"general","", application.getString(R.string.api_key));
 
         try {
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
