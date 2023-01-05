@@ -12,32 +12,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectnewsbgn.Interface.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.Repository.INewsRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.CustomViewHolderSmall> {
+    public INewsRepository inewsRepository;
     private Context context;
     private List<News> newsList;
     private SelectListener listener;
 
-    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener,INewsRepository iNewsRepository) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
+        this.inewsRepository = iNewsRepository;
     }
 
 
 
     public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, int position) {
+        holder.bind(newsList.get(position));
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
-        holder.text_description.setText(newsList.get(position).getDescription());
+        holder.text_date.setText(newsList.get(position).getPublishedAt());
+        /*holder.text_description.setText(newsList.get(position).getDescription());*/
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +77,7 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
 
         public TextView text_title;
         public TextView text_source;
+        public TextView text_date;
         public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
@@ -81,7 +88,8 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
 
             text_title = itemView.findViewById(R.id.title);
             text_source = itemView.findViewById(R.id.author);
-            text_description = itemView.findViewById(R.id.description);
+            text_date = itemView.findViewById(R.id.date);
+            /*text_description = itemView.findViewById(R.id.description);*/
             img_headline = itemView.findViewById(R.id.newsPic);
             btnFav = itemView.findViewById(R.id.btnFavourite);
             btnDelete = itemView.findViewById(R.id.btnDelete);
@@ -106,6 +114,10 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    News newsClicked = newsList.get(getAdapterPosition());
+                    if(newsClicked.getFavourite()) {
+                        inewsRepository.updateNews(newsClicked);
+                    }
                     newsList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                 }
@@ -115,6 +127,19 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
 
         @Override
         public void onClick(View v) {
+
+        }
+
+        public void bind(News news) {
+            setIconFav(newsList.get(getAdapterPosition()).getFavourite());
+        }
+
+        private void setIconFav(boolean favourite) {
+            if(favourite){
+                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
+            }
+            else
+                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_border_24));
 
         }
     }

@@ -83,42 +83,32 @@
                     android:background="@color/Charcoal">
 
                     <ImageButton
-                        android:id="@+id/btnDelete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="228dp"
-                        android:contentDescription="Delete"
-                        android:backgroundTint="@color/Cream"
-                        android:src="@drawable/ic_baseline_delete_24"
-                        android:layout_marginEnd="5dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
                         android:id="@+id/btnShare"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:backgroundTint="@color/Cream"
                         android:contentDescription="Share"
                         android:src="@drawable/ic_baseline_share_24"
-                        android:backgroundTint="@color/Cream"
-                        android:layout_marginEnd="5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
-                        app:layout_constraintStart_toEndOf="@+id/btnDelete"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintHorizontal_bias="0.984"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <ImageButton
                         android:id="@+id/btnFavourite"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/favourites"
+                        android:layout_marginEnd="40dp"
                         android:backgroundTint="@color/Cream"
+                        android:contentDescription="@string/favourites"
                         android:src="@drawable/ic_baseline_favorite_border_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>

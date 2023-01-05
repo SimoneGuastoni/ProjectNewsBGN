@@ -2,9 +2,11 @@ package com.example.projectnewsbgn.Repository;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.room.Database;
 
+import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.Utility.CallNewsApi;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
@@ -28,6 +30,7 @@ public class NewsRepository implements INewsRepository {
     private final NewsDao newsDao;
     private List<News> newsList;
     private Context context;
+    private long time;
 
 
     public NewsRepository(Application application,
@@ -40,15 +43,24 @@ public class NewsRepository implements INewsRepository {
         context = application.getBaseContext();
     }
 
+/* Metodi della INewsRepository */
+
 
     @Override
-    public void fetchNews(String country, int page, long lastUpdate) {
+    public void fetchNews(String country, int page, long lastUpdate,String topic,String query) {
 
         long currentTime = System.currentTimeMillis();
 
         if(lastUpdate == 0 || currentTime - lastUpdate > 20000) {
 
-            Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, "general", "", application.getString(R.string.api_key));
+            /*Shared pref che mi permette di calcolare il tempo tra le fetch*/
+            SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            time = System.currentTimeMillis();
+            editor.putLong(String.valueOf(MainActivity.TIME),time);
+            editor.apply();
+
+            Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topic, query, application.getString(R.string.api_key));
 
             try {
                 newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
@@ -78,7 +90,6 @@ public class NewsRepository implements INewsRepository {
     }
 
 
-
     @Override
     public void updateNews(News news) {
         if (news.getFavourite()){
@@ -94,25 +105,27 @@ public class NewsRepository implements INewsRepository {
     @Override
     public void getFavouriteNews() {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            responseCallback.onSuccess(newsDao.getFavouriteNews(),System.currentTimeMillis());
+            List<News> testList = newsDao.getFavouriteNews();
+            if(testList.size() != 0){
+                responseCallback.onSuccess(testList, System.currentTimeMillis());
+            }
+            else
+                responseCallback.onFailure("Nothing liked yet");
         });
-
     }
 
     @Override
     public void deleteFavouriteNews() {
-
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            List<News> favListNews = newsDao.getFavouriteNews();
+            for (int i=0 ; i < favListNews.size() ; i++){
+                favListNews.get(i).setFavourite(false);
+            }
+            responseCallback.onSuccess(favListNews,System.currentTimeMillis());
+        });
     }
 
-
-    //metodo per effettuare getnews, restituisce List<News>
-
-    public List<News> getNewsList() {
-        NewsDatabase.dataBaseWriteExecutor.execute(() -> {  //perchè in maiuscolo??????
-           newsList=newsDao.getAll();
-        });
-        return newsList;
-}
+/* Metodi che lavorano sul Database */
 
     private void saveDataInDatabase(List<News> newsList) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
@@ -138,8 +151,14 @@ public class NewsRepository implements INewsRepository {
 
     private void updateDatabase(News news, boolean favourite) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsDao.updateFavouriteNews(news);
-            responseCallback.onNewsFavoriteStatusChange(news);
+            if(favourite){
+                newsDao.updateNews(news);
+                responseCallback.onNewsFavoriteStatusChange(news);
+            }
+            else{
+                newsDao.updateNews(news);
+                responseCallback.onNewsFavoriteStatusChange(news);
+            }
         });
     }
 }

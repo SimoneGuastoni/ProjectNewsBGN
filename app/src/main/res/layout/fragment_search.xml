@@ -29,17 +29,6 @@
                 android:textStyle="bold"
                 android:layout_marginTop="10dp" />
 
-            <Spinner
-                android:id="@+id/spinnerCountrySearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10sp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="20sp"
-                android:background="@color/Charcoal"
-                android:contentDescription="@string/countryList"
-                android:minHeight="48dp" />
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchBar"
@@ -57,7 +46,8 @@
     </com.google.android.material.card.MaterialCardView>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -286,8 +276,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSearch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
             </androidx.recyclerview.widget.RecyclerView>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

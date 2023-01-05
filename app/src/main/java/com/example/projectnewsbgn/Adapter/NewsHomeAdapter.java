@@ -29,10 +29,11 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
     private List<News> newsList;
     private SelectListener listener;
 
-    public NewsHomeAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsHomeAdapter(Context context, List<News> newsList, SelectListener listener, INewsRepository iNewsRepository) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
+        this.inewsRepository = iNewsRepository;
     }
 
     @NonNull
@@ -43,6 +44,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolderHome holder, int position) {
+        holder.bind(newsList.get(position));
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
@@ -58,6 +60,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
         if(newsList.get(position).getUrlToImage() != null){
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
         }
+
     }
 
     @Override
@@ -76,7 +79,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
         public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
-        public ImageButton btnFav,btnShare,btnDelete;
+        public ImageButton btnFav,btnShare;
         public MaterialCardView container;
 
         public CustomViewHolderHome(@NonNull View itemView) {
@@ -88,11 +91,9 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             text_description = itemView.findViewById(R.id.description);
             img_headline = itemView.findViewById(R.id.newsPic);
             btnFav = itemView.findViewById(R.id.btnFavourite);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
             btnShare = itemView.findViewById(R.id.btnShare);
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
-            container = itemView.findViewById(R.id.containerCardViewHome);
-
+            container = itemView.findViewById(R.id.containerListNews);
 
             btnFav.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,8 +101,8 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
                     if(!(newsList.get(getAdapterPosition()).getFavourite())) {
                         Toast.makeText(context, "Add to favourites", Toast.LENGTH_SHORT).show();
                         News selectedNews = newsList.get(getAdapterPosition());
-                        selectedNews.setFavourite(true);
-                        notifyDataSetChanged();
+                        /*selectedNews.setFavourite(true);
+                        notifyDataSetChanged();*/
                         btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
                         inewsRepository.updateNews(selectedNews);
                     }
@@ -119,20 +120,24 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
                     Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
 
-            btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    newsList.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                }
-            });
+
+        private void setIconFav(Boolean fav) {
+            if(fav){
+                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
+            }
+            else
+                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_border_24));
         }
 
 
         @Override
         public void onClick(View v) {
+        }
 
+        public void bind(News news) {
+            setIconFav(newsList.get(getAdapterPosition()).getFavourite());
         }
     }
 }

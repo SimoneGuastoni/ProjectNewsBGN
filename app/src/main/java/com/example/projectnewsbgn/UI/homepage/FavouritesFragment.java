@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.UI.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
-import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
+import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
 import com.example.projectnewsbgn.Interface.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
@@ -30,7 +32,9 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
     RecyclerView recyclerViewFav;
     List<News> newsFavList;
     INewsRepository iNewsRepository;
-    NewsFavAdapter newsFavAdapter;
+    NewsSmallAdapter newsSmallAdapter;
+    Button buttonDeleteAll;
+    ImageView iconNoFavNews;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,16 +57,22 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
         super.onViewCreated(view, savedInstanceState);
 
         recyclerViewFav = view.findViewById(R.id.recyclerViewFav);
+        iconNoFavNews = view.findViewById(R.id.noFavNews);
+        buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
-        newsFavAdapter = new NewsFavAdapter(getContext(),newsFavList,this,iNewsRepository);
+        newsSmallAdapter = new NewsSmallAdapter(getContext(),newsFavList,this,iNewsRepository);
 
         recyclerViewFav.setLayoutManager(layoutManager);
-        recyclerViewFav.setAdapter(newsFavAdapter);
+        recyclerViewFav.setAdapter(newsSmallAdapter);
 
         iNewsRepository.getFavouriteNews();
+
+        buttonDeleteAll.setOnClickListener(v -> {
+          iNewsRepository.deleteFavouriteNews();
+        });
     }
 
     @Override
@@ -70,20 +80,23 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
         if(newsList.size() != 0){
             this.newsFavList.clear();
             this.newsFavList.addAll(newsList);
+            if(newsList.size() != 0) {
+                iconNoFavNews.setVisibility(View.INVISIBLE);
+            }
         }
         else
             Toast.makeText(getContext(), "No Fav News...", Toast.LENGTH_SHORT).show();
         requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                newsFavAdapter.notifyDataSetChanged();
+                newsSmallAdapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public void onFailure(String errorMessage) {
-
+        iconNoFavNews.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -93,6 +106,8 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
 
     @Override
     public void OnNewsClicked(News news) {
-
+        Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
+        startActivity(goToNews);
+        getActivity().finish();
     }
 }
