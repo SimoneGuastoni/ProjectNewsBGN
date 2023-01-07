@@ -89,6 +89,49 @@ public class NewsRepository implements INewsRepository {
         }
     }
 
+    @Override
+    public void fetchNews(String country, int page, long lastUpdate,List<String> topics,String query) {
+
+        long currentTime = System.currentTimeMillis();
+
+        if(lastUpdate == 0 || currentTime - lastUpdate > 20000) {
+
+            /*Shared pref che mi permette di calcolare il tempo tra le fetch*/
+            SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            time = System.currentTimeMillis();
+            editor.putLong(String.valueOf(MainActivity.TIME),time);
+            editor.apply();
+
+            Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topics, query, application.getString(R.string.api_key));
+
+            try {
+                newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
+                    @Override
+                    public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+                        if (response.body() != null && response.isSuccessful() &&
+                                !response.body().getStatus().equals("errorStatusResponseBody")) {
+                            newsList = response.body().getArticles();
+                            saveDataInDatabase(newsList);
+                        } else {
+                            responseCallback.onFailure("Fetch_Error_onFailure");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+                        responseCallback.onFailure(t.getMessage());
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            readDataFromDatabase(lastUpdate);
+        }
+    }
+
 
     @Override
     public void updateNews(News news) {
