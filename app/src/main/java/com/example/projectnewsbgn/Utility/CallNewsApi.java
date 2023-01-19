@@ -17,6 +17,7 @@ public interface CallNewsApi {
             @Query("apiKey")String apiKey
     );
 
+    /* Test multi category */
     @GET("top-headlines")
     Call<NewsApiResponse> callHeadlines(
             @Query("country")String country,

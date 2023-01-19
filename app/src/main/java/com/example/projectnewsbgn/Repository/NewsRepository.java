@@ -89,6 +89,7 @@ public class NewsRepository implements INewsRepository {
         }
     }
 
+    /* Test usare il metodo sopra*/
     @Override
     public void fetchNews(String country, int page, long lastUpdate,List<String> topics,String query) {
 
@@ -111,7 +112,7 @@ public class NewsRepository implements INewsRepository {
                     public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                         if (response.body() != null && response.isSuccessful() &&
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
-                            newsList = response.body().getArticles();
+                            /*newsList = response.body().getArticles();*/
                             saveDataInDatabase(newsList);
                         } else {
                             responseCallback.onFailure("Fetch_Error_onFailure");

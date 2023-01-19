@@ -53,7 +53,7 @@ public class RequestManager {
                         Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                     }
 
-                    listener.onFetchData(response.body().getArticles(), response.message());
+                    /*listener.onFetchData(response.body().getArticles(), response.message());*/
                 }
 
                 @Override

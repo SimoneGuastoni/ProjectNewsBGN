@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.projectnewsbgn.Repository.INewsRepository;
+import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
 
 //necessario aggiungere iNewsRepositoty perchè funzioni
 

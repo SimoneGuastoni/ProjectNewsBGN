@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.List;
 
-public class NewsApiResponse implements Serializable, Parcelable {
+public class NewsApiResponse extends NewsResponse {
      String status;
      int totalResults;
      List<News> articles;
@@ -35,6 +35,7 @@ public class NewsApiResponse implements Serializable, Parcelable {
             return new NewsApiResponse[size];
         }
     };
+
 
     public String getStatus() {
         return status;

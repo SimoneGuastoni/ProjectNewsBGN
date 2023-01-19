@@ -3,9 +3,10 @@ package com.example.projectnewsbgn.UI.Main;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.Result;
 
-import javax.xml.transform.Result;
 
 public class NewsViewModel extends ViewModel {
     //prende il nome della classe
@@ -27,16 +28,17 @@ public class NewsViewModel extends ViewModel {
         if(newsListLiveData == null){
             fetchNews(country, lastupdate);
         }
+        /* int di controllo */
+        Result size = newsListLiveData.getValue();
         return newsListLiveData;
     }
 
     public void updateNews(News news) {
-        newsRepositoryWithLiveData.updateNews(news); //aggiungere tale classe
 
     }
 
     private void fetchNews(String country, long lastUpdate){
-        newsListLiveData = newsRepositoryWithLiveData.fetchNews(country, page, lastUpdate);
+        newsListLiveData = newsRepositoryWithLiveData.fetchNews(country,page,lastUpdate);
     }
 
     /*
