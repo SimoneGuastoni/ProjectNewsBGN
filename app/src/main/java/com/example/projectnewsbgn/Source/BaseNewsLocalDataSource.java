@@ -1,7 +1,6 @@
-package com.example.projectnewsbgn.Repository;
+package com.example.projectnewsbgn.Source;
 
 import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Models.NewsApiResponse;
 
 import java.util.List;
 
@@ -13,13 +12,11 @@ public abstract class BaseNewsLocalDataSource {
         this.newsCallBack = newsCallBack;
     }
 
-    public abstract void getFavoriteNews();
+    public abstract void getFavoriteNewsList();
     public abstract void updateNews(News news);
-    public abstract void deleteFavoriteNews();
-
-    /* Metodi che lavorano su DB*/
-
+    public abstract void deleteAllFavoriteNews();
     public abstract void saveDataInDatabase(List<News> newsList);
-    public abstract void readDataFromDatabase(long lastUpdate);
     public abstract void updateDataOnDatabase(News news, boolean favourite);
+    public abstract void updateNewsNotSaved(News news);
+    public abstract void getNewsFromDatabase(long lastUpdate);
 }

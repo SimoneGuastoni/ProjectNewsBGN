@@ -8,32 +8,28 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectnewsbgn.Listener.HomeListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Interface.SelectListener;
-import com.example.projectnewsbgn.Repository.INewsRepository;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.CustomViewHolderHome>{
-    public INewsRepository inewsRepository;
     private Context context;
     private List<News> newsList;
-    private SelectListener listener;
+    private HomeListener listener;
 
-    public NewsHomeAdapter(Context context, List<News> newsList, SelectListener listener, INewsRepository iNewsRepository) {
+    public NewsHomeAdapter(Context context, List<News> newsList, HomeListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
-        this.inewsRepository = iNewsRepository;
     }
 
     @NonNull
@@ -44,7 +40,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolderHome holder, int position) {
-        holder.bind(newsList.get(position));
+       /* holder.bind(newsList.get(position));*/
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
@@ -71,7 +67,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             return 0;
     }
 
-    public class CustomViewHolderHome extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class CustomViewHolderHome extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView text_title;
         public TextView text_source;
@@ -79,7 +75,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
         public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
-        public ImageButton btnFav,btnShare;
+        public ImageButton btnFav, btnShare;
         public MaterialCardView container;
 
         public CustomViewHolderHome(@NonNull View itemView) {
@@ -95,7 +91,28 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
             container = itemView.findViewById(R.id.containerListNews);
 
-            btnFav.setOnClickListener(new View.OnClickListener() {
+            btnFav.setOnClickListener(v -> {
+                changeFavIcon(newsList.get(getAdapterPosition()).getFavourite());
+                listener.onFavButtonPressed(newsList.get(getAdapterPosition()));
+            });
+        }
+
+        private void changeFavIcon(boolean favourite) {
+            if(favourite){
+                btnFav.setImageDrawable(AppCompatResources.getDrawable
+                        (context,R.drawable.ic_baseline_favorite_border_24));
+            }
+            else{
+                btnFav.setImageDrawable(AppCompatResources.getDrawable
+                        (context,R.drawable.ic_baseline_favorite_24));
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+        }
+    }
+            /*btnFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(!(newsList.get(getAdapterPosition()).getFavourite())) {
@@ -103,7 +120,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
                         News selectedNews = newsList.get(getAdapterPosition());
                         /*selectedNews.setFavourite(true);
                         notifyDataSetChanged();*/
-                        btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
+               /*         btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
                         inewsRepository.updateNews(selectedNews);
                     }
                     else{
@@ -139,5 +156,5 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
         public void bind(News news) {
             setIconFav(newsList.get(getAdapterPosition()).getFavourite());
         }
-    }
+    }*/
 }

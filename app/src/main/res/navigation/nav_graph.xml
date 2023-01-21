@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
-        android:name="com.example.projectnewsbgn.UI.homepage.FavouritesFragment"
+        android:name="com.example.projectnewsbgn.UI.homepage.FavoritesFragment"
         android:label="FavouritesFragment" >
         <action
             android:id="@+id/action_favouritesFragment_to_accountFragment"

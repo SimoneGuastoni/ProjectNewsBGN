@@ -5,31 +5,37 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.INewsRepository;
-import com.example.projectnewsbgn.Repository.NewsRepository;
-import com.example.projectnewsbgn.Utility.ResponseCallback;
+import com.example.projectnewsbgn.Models.Result;
+import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AccountFragment extends Fragment implements ResponseCallback {
+public class AccountFragment extends Fragment{
+
+    private MutableLiveData<Result> newsObtained;
 
     TextView favouriteArticlesTot;
-    INewsRepository iNewsRepository;
+    NewsViewModel newsViewModel;
+    List<News> newsFavList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iNewsRepository =new NewsRepository(requireActivity().getApplication(),this);
-
+        newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
+        newsFavList = new ArrayList<>();
     }
 
     @Override
@@ -45,22 +51,16 @@ public class AccountFragment extends Fragment implements ResponseCallback {
 
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
 
-        iNewsRepository.getFavouriteNews();
-
+        newsObtained = newsViewModel.getAllFavNews();
+        newsObtained.observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
+                int initialSize = this.newsFavList.size();
+                this.newsFavList.clear();
+                this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
+            } else {
+                Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    @Override
-    public void onSuccess(List<News> newsList, long lastUpdate) {
-        favouriteArticlesTot.setText(String.valueOf(newsList.size()));
-    }
-
-    @Override
-    public void onFailure(String errorMessage) {
-        favouriteArticlesTot.setText(errorMessage);
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChange(News news) {
-
-    }
 }

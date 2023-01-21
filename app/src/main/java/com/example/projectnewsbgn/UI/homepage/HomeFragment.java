@@ -2,7 +2,6 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,36 +22,32 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
-import com.example.projectnewsbgn.Repository.INewsRepository;
-import com.example.projectnewsbgn.Interface.SelectListener;
+import com.example.projectnewsbgn.Listener.HomeListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
-import com.example.projectnewsbgn.Repository.NewsRepository;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.Result;
+import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 import com.example.projectnewsbgn.UI.Main.NewsViewModelFactory;
-import com.example.projectnewsbgn.Utility.ResponseCallback;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements SelectListener, ResponseCallback {
+public class HomeFragment extends Fragment implements HomeListener {
 
     /* controllo */
     private MutableLiveData<Result> newsObtained;
 
     RecyclerView recyclerView;
-    /* Old repository */
-    INewsRepository iNewsRepository;
 
-    /* New repository */
     INewsRepositoryWithLiveData newsRepositoryWithLiveData;
     NewsViewModel newsViewModel;
+
+    /* Test multi fetch multitopics*/
+    List<String> topicList = new ArrayList<String>();
 
     NewsHomeAdapter newsRecyclerViewAdapter;
     ProgressBar progressBar;
@@ -73,10 +67,12 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
                 requireActivity(),new NewsViewModelFactory(newsRepositoryWithLiveData))
                 .get(NewsViewModel.class);
 
-        /* Vecchia creazione della repository*/
-        /*iNewsRepository =new NewsRepository(requireActivity().getApplication(),this);*/
-
         newsList = new ArrayList<>();
+
+        /* Test multiTopic */
+        topicList.add("general");
+        topicList.add("health");
+
     }
 
     @Override
@@ -93,12 +89,6 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
 
         country = loadSavedCountry();
 
-        /* Se non sono passati almeno 20 secondi da quando si ha eseguito la fetch se entro nella home non esegue la fetch,
-         * senza repository la schermata viene distrutta e si perdono le news, ma funziona.
-         * Ovvero se cambio pagina e ritorno sulla home non ricarico le news a meno che non sia passato un tempo X (in questo caso 20 secondi)
-         * dall'ultima chiamata.
-         * Commentato per il momento per evitare noie durante il test */
-
         timePassedFromFetch = calculateTimeFromFetch();
 
         progressBar = view.findViewById(R.id.progressBar);
@@ -108,7 +98,7 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 
-        newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(), newsList, this, iNewsRepository);
+        newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(), newsList,this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(newsRecyclerViewAdapter);
@@ -118,7 +108,7 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
         internetError.setVisibility(View.INVISIBLE);
 
         /* controllo */
-        newsObtained = newsViewModel.getNews(country,timePassedFromFetch);
+        newsObtained = newsViewModel.getNews(country,topicList,timePassedFromFetch);
 
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
@@ -133,10 +123,9 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
             }
         });
 
-        /* Vecchia fetch delle news*/
-       /* iNewsRepository.fetchNews(country,0,timePassedFromFetch,"general","");*/
-
     }
+
+    // Metodi del comportamento dell'adapter
 
     @Override
     public void OnNewsClicked(News news) {
@@ -146,34 +135,13 @@ public class HomeFragment extends Fragment implements SelectListener, ResponseCa
     }
 
     @Override
-    public void onSuccess(List<News> newsList, long lastUpdate) {
-        if(newsList != null){
-            this.newsList.clear();
-            this.newsList.addAll(newsList);
-        }
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                newsRecyclerViewAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
+    public void onFavButtonPressed(News news) {
+        newsViewModel.updateNews(news);
     }
 
-    @Override
-    public void onFailure(String errorMessage) {
-        Toast.makeText(getContext(), "Connection error", Toast.LENGTH_SHORT).show();
-        progressBar.setVisibility(View.INVISIBLE);
-        internetError.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChange(News news) {
-
-    }
+    // Metodi di supporto al fragment
 
     private long calculateTimeFromFetch() {
-
         long time;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS_FETCH,MODE_PRIVATE);

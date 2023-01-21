@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         HomeFragment homeFragment = new HomeFragment();
         AccountFragment accountFragment = new AccountFragment();
-        FavouritesFragment favouritesFragment = new FavouritesFragment();
+        FavoritesFragment favouritesFragment = new FavoritesFragment();
         SearchFragment searchFragment = new SearchFragment();
 
 

@@ -1,7 +1,4 @@
-package com.example.projectnewsbgn.Repository;
-
-import com.example.projectnewsbgn.Models.NewsApiResponse;
-import com.example.projectnewsbgn.Models.NewsResponse;
+package com.example.projectnewsbgn.Models;
 
 public abstract class Result {
     private Result() {}

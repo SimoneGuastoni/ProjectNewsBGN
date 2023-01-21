@@ -4,42 +4,37 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectnewsbgn.Interface.SelectListener;
+import com.example.projectnewsbgn.Listener.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.INewsRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.CustomViewHolderSmall> {
-    public INewsRepository inewsRepository;
     private Context context;
     private List<News> newsList;
     private SelectListener listener;
 
-    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener,INewsRepository iNewsRepository) {
+    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
-        this.inewsRepository = iNewsRepository;
     }
 
 
 
     public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, int position) {
-        holder.bind(newsList.get(position));
+        /*holder.bind(newsList.get(position));*/
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
@@ -96,8 +91,36 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
             btnShare = itemView.findViewById(R.id.btnShare);
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
 
+            btnFav.setOnClickListener(v -> {
+                News newsClicked = newsList.get(getAdapterPosition());
+                changeFavIcon(newsList.get(getAdapterPosition()).getFavourite());
+                listener.onFavButtonPressed(newsClicked);
+            });
 
-            btnFav.setOnClickListener(new View.OnClickListener() {
+            btnDelete.setOnClickListener(v -> {
+                News newsClicked = newsList.get(getAdapterPosition());
+                newsList.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
+                listener.onDeleteButtonPressed(newsClicked);
+            });
+        }
+
+        private void changeFavIcon(boolean favourite) {
+            if(favourite){
+                btnFav.setImageDrawable(AppCompatResources.getDrawable
+                        (context,R.drawable.ic_baseline_favorite_border_24));
+            }
+            else{
+                btnFav.setImageDrawable(AppCompatResources.getDrawable
+                        (context,R.drawable.ic_baseline_favorite_24));
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+           /* btnFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Add to favourites", Toast.LENGTH_SHORT).show();
@@ -124,12 +147,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
             });
         }
 
-
-        @Override
-        public void onClick(View v) {
-
-        }
-
         public void bind(News news) {
             setIconFav(newsList.get(getAdapterPosition()).getFavourite());
         }
@@ -142,5 +159,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
                 btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_border_24));
 
         }
+    }*/
     }
 }

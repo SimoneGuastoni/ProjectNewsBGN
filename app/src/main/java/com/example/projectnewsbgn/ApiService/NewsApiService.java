@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Utility;
+package com.example.projectnewsbgn.ApiService;
 
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 

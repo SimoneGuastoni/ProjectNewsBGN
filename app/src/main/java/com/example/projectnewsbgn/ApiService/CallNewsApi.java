@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Utility;
+package com.example.projectnewsbgn.ApiService;
 
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 
@@ -14,6 +14,13 @@ public interface CallNewsApi {
             @Query("country")String country,
             @Query("category")String category,
             @Query("q")String query,
+            @Query("apiKey")String apiKey
+    );
+
+    @GET("top-headlines")
+    Call<NewsApiResponse> callHeadlines(
+            @Query("country")String country,
+            @Query("category")List<String> category,
             @Query("apiKey")String apiKey
     );
 

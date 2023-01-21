@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,21 +19,22 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
-import com.example.projectnewsbgn.Interface.SelectListener;
+import com.example.projectnewsbgn.Listener.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.INewsRepository;
-import com.example.projectnewsbgn.Repository.NewsRepository;
-import com.example.projectnewsbgn.Utility.ResponseCallback;
+import com.example.projectnewsbgn.Models.Result;
+import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouritesFragment extends Fragment implements SelectListener,ResponseCallback {
+public class FavoritesFragment extends Fragment implements SelectListener{
+
+    private MutableLiveData<Result> newsObtained;
 
     RecyclerView recyclerViewFav;
     List<News> newsFavList;
-    INewsRepository iNewsRepository;
+    NewsViewModel newsViewModel;
     NewsSmallAdapter newsSmallAdapter;
     Button buttonDeleteAll;
     ImageView iconNoFavNews;
@@ -40,7 +43,7 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iNewsRepository = new NewsRepository(requireActivity().getApplication(),this);
+        newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
 
         newsFavList = new ArrayList<>();
     }
@@ -63,51 +66,49 @@ public class FavouritesFragment extends Fragment implements SelectListener,Respo
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
-        newsSmallAdapter = new NewsSmallAdapter(getContext(),newsFavList,this,iNewsRepository);
+        newsSmallAdapter = new NewsSmallAdapter(getContext(),newsFavList,this);
 
         recyclerViewFav.setLayoutManager(layoutManager);
         recyclerViewFav.setAdapter(newsSmallAdapter);
 
-        iNewsRepository.getFavouriteNews();
+        newsObtained = newsViewModel.getAllFavNews();
+        newsObtained.observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
+                int initialSize = this.newsFavList.size();
+                this.newsFavList.clear();
+                this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
+                newsSmallAdapter.notifyItemRangeInserted(initialSize,this.newsFavList.size());
+            } else {
+                Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
+                iconNoFavNews.setVisibility(View.VISIBLE);
+            }
+        });
 
         buttonDeleteAll.setOnClickListener(v -> {
-          iNewsRepository.deleteFavouriteNews();
+          for (int i=0 ; i<newsFavList.size(); i++){
+              newsFavList.remove(i);
+              newsSmallAdapter.notifyItemRemoved(i);
+              onDeleteButtonPressed(newsFavList.get(i));
+          }
         });
     }
 
-    @Override
-    public void onSuccess(List<News> newsList, long lastUpdate) {
-        if(newsList.size() != 0){
-            this.newsFavList.clear();
-            this.newsFavList.addAll(newsList);
-            if(newsList.size() != 0) {
-                iconNoFavNews.setVisibility(View.INVISIBLE);
-            }
-        }
-        else
-            Toast.makeText(getContext(), "No Fav News...", Toast.LENGTH_SHORT).show();
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                newsSmallAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(String errorMessage) {
-        iconNoFavNews.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChange(News news) {
-
-    }
+    // Metodi del comportamenteo dell'adatper
 
     @Override
     public void OnNewsClicked(News news) {
         Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
         startActivity(goToNews);
         getActivity().finish();
+    }
+
+    @Override
+    public void onFavButtonPressed(News news) {
+        newsViewModel.updateNews(news);
+    }
+
+    @Override
+    public void onDeleteButtonPressed(News news) {
+        newsViewModel.updateNews(news);
     }
 }

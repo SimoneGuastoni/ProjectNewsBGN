@@ -2,7 +2,6 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,54 +10,58 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
-import com.example.projectnewsbgn.Interface.OnFetchDataListener;
-import com.example.projectnewsbgn.Interface.SelectListener;
+import com.example.projectnewsbgn.Listener.SelectListener;
 import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.INewsRepository;
-import com.example.projectnewsbgn.Repository.NewsRepository;
+import com.example.projectnewsbgn.Models.Result;
+import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
-import com.example.projectnewsbgn.Utility.RequestManager;
-import com.example.projectnewsbgn.Utility.ResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements SelectListener, ResponseCallback {
+public class SearchFragment extends Fragment implements SelectListener{
 
-    INewsRepository iNewsRepository;
+    NewsViewModel newsViewModel;
+    MutableLiveData<Result> newsObtained;
+
     RecyclerView recyclerView;
     NewsSmallAdapter newsSmallAdapter;
-    ImageView businessTopic,scienceTopic,generalTopic,healthTopic,sportTopic,entertainmentTopic,technologyTopic;
+    ImageView businessTopic,scienceTopic,generalTopic,healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage;
     ProgressBar progressBar;
-    String category = "general",country;
+    String category = "general",country,query = "";
     SearchView searchView;
     List<News> newsList;
+    List<String> allTopic;
     long timePassedFromFetch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iNewsRepository = new NewsRepository(requireActivity().getApplication(),this);
+        newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
         newsList = new ArrayList<>();
+        allTopic = new ArrayList<String>();
+        allTopic.add("general");
+        allTopic.add("sport");
+        allTopic.add("health");
+        allTopic.add("business");
+        allTopic.add("technology");
+        allTopic.add("entertainment");
+        allTopic.add("science");
     }
 
     @Override
@@ -82,6 +85,7 @@ public class SearchFragment extends Fragment implements SelectListener, Response
         entertainmentTopic = view.findViewById(R.id.entertainmentTopic);
         healthTopic = view.findViewById(R.id.healthTopic);
         sportTopic = view.findViewById(R.id.sportTopic);
+        waitingImage = view.findViewById(R.id.waitForInputImage);
 
         searchView = view.findViewById(R.id.searchBar);
 
@@ -92,18 +96,20 @@ public class SearchFragment extends Fragment implements SelectListener, Response
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 
-        newsSmallAdapter = new NewsSmallAdapter(getContext(), newsList, this, iNewsRepository);
+        newsSmallAdapter = new NewsSmallAdapter(getContext(), newsList, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(newsSmallAdapter);
 
-        iNewsRepository.fetchNews(country,0,0,category,"");
+        // Fetch eseguita con una specifica query inserita nella ricerca
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                waitingImage.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
-                iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,query);
+                newsObtained = newsViewModel.getNews(country,allTopic,query);
+                rebuildNewsList(newsObtained);
                 return true;
             }
 
@@ -113,49 +119,65 @@ public class SearchFragment extends Fragment implements SelectListener, Response
             }
         });
 
+        // Serie di fetch eseguite su di uno specifico topic a seconda del bottone
+
         businessTopic.setOnClickListener(v -> {
             category = "business";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         healthTopic.setOnClickListener(v -> {
             category = "health";
+            Toast.makeText(getContext(), "click health", Toast.LENGTH_SHORT).show();
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         sportTopic.setOnClickListener(v -> {
             category = "sport";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         entertainmentTopic.setOnClickListener(v -> {
             category = "entertainment";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         technologyTopic.setOnClickListener(v -> {
             category = "technology";
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
         });
 
         generalTopic.setOnClickListener(v -> {
             category = "general";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         scienceTopic.setOnClickListener(v -> {
             category = "science";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
-            iNewsRepository.fetchNews(country,0,timePassedFromFetch,category,"");
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
     }
+
+    // Metodi del comportamento dell'adapter
 
     @Override
     public void OnNewsClicked(News news) {
@@ -165,29 +187,16 @@ public class SearchFragment extends Fragment implements SelectListener, Response
     }
 
     @Override
-    public void onSuccess(List<News> newsList, long lastUpdate) {
-        if(newsList != null){
-            this.newsList.clear();
-            this.newsList.addAll(newsList);
-        }
-        requireActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                newsSmallAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
+    public void onFavButtonPressed(News news) {
+        newsViewModel.updateNewsNotSaved(news);
     }
 
     @Override
-    public void onFailure(String errorMessage) {
+    public void onDeleteButtonPressed(News news) {
 
     }
 
-    @Override
-    public void onNewsFavoriteStatusChange(News news) {
-
-    }
+    // Metodi di supporto al fragment
 
     private long calculateTimeFromFetch() {
         long time;
@@ -203,5 +212,21 @@ public class SearchFragment extends Fragment implements SelectListener, Response
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);
         savedCountry = sharedPreferences.getString(UserAccessActivity.COUNTRY,"");
         return savedCountry;
+    }
+
+
+    private void rebuildNewsList(MutableLiveData<Result> newsObtained) {
+        newsObtained.observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
+                int initialSize = this.newsList.size();
+                this.newsList.clear();
+                this.newsList.addAll(((Result.Success) result).getData().getNewsList());
+                newsSmallAdapter.notifyItemRangeInserted(initialSize,this.newsList.size());
+                progressBar.setVisibility(View.INVISIBLE);
+            } else {
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
