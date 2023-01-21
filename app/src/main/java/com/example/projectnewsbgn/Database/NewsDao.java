@@ -22,6 +22,9 @@ public interface NewsDao {
     @Query("SELECT * FROM news_table WHERE favourite = 1 ORDER BY publishedAt DESC")
     List<News> getFavouriteNews();
 
+    @Query("SELECT * FROM news_table WHERE favourite = 0 ORDER BY publishedAt DESC")
+    List<News> getAllNoFavoriteNews();
+
     @Insert
     void insertNews(News news);
 
@@ -35,6 +38,9 @@ public interface NewsDao {
 
     @Update
     void updateFavouriteNews(News news);
+
+    @Delete
+    void databaseCleaner(List<News> newsListNoFav);
 
     @Delete
     void deleteAllFavouriteNews(News news);

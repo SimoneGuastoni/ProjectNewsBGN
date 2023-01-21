@@ -20,7 +20,8 @@ public interface CallNewsApi {
     @GET("top-headlines")
     Call<NewsApiResponse> callHeadlines(
             @Query("country")String country,
-            @Query("category")List<String> category,
+            @Query("category")String category,
+            @Query("pageSize")int pageSize,
             @Query("apiKey")String apiKey
     );
 

@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment implements HomeListener {
 
         /* Test multiTopic */
         topicList.add("general");
+        topicList.add("entertainment");
         topicList.add("health");
 
     }
