@@ -150,13 +150,6 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
         Result result = allNewsMutableLiveData.getValue();
-        if (result != null && result.isSuccess()) {
-            List<News> oldAllNews = ((Result.Success)result).getData().getNewsList();
-            if (oldAllNews.contains(news)) {
-                oldAllNews.set(oldAllNews.indexOf(news), news);
-                allNewsMutableLiveData.postValue(result);
-            }
-        }
         favoriteNewsMutableLiveData.postValue(new Result.Success(new NewsResponse(favoriteNews)));
     }
 

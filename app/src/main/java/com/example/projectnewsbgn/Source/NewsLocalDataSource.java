@@ -71,8 +71,9 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                     newsList.get(i).setId(insertedNewsId.get(i));
                 }
 
-            newsCallBack.onSuccessFromLocal(newsList,System.currentTimeMillis());
-        }});
+                newsCallBack.onSuccessFromLocal(newsList, System.currentTimeMillis());
+            }
+        });
     }
 
     @Override

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,16 +111,19 @@ public class HomeFragment extends Fragment implements HomeListener {
         /* controllo */
         newsObtained = newsViewModel.getNews(country,topicList,timePassedFromFetch);
 
-        newsObtained.observe(getViewLifecycleOwner(), result -> {
-            if(result.isSuccess()){
-                int initialSize = this.newsList.size();
-                this.newsList.clear();
-                this.newsList.addAll(((Result.Success) result).getData().getNewsList());
-                newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize,this.newsList.size());
-                progressBar.setVisibility(View.GONE);
-            } else {
-                Toast.makeText(getContext(), "Error 666", Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.GONE);
+        newsObtained.observe(getViewLifecycleOwner(), new Observer<Result>() {
+            @Override
+            public void onChanged(Result result) {
+                if (result.isSuccess()) {
+                    int initialSize = HomeFragment.this.newsList.size();
+                    HomeFragment.this.newsList.clear();
+                    HomeFragment.this.newsList.addAll(((Result.Success) result).getData().getNewsList());
+                    newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(HomeFragment.this.getContext(), "Error 666", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
 

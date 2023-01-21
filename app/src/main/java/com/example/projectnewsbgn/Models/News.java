@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Models;
 
+import androidx.annotation.Nullable;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -38,6 +39,14 @@ public class News implements Serializable {
         this.publishedAt = publishedAt;
         this.content = content;
         this.favourite = favourite;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        News news = (News) obj;
+        return this.url.equals(((News) obj).url);
     }
 
     public boolean getFavourite() {
