@@ -26,7 +26,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
     public void getNews(String country, int page, long lastUpdate, List<String> topicList) {
         List<Call<NewsApiResponse>> listCallNewsApiResponse = new ArrayList<>();
         for (int i = 0; i < topicList.size(); i++) {
-            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), 100, apiKey));
+            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), 7, apiKey));
         }
         for (int p = 0; p < listCallNewsApiResponse.size(); p++) {
             try {
@@ -77,7 +77,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
      //Fetch eseguita dal Search fragment su di un topic specifico
     @Override
     public void getNewsChoseTopic(String country, int page, String topic, String query) {
-        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topic, query,apiKey);
+        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topic, query,100,apiKey);
 
         try {
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
@@ -104,7 +104,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
     //Fetch eseguita dal Search Fragment su tutti i topic ma con un query specifica
     @Override
     public void getNewsChoseTopicQuery(String country, int page, List<String> topicList, String query) {
-        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topicList, query,apiKey);
+        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topicList, query,100,apiKey);
 
         try {
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {

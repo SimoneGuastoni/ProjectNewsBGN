@@ -14,6 +14,7 @@ public interface CallNewsApi {
             @Query("country")String country,
             @Query("category")String category,
             @Query("q")String query,
+            @Query("pageSize")int pageSize,
             @Query("apiKey")String apiKey
     );
 
@@ -31,6 +32,7 @@ public interface CallNewsApi {
             @Query("country")String country,
             @Query("category")List<String> category,
             @Query("q") String query,
+            @Query("pageSize")int pageSize,
             @Query("apiKey")String apiKey
     );
 }
