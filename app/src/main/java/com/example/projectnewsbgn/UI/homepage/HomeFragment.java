@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         newsList = new ArrayList<>();
 
         /* Test multiTopic */
-        topicList.add("general");
+        topicList.add("business");
         topicList.add("entertainment");
         topicList.add("health");
 
@@ -120,10 +120,10 @@ public class HomeFragment extends Fragment implements HomeListener {
                     HomeFragment.this.newsList.clear();
                     HomeFragment.this.newsList.addAll(((Result.Success) result).getData().getNewsList());
                     newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
-                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
                 } else {
                     Toast.makeText(HomeFragment.this.getContext(), "Error 666", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });

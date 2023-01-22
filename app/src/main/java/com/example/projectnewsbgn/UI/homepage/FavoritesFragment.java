@@ -66,6 +66,7 @@ public class FavoritesFragment extends Fragment implements SelectListener{
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
+        //TODO Creare nuovo adapter con checkbox
         newsSmallAdapter = new NewsSmallAdapter(getContext(),newsFavList,this);
 
         recyclerViewFav.setLayoutManager(layoutManager);
@@ -84,6 +85,7 @@ public class FavoritesFragment extends Fragment implements SelectListener{
             }
         });
 
+        //TODO Sistemare bottone delete All
         buttonDeleteAll.setOnClickListener(v -> {
           for (int i=0 ; i<newsFavList.size(); i++){
               newsFavList.remove(i);

@@ -28,8 +28,6 @@ public interface NewsDao {
     @Insert
     void insertNews(News news);
 
-    /* Update LIVEDATA? TODO */
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long>insertNewsList(List<News> newsList);
 

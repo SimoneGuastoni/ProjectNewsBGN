@@ -49,6 +49,7 @@ public class AccountFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO sistemare metodo che calcola la grandezza della lista dei preferiti
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
 
         newsObtained = newsViewModel.getAllFavNews();

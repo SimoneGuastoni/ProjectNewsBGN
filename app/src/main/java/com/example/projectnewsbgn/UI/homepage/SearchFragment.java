@@ -102,7 +102,7 @@ public class SearchFragment extends Fragment implements SelectListener{
         recyclerView.setAdapter(newsSmallAdapter);
 
         // Fetch eseguita con una specifica query inserita nella ricerca
-
+        //TODO Sistemare fetch con barra di ricerca
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -131,7 +131,6 @@ public class SearchFragment extends Fragment implements SelectListener{
 
         healthTopic.setOnClickListener(v -> {
             category = "health";
-            Toast.makeText(getContext(), "click health", Toast.LENGTH_SHORT).show();
             waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
@@ -221,7 +220,8 @@ public class SearchFragment extends Fragment implements SelectListener{
                 int initialSize = this.newsList.size();
                 this.newsList.clear();
                 this.newsList.addAll(((Result.Success) result).getData().getNewsList());
-                newsSmallAdapter.notifyItemRangeInserted(initialSize,this.newsList.size());
+                newsSmallAdapter.notifyItemRangeChanged(initialSize,this.newsList.size());
+                newsSmallAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
             } else {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();

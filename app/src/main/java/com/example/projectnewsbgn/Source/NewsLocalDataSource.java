@@ -106,13 +106,46 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     // Metodi di supporto al precedente metodo updateNewsNotSaved per le news provenienti dal Search Fragment
     private void deleteFromDatabase(News news) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsDao.deleteNews(news);
+            List<News> allNewsFromDb = newsDao.getAll();
+            if(allNewsFromDb != null) {
+                for (News newsSaved : allNewsFromDb) {
+                    if (news.equals(newsSaved)) {
+                        if (newsSaved.getFavourite()){
+                            news.setId(newsSaved.getId());
+                            newsDao.updateNews(news);
+                        }
+                    }
+                }
+            }
+            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getFavouriteNews());
         });
     }
 
     private void insertDataOnDatabase(News news) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsDao.insertNews(news);
+            List<News> allNewsFromDb = newsDao.getAll();
+            int controlCounter = 0;
+            if(allNewsFromDb != null) {
+                for (News newsSaved : allNewsFromDb) {
+                    if (news.equals(newsSaved)) {
+                        if (!newsSaved.getFavourite()){
+                            news.setId(newsSaved.getId());
+                            newsDao.updateNews(news);
+                        }
+                    }
+                    else {
+                        controlCounter++;
+                    }
+                }
+                if (controlCounter == allNewsFromDb.size()){
+                    news.setId(allNewsFromDb.size() + 1);
+                    newsDao.insertNews(news);
+                }
+            }
+            else {
+                news.setId(1);
+                newsDao.insertNews(news);
+            }
         });
     }
 

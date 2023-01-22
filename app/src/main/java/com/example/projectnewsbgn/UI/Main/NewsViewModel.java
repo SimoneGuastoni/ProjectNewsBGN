@@ -30,7 +30,7 @@ public class NewsViewModel extends ViewModel {
 
         //Fetch eseguita dal HomeFragment
     public MutableLiveData<Result> getNews(String country, List<String> topicList, long lastupdate){
-        //TODO Inserire controllo
+        //TODO Inserire controllo tempo + clear del database
         if(newsListLiveData == null){
             fetchNews(country,topicList,lastupdate);
         }
