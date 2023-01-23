@@ -112,49 +112,4 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
         public void onClick(View v) {
         }
     }
-            /*btnFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!(newsList.get(getAdapterPosition()).getFavourite())) {
-                        Toast.makeText(context, "Add to favourites", Toast.LENGTH_SHORT).show();
-                        News selectedNews = newsList.get(getAdapterPosition());
-                        /*selectedNews.setFavourite(true);
-                        notifyDataSetChanged();*/
-               /*         btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
-                        inewsRepository.updateNews(selectedNews);
-                    }
-                    else{
-                        Toast.makeText(context, "Delete from favourite", Toast.LENGTH_SHORT).show();
-                        newsList.get(getAdapterPosition()).setFavourite(false);
-                        btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_border_24));
-                    }
-                }
-            });
-
-            btnShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-
-        private void setIconFav(Boolean fav) {
-            if(fav){
-                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_24));
-            }
-            else
-                btnFav.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.ic_baseline_favorite_border_24));
-        }
-
-
-        @Override
-        public void onClick(View v) {
-        }
-
-        public void bind(News news) {
-            setIconFav(newsList.get(getAdapterPosition()).getFavourite());
-        }
-    }*/
 }

@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
+import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
 import com.example.projectnewsbgn.Listener.SelectListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
@@ -35,7 +35,7 @@ public class FavoritesFragment extends Fragment implements SelectListener{
     RecyclerView recyclerViewFav;
     List<News> newsFavList;
     NewsViewModel newsViewModel;
-    NewsSmallAdapter newsSmallAdapter;
+    NewsFavAdapter newsFavAdapter;
     Button buttonDeleteAll;
     ImageView iconNoFavNews;
 
@@ -67,10 +67,9 @@ public class FavoritesFragment extends Fragment implements SelectListener{
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
         //TODO Creare nuovo adapter con checkbox
-        newsSmallAdapter = new NewsSmallAdapter(getContext(),newsFavList,this);
-
+        newsFavAdapter = new NewsFavAdapter(getContext(),newsFavList,this);
         recyclerViewFav.setLayoutManager(layoutManager);
-        recyclerViewFav.setAdapter(newsSmallAdapter);
+        recyclerViewFav.setAdapter(newsFavAdapter);
 
         newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
@@ -78,7 +77,7 @@ public class FavoritesFragment extends Fragment implements SelectListener{
                 int initialSize = this.newsFavList.size();
                 this.newsFavList.clear();
                 this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
-                newsSmallAdapter.notifyItemRangeInserted(initialSize,this.newsFavList.size());
+                newsFavAdapter.notifyItemRangeInserted(initialSize,this.newsFavList.size());
             } else {
                 Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
                 iconNoFavNews.setVisibility(View.VISIBLE);
@@ -88,9 +87,9 @@ public class FavoritesFragment extends Fragment implements SelectListener{
         //TODO Sistemare bottone delete All
         buttonDeleteAll.setOnClickListener(v -> {
           for (int i=0 ; i<newsFavList.size(); i++){
-              newsFavList.remove(i);
-              newsSmallAdapter.notifyItemRemoved(i);
-              onDeleteButtonPressed(newsFavList.get(i));
+              /*newsFavList.remove(i);
+              newsFavAdapter.notifyItemRemoved(i);
+              onDeleteButtonPressed(newsFavList.get(i));*/
           }
         });
     }

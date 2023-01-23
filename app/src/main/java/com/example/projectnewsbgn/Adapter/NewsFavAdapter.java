@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,20 +21,27 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.CustomViewHolderSmall> {
+public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderFav> {
     private Context context;
     private List<News> newsList;
     private SelectListener listener;
 
-    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsFavAdapter(Context context, List<News> newsList, SelectListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
     }
 
 
+    @NonNull
+    @Override
+    public CustomViewHolderFav onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.custom_list_news_fav, parent, false);
 
-    public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, int position) {
+        return new CustomViewHolderFav(view);}
+
+    public void onBindViewHolder(@NonNull CustomViewHolderFav holder, int position) {
         /*holder.bind(newsList.get(position));*/
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
@@ -52,13 +60,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
         }
     }
 
-    @NonNull
-    @Override
-    public CustomViewHolderSmall onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.custom_list_news_small, parent, false);
-
-        return new CustomViewHolderSmall(view);    }
 
     @Override
     public int getItemCount() {
@@ -68,7 +69,7 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
             return 0;
     }
 
-    public class CustomViewHolderSmall extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class CustomViewHolderFav extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView text_title;
         public TextView text_source;
@@ -76,26 +77,21 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
         public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
-        public ImageButton btnFav,btnShare,btnDelete;
+        public ImageButton btnShare,btnDelete;
+        public CheckBox cbDelete;
 
-        public CustomViewHolderSmall(@NonNull View itemView) {
+        public CustomViewHolderFav(@NonNull View itemView) {
             super(itemView);
 
-            text_title = itemView.findViewById(R.id.title);
-            text_source = itemView.findViewById(R.id.author);
-            text_date = itemView.findViewById(R.id.date);
+            text_title = itemView.findViewById(R.id.titleFav);
+            text_source = itemView.findViewById(R.id.authorFav);
+            text_date = itemView.findViewById(R.id.dateFav);
             /*text_description = itemView.findViewById(R.id.description);*/
-            img_headline = itemView.findViewById(R.id.newsPic);
-            btnFav = itemView.findViewById(R.id.btnFavourite);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
-            btnShare = itemView.findViewById(R.id.btnShare);
-            linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
-
-            btnFav.setOnClickListener(v -> {
-                News newsClicked = newsList.get(getAdapterPosition());
-                changeFavIcon(newsList.get(getAdapterPosition()).getFavourite());
-                listener.onFavButtonPressed(newsClicked);
-            });
+            img_headline = itemView.findViewById(R.id.newsPicFav);
+            btnShare = itemView.findViewById(R.id.btnShareFav);
+            cbDelete = itemView.findViewById(R.id.cbDelete);
+            btnDelete = itemView.findViewById(R.id.btnDeleteFav);
+            linearLayout = itemView.findViewById(R.id.containerListNewsFav);
 
             btnDelete.setOnClickListener(v -> {
                 News newsClicked = newsList.get(getAdapterPosition());
@@ -103,17 +99,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
                 notifyItemRemoved(getAdapterPosition());
                 listener.onDeleteButtonPressed(newsClicked);
             });
-        }
-
-        private void changeFavIcon(boolean favourite) {
-            if(favourite){
-                btnFav.setImageDrawable(AppCompatResources.getDrawable
-                        (context,R.drawable.ic_baseline_favorite_border_24));
-            }
-            else{
-                btnFav.setImageDrawable(AppCompatResources.getDrawable
-                        (context,R.drawable.ic_baseline_favorite_24));
-            }
         }
 
         @Override
