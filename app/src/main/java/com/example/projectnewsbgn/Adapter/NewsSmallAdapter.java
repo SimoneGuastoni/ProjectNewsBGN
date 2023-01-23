@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectnewsbgn.Listener.SelectListener;
+import com.example.projectnewsbgn.Listener.FavListener;
+import com.example.projectnewsbgn.Listener.SearchListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.squareup.picasso.Picasso;
@@ -23,9 +24,9 @@ import java.util.List;
 public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.CustomViewHolderSmall> {
     private Context context;
     private List<News> newsList;
-    private SelectListener listener;
+    private SearchListener listener;
 
-    public NewsSmallAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsSmallAdapter(Context context, List<News> newsList, SearchListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
@@ -76,7 +77,7 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
         public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
-        public ImageButton btnFav,btnShare,btnDelete;
+        public ImageButton btnFav,btnShare;
 
         public CustomViewHolderSmall(@NonNull View itemView) {
             super(itemView);
@@ -87,7 +88,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
             /*text_description = itemView.findViewById(R.id.description);*/
             img_headline = itemView.findViewById(R.id.newsPic);
             btnFav = itemView.findViewById(R.id.btnFavourite);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
             btnShare = itemView.findViewById(R.id.btnShare);
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
 
@@ -97,12 +97,6 @@ public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.Cust
                 listener.onFavButtonPressed(newsClicked);
             });
 
-            btnDelete.setOnClickListener(v -> {
-                News newsClicked = newsList.get(getAdapterPosition());
-                newsList.remove(getAdapterPosition());
-                notifyItemRemoved(getAdapterPosition());
-                listener.onDeleteButtonPressed(newsClicked);
-            });
         }
 
         private void changeFavIcon(boolean favourite) {

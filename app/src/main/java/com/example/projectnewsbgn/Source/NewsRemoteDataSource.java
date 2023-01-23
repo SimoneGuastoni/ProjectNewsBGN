@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Source;
 
+import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.ApiService.CallNewsApi;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
@@ -15,6 +16,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
 
     private final CallNewsApi callNewsApi;
     private final String apiKey;
+    private int counter;
 
     public NewsRemoteDataSource(String apiKey) {
         this.apiKey = apiKey;
@@ -24,7 +26,10 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
     //Fetch eseguita dal Home Fragment
     @Override
     public void getNews(String country, int page, long lastUpdate, List<String> topicList) {
+        counter = topicList.size();
+        List<News> controlList = new ArrayList<>();
         List<Call<NewsApiResponse>> listCallNewsApiResponse = new ArrayList<>();
+
         for (int i = 0; i < topicList.size(); i++) {
             listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), 7, apiKey));
         }
@@ -35,7 +40,11 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                         if (response.body() != null && response.isSuccessful() &&
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
-                            newsCallBack.onSuccessFromRemote(response.body(), System.currentTimeMillis());
+                            counter--;
+                            controlList.addAll(response.body().getArticles());
+                            if(counter == 0){
+                                newsCallBack.onSuccessFromRemote(controlList, System.currentTimeMillis());
+                            }
                         } else {
                             newsCallBack.onFailureFromRemote(new Exception("Error Missing Body"));
                         }
@@ -50,27 +59,6 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                 e.printStackTrace();
             }
         }
-           /*try {
-                newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
-                    @Override
-                    public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
-                        if (response.body() != null && response.isSuccessful() &&
-                                !response.body().getStatus().equals("errorStatusResponseBody")) {
-                            newsCallBack.onSuccessFromRemote(response.body(), System.currentTimeMillis());
-                        } else {
-                            newsCallBack.onFailureFromRemote(new Exception("Error Missing Body"));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<NewsApiResponse> call, Throwable t) {
-                        newsCallBack.onFailureFromRemote(new Exception("Error from retrofit"));
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-     }*/
     }
 
 
@@ -102,10 +90,12 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
     }
 
     //Fetch eseguita dal Search Fragment su tutti i topic ma con un query specifica
-    //TODO Sistemare fetch serch news
     @Override
     public void getNewsChoseTopicQuery(String country, int page, List<String> topicList, String query) {
+        counter = topicList.size();
+        List<News> controlList= new ArrayList<>();
         List<Call<NewsApiResponse>> listCallNewsApiResponse = new ArrayList<>();
+
         for (int i = 0; i < topicList.size(); i++) {
             listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), query, 100, apiKey));
         }
@@ -116,7 +106,12 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
                         if (response.body() != null && response.isSuccessful() &&
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
-                            newsCallBack.onSuccessFromRemote(response.body());
+                            counter--;
+                            controlList.addAll(response.body().getArticles());
+                            /*newsCallBack.onSuccessFromRemote(response.body());*/
+                            if (counter == 0){
+                                newsCallBack.onSuccessFromRemote(controlList);
+                            }
                         } else {
                             newsCallBack.onFailureFromRemote(new Exception("Error Missing Body"));
                         }

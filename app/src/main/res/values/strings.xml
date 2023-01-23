@@ -11,7 +11,6 @@
     <string name="confirm_password">Confirm password</string>
     <string name="avatarSelectText">Please select an avatar.</string>
     <string name="register">Register</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="selectCountryString">Please select a country</string>
     <string name="please_select_topic_of_interest">Please select topic of interest</string>

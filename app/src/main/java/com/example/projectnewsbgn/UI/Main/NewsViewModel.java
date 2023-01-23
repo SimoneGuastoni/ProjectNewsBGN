@@ -48,6 +48,7 @@ public class NewsViewModel extends ViewModel {
         //Fetch eseguita dal Search fragment, più topic con una sola query
     public MutableLiveData<Result> getNews(String country,List<String> topicList,String query){
         fetchNewsWithTopicAndQuery(country,topicList,query);
+        Result controlList = topicChoseNewsList.getValue();
         return topicChoseNewsList;
     }
 

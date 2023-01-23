@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
-import com.example.projectnewsbgn.Listener.SelectListener;
+import com.example.projectnewsbgn.Listener.FavListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
@@ -28,12 +28,12 @@ import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritesFragment extends Fragment implements SelectListener{
+public class FavoritesFragment extends Fragment implements FavListener {
 
     private MutableLiveData<Result> newsObtained;
 
     RecyclerView recyclerViewFav;
-    List<News> newsFavList;
+    List<News> newsFavList,controlList;
     NewsViewModel newsViewModel;
     NewsFavAdapter newsFavAdapter;
     Button buttonDeleteAll;
@@ -46,6 +46,8 @@ public class FavoritesFragment extends Fragment implements SelectListener{
         newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
 
         newsFavList = new ArrayList<>();
+
+        controlList = new ArrayList<>();
     }
 
     @Override
@@ -66,7 +68,6 @@ public class FavoritesFragment extends Fragment implements SelectListener{
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
-        //TODO Creare nuovo adapter con checkbox
         newsFavAdapter = new NewsFavAdapter(getContext(),newsFavList,this);
         recyclerViewFav.setLayoutManager(layoutManager);
         recyclerViewFav.setAdapter(newsFavAdapter);
@@ -84,12 +85,16 @@ public class FavoritesFragment extends Fragment implements SelectListener{
             }
         });
 
-        //TODO Sistemare bottone delete All
         buttonDeleteAll.setOnClickListener(v -> {
-          for (int i=0 ; i<newsFavList.size(); i++){
-              /*newsFavList.remove(i);
-              newsFavAdapter.notifyItemRemoved(i);
-              onDeleteButtonPressed(newsFavList.get(i));*/
+            int size = controlList.size();
+            News controlNews;
+          for (int i=size-1 ; i>-1; i--){
+              controlNews = controlList.get(i);
+              controlList.remove(i);
+              /*newsFavList.remove(i);*/
+              newsFavAdapter.notifyItemRemoved(newsFavList.indexOf(controlNews));
+              onDeleteButtonPressed(controlNews);
+              newsFavList.remove(controlNews);
           }
         });
     }
@@ -111,5 +116,15 @@ public class FavoritesFragment extends Fragment implements SelectListener{
     @Override
     public void onDeleteButtonPressed(News news) {
         newsViewModel.updateNews(news);
+    }
+
+    @Override
+    public void deleteNewsChecked(News news,Boolean checked) {
+        if (checked){
+            controlList.add(news);
+        }
+        else {
+            controlList.remove(news);
+        }
     }
 }

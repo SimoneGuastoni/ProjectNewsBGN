@@ -23,7 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsSmallAdapter;
-import com.example.projectnewsbgn.Listener.SelectListener;
+import com.example.projectnewsbgn.Listener.FavListener;
+import com.example.projectnewsbgn.Listener.SearchListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
@@ -33,7 +34,7 @@ import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements SelectListener{
+public class SearchFragment extends Fragment implements SearchListener {
 
     NewsViewModel newsViewModel;
     MutableLiveData<Result> newsObtained;
@@ -102,7 +103,6 @@ public class SearchFragment extends Fragment implements SelectListener{
         recyclerView.setAdapter(newsSmallAdapter);
 
         // Fetch eseguita con una specifica query inserita nella ricerca
-        //TODO Sistemare fetch con barra di ricerca
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -190,10 +190,6 @@ public class SearchFragment extends Fragment implements SelectListener{
         newsViewModel.updateNewsNotSaved(news);
     }
 
-    @Override
-    public void onDeleteButtonPressed(News news) {
-
-    }
 
     // Metodi di supporto al fragment
 
@@ -224,7 +220,7 @@ public class SearchFragment extends Fragment implements SelectListener{
                 newsSmallAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
             } else {
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), result.toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });

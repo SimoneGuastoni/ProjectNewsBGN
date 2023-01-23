@@ -11,10 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectnewsbgn.Listener.SelectListener;
+import com.example.projectnewsbgn.Listener.FavListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.squareup.picasso.Picasso;
@@ -24,9 +23,9 @@ import java.util.List;
 public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderFav> {
     private Context context;
     private List<News> newsList;
-    private SelectListener listener;
+    private FavListener listener;
 
-    public NewsFavAdapter(Context context, List<News> newsList, SelectListener listener) {
+    public NewsFavAdapter(Context context, List<News> newsList, FavListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;
@@ -92,6 +91,16 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
             cbDelete = itemView.findViewById(R.id.cbDelete);
             btnDelete = itemView.findViewById(R.id.btnDeleteFav);
             linearLayout = itemView.findViewById(R.id.containerListNewsFav);
+
+            cbDelete.setOnClickListener(v -> {
+                News newsChecked = newsList.get(getAdapterPosition());
+                if (cbDelete.isChecked()){
+                    listener.deleteNewsChecked(newsChecked,true);
+                }
+                else {
+                    listener.deleteNewsChecked(newsChecked,false);
+                }
+            });
 
             btnDelete.setOnClickListener(v -> {
                 News newsClicked = newsList.get(getAdapterPosition());

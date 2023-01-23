@@ -49,7 +49,6 @@ public class AccountFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO sistemare metodo che calcola la grandezza della lista dei preferiti
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
 
         newsObtained = newsViewModel.getAllFavNews();
@@ -58,8 +57,9 @@ public class AccountFragment extends Fragment{
                 int initialSize = this.newsFavList.size();
                 this.newsFavList.clear();
                 this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
+                favouriteArticlesTot.setText(String.valueOf(newsFavList.size()));
             } else {
-                Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
+                favouriteArticlesTot.setText(String.valueOf(0));
             }
         });
     }

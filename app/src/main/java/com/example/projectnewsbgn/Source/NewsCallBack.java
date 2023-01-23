@@ -6,8 +6,9 @@ import com.example.projectnewsbgn.Models.NewsApiResponse;
 import java.util.List;
 
 public interface NewsCallBack {
-    void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate);
+    void onSuccessFromRemote(List<News> newsList, long lastUpdate);
     void onSuccessFromRemote(NewsApiResponse newsApiResponse);
+    void onSuccessFromRemote(List<News> newsList);
     void onFailureFromRemote(Exception exception);
     void onFailureFromLocal(Exception exception);
     void onSuccessFromLocal(List<News> newsList);

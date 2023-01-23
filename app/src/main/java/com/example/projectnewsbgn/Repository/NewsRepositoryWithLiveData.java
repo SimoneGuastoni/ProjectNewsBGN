@@ -101,15 +101,20 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
 
     // Metodi onSuccess
     @Override
-    public void onSuccessFromRemote(NewsApiResponse newsApiResponse, long lastUpdate) {
-        List<News> controlList = newsApiResponse.getArticles();
-        newsLocalDataSource.saveDataInDatabase(controlList);
+    public void onSuccessFromRemote(List<News> newsList, long lastUpdate) {
+        newsLocalDataSource.saveDataInDatabase(newsList);
     }
 
     @Override
     public void onSuccessFromRemote(NewsApiResponse newsApiResponse) {
         List<News> controlList = newsApiResponse.getArticles();
         Result.Success result = new Result.Success(new NewsResponse(controlList));
+        topicChoseNewsList.postValue(result);
+    }
+
+    @Override
+    public void onSuccessFromRemote(List<News> newsList) {
+        Result.Success result = new Result.Success(new NewsResponse(newsList));
         topicChoseNewsList.postValue(result);
     }
 
