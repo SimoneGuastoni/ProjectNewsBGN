@@ -18,9 +18,12 @@ public interface    INewsRepositoryWithLiveData {
 
     MutableLiveData<Result> deleteAllFavoriteNews();
 
+    MutableLiveData<Result> localFetch(Long lastUpdate);
+
+    void clearDatabase();
+
     void updateNews(News news);
 
     void updateNewsNotSaved(News news);
-
 
 }

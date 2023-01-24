@@ -1,5 +1,7 @@
 package com.example.projectnewsbgn.Database;
 
+import android.support.annotation.WorkerThread;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -45,4 +47,6 @@ public interface NewsDao {
 
     @Delete
     void deleteNews(News news);
+
+
 }

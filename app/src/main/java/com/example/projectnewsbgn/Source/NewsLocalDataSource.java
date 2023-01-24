@@ -59,6 +59,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     @Override
     public void saveDataInDatabase(List<News> newsList) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            //TODO Errore negli id
             List<News> allNewsFromDb = newsDao.getAll();
             if(allNewsFromDb != null) {
                 for (News news : allNewsFromDb) {
@@ -97,9 +98,25 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     }
 
     @Override
-    public void getNewsFromDatabase(long lastUpdate) {
+    public void getNewsFromDatabase(Long lastUpdate) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate);
+        });
+    }
+
+    @Override
+    public void clearDatabase() {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            List<News> listNoFavNews = newsDao.getAllNoFavoriteNews();
+            List<News> listFavNews = newsDao.getFavouriteNews();
+            int id=1;
+            newsDao.databaseCleaner(listNoFavNews);
+            for(News news:listFavNews){
+                news.setId(id);
+                id++;
+                newsDao.updateNews(news);
+            }
+            List<News> controlList =newsDao.getAll();
         });
     }
 

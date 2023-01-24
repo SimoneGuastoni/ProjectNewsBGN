@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +31,7 @@ import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 import com.example.projectnewsbgn.UI.Main.NewsViewModelFactory;
+import com.example.projectnewsbgn.UI.login.ForgotPasswordFragment;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 
@@ -42,6 +44,7 @@ public class HomeFragment extends Fragment implements HomeListener {
     /* controllo */
     private MutableLiveData<Result> newsObtained;
 
+    private FullNewsFragment fullNewsFragment = new FullNewsFragment();
     RecyclerView recyclerView;
 
     INewsRepositoryWithLiveData newsRepositoryWithLiveData;
@@ -65,12 +68,13 @@ public class HomeFragment extends Fragment implements HomeListener {
                 requireActivity().getApplication());
 
         newsViewModel = new ViewModelProvider(
-                requireActivity(),new NewsViewModelFactory(newsRepositoryWithLiveData))
+                requireActivity(),new NewsViewModelFactory(newsRepositoryWithLiveData,requireActivity().getApplication()))
                 .get(NewsViewModel.class);
 
         newsList = new ArrayList<>();
 
         /* Test multiTopic */
+        topicList.clear();
         topicList.add("business");
         topicList.add("entertainment");
         topicList.add("health");
@@ -132,11 +136,19 @@ public class HomeFragment extends Fragment implements HomeListener {
 
     // Metodi del comportamento dell'adapter
 
+    //TODO fullnewsFragment
     @Override
     public void OnNewsClicked(News news) {
-        Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
-        startActivity(goToNews);
-        getActivity().finish();
+        //getView().findViewById(R.id.action_homeFragment_to_fullNewsFragment);
+        FragmentTransaction toFullNews = getActivity().getSupportFragmentManager().beginTransaction();
+        toFullNews.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("full_news",news);
+        fullNewsFragment.setArguments(bundle);
+        toFullNews.replace(android.R.id.content,fullNewsFragment);
+        toFullNews.addToBackStack(null);
+        toFullNews.commit();
     }
 
     @Override

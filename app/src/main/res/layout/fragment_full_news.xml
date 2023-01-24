@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayoutFullNews"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UI.homepage.FullNewsFragment"
+    android:background="@color/Tan">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/Cream"
+        app:cardElevation="20sp"
+        android:layout_margin="5dp"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconFullNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/not_found"/>
+
+                <TextView
+                    android:id="@+id/titleFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textStyle="bold"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="40sp"/>
+                <TextView
+                    android:id="@+id/linkNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Link"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="italic"
+                    android:textSize="15sp"
+                    />
+                <TextView
+                    android:id="@+id/dateFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="__/__/____"
+                    android:textColor="@color/Charcoal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="italic"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/contentFullNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Content"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/Charcoal"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="20sp"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/Charcoal">
+
+                        <ImageButton
+                            android:id="@+id/btnShare"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/Cream"
+                            android:contentDescription="Share"
+                            android:src="@drawable/ic_baseline_share_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btnFavourite"
+                            app:layout_constraintHorizontal_bias="0.962"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <ImageButton
+                            android:id="@+id/btnFavourite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="44dp"
+                            android:backgroundTint="@color/Cream"
+                            android:contentDescription="@string/favourites"
+                            android:src="@drawable/ic_baseline_favorite_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

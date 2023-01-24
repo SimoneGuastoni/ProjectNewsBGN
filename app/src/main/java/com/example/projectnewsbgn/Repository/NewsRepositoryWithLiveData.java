@@ -46,7 +46,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public MutableLiveData<Result> fetchNews(String country, List<String> topicList, int page, long lastUpdate) {
 
-        long currentTime = System.currentTimeMillis();
+        /*long currentTime = System.currentTimeMillis();
 
         if(lastUpdate == 0 || currentTime - lastUpdate > 20000) {
             SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
@@ -59,7 +59,9 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         }
         else {
             newsLocalDataSource.getNewsFromDatabase(lastUpdate);
-        }
+        }*/
+        //Modifica?
+        newsRemoteDataSource.getNews(country,1,lastUpdate,topicList);
         return allNewsMutableLiveData;
     }
 
@@ -96,6 +98,17 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     public MutableLiveData<Result> deleteAllFavoriteNews() {
         newsLocalDataSource.deleteAllFavoriteNews();
         return favoriteNewsMutableLiveData;
+    }
+
+    @Override
+    public MutableLiveData<Result> localFetch(Long lastUpdate) {
+        newsLocalDataSource.getNewsFromDatabase(lastUpdate);
+        return allNewsMutableLiveData;
+    }
+
+    @Override
+    public void clearDatabase() {
+        newsLocalDataSource.clearDatabase();
     }
 
 

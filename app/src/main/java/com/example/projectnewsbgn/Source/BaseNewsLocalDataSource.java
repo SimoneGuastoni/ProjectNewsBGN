@@ -18,5 +18,6 @@ public abstract class BaseNewsLocalDataSource {
     public abstract void saveDataInDatabase(List<News> newsList);
     public abstract void updateDataOnDatabase(News news, boolean favourite);
     public abstract void updateNewsNotSaved(News news);
-    public abstract void getNewsFromDatabase(long lastUpdate);
+    public abstract void getNewsFromDatabase(Long lastUpdate);
+    public abstract void clearDatabase();
 }

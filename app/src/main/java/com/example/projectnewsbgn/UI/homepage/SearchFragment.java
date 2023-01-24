@@ -155,7 +155,10 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         technologyTopic.setOnClickListener(v -> {
             category = "technology";
+            waitingImage.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
+            newsObtained = newsViewModel.getNews(country,category,query);
+            rebuildNewsList(newsObtained);
         });
 
         generalTopic.setOnClickListener(v -> {
@@ -185,6 +188,7 @@ public class SearchFragment extends Fragment implements SearchListener {
         getActivity().finish();
     }
 
+    //TODO refresh arrayadapter fav fragment?
     @Override
     public void onFavButtonPressed(News news) {
         newsViewModel.updateNewsNotSaved(news);

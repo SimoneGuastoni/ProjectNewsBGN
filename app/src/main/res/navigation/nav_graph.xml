@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fullNewsFragment"
+            app:destination="@id/fullNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/action_favouritesFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_fullNewsFragment"
+            app:destination="@id/fullNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -60,6 +66,24 @@
             app:destination="@id/accountFragment" />
         <action
             android:id="@+id/action_searchFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_fullNewsFragment"
+            app:destination="@id/fullNewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullNewsFragment"
+        android:name="com.example.projectnewsbgn.UI.homepage.FullNewsFragment"
+        android:label="fragment_full_news"
+        tools:layout="@layout/fragment_full_news" >
+        <action
+            android:id="@+id/action_fullNewsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_fullNewsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_fullNewsFragment_to_favouritesFragment"
             app:destination="@id/favouritesFragment" />
     </fragment>
 </navigation>
