@@ -27,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     public static final long TIME = 0;
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

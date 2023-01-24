@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         recyclerView.setAdapter(newsRecyclerViewAdapter);
 
 
+
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.INVISIBLE);
 

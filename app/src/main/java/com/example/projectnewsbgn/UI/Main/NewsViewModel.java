@@ -44,7 +44,7 @@ public class NewsViewModel extends ViewModel {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong(String.valueOf(MainActivity.TIME), currentTime);
             editor.apply();
-            /*newsRepositoryWithLiveData.clearDatabase();*/
+            newsRepositoryWithLiveData.clearDatabase();
             fetchNews(country,topicList,lastUpdate);
         }
         else {

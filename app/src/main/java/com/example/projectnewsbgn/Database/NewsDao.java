@@ -27,6 +27,9 @@ public interface NewsDao {
     @Query("SELECT * FROM news_table WHERE favourite = 0 ORDER BY publishedAt DESC")
     List<News> getAllNoFavoriteNews();
 
+    @Query("SELECT 1 FROM news_table WHERE url == null")
+    int getFreeIdRow();
+
     @Insert
     void insertNews(News news);
 

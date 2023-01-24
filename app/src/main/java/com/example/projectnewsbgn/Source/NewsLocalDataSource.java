@@ -59,7 +59,6 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     @Override
     public void saveDataInDatabase(List<News> newsList) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            //TODO Errore negli id
             List<News> allNewsFromDb = newsDao.getAll();
             if(allNewsFromDb != null) {
                 for (News news : allNewsFromDb) {
@@ -67,6 +66,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                         newsList.set(newsList.indexOf(news), news);
                     }
                 }
+                //TODO Errore negli id????
                 List<Long> insertedNewsId = newsDao.insertNewsList(newsList);
                 for (int i = 0; i < newsList.size(); i++) {
                     newsList.get(i).setId(insertedNewsId.get(i));
@@ -155,7 +155,9 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                     }
                 }
                 if (controlCounter == allNewsFromDb.size()){
-                    news.setId(allNewsFromDb.size() + 1);
+                    //news.setId(allNewsFromDb.size() + 1);
+                    int idFree = newsDao.getFreeIdRow();
+                    news.setId(idFree);
                     newsDao.insertNews(news);
                 }
             }
