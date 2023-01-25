@@ -21,10 +21,8 @@ public abstract class NewsDatabase extends RoomDatabase {
     public static final ExecutorService dataBaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    /* Metodo per accedere al DAO
-    public abstract NewsDao newsDao();*/
-
-    /* Metodo per creare il dataBase,synchronized indica che solo un thread per volta piò accedere a questo metodo*/
+    /* Metodo per creare il dataBase,synchronized indica che solo un thread per
+    volta piò accedere a questo metodo*/
     public static synchronized NewsDatabase getInstanceDatabase(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),

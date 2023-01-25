@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectnewsbgn.Listener.FavListener;
 import com.example.projectnewsbgn.Listener.SearchListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
@@ -21,12 +20,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NewsSmallAdapter extends RecyclerView.Adapter<NewsSmallAdapter.CustomViewHolderSmall> {
+public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.CustomViewHolderSmall> {
     private Context context;
     private List<News> newsList;
     private SearchListener listener;
 
-    public NewsSmallAdapter(Context context, List<News> newsList, SearchListener listener) {
+    public NewsSearchAdapter(Context context, List<News> newsList, SearchListener listener) {
         this.context = context;
         this.newsList = newsList;
         this.listener = listener;

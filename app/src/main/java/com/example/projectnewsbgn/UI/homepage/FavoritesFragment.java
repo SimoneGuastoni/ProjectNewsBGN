@@ -1,6 +1,5 @@
 package com.example.projectnewsbgn.UI.homepage;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
@@ -23,7 +24,6 @@ import com.example.projectnewsbgn.Listener.FavListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +31,14 @@ import java.util.List;
 public class FavoritesFragment extends Fragment implements FavListener {
 
     private MutableLiveData<Result> newsObtained;
-
-    RecyclerView recyclerViewFav;
-    List<News> newsFavList,controlList;
-    NewsViewModel newsViewModel;
-    NewsFavAdapter newsFavAdapter;
-    Button buttonDeleteAll;
-    ImageView iconNoFavNews;
+    private FullNewsFragment fullNewsFragment;
+    private RecyclerView recyclerViewFav;
+    private List<News> newsFavList,controlList;
+    private NewsViewModel newsViewModel;
+    private NewsFavAdapter newsFavAdapter;
+    private Button buttonDeleteAll;
+    private ProgressBar progressBar;
+    private ImageView iconNoFavNews;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class FavoritesFragment extends Fragment implements FavListener {
         newsFavList = new ArrayList<>();
 
         controlList = new ArrayList<>();
+
+        fullNewsFragment = new FullNewsFragment();
     }
 
     @Override
@@ -64,14 +67,16 @@ public class FavoritesFragment extends Fragment implements FavListener {
         recyclerViewFav = view.findViewById(R.id.recyclerViewFav);
         iconNoFavNews = view.findViewById(R.id.noFavNews);
         buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
+        progressBar = view.findViewById(R.id.progressBar);
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
 
-        newsFavAdapter = new NewsFavAdapter(getContext(),newsFavList,this);
+        newsFavAdapter = new NewsFavAdapter(newsFavList,this);
         recyclerViewFav.setLayoutManager(layoutManager);
         recyclerViewFav.setAdapter(newsFavAdapter);
 
+        //TODO se scarico una notizia che ho già a cui ho già messo like il cuore è pieno
         newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
@@ -79,8 +84,13 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 this.newsFavList.clear();
                 this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
                 newsFavAdapter.notifyItemRangeInserted(initialSize,this.newsFavList.size());
+                newsFavAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.INVISIBLE);
+                iconNoFavNews.setVisibility(View.INVISIBLE);
+                buttonDeleteAll.setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
+                buttonDeleteAll.setVisibility(view.INVISIBLE);
                 iconNoFavNews.setVisibility(View.VISIBLE);
             }
         });
@@ -91,7 +101,6 @@ public class FavoritesFragment extends Fragment implements FavListener {
           for (int i=size-1 ; i>-1; i--){
               controlNews = controlList.get(i);
               controlList.remove(i);
-              /*newsFavList.remove(i);*/
               newsFavAdapter.notifyItemRemoved(newsFavList.indexOf(controlNews));
               onDeleteButtonPressed(controlNews);
               newsFavList.remove(controlNews);
@@ -103,14 +112,10 @@ public class FavoritesFragment extends Fragment implements FavListener {
 
     @Override
     public void OnNewsClicked(News news) {
-        Intent goToNews = new Intent(getActivity(), FullDisplayNewsActivity.class).putExtra("news",news);
-        startActivity(goToNews);
-        getActivity().finish();
-    }
-
-    @Override
-    public void onFavButtonPressed(News news) {
-        newsViewModel.updateNews(news);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("full_news",news);
+        fullNewsFragment.setArguments(bundle);
+        Navigation.findNavController(requireView()).navigate(R.id.action_favouritesFragment_to_fullNewsFragment,bundle);
     }
 
     @Override

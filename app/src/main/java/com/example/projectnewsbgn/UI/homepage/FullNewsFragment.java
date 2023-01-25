@@ -17,17 +17,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 import com.squareup.picasso.Picasso;
 
 
 public class FullNewsFragment extends Fragment {
 
-    News news;
-    TextView text_title,text_date,text_content,text_author,text_link;
-    ImageView iconNews;
-    ImageButton bntFav;
-    NewsViewModel newsViewModel;
+    private News news;
+    private TextView text_title,text_date,text_content,text_author,text_link;
+    private ImageView iconNews;
+    private ImageButton bntFav;
+    private NewsViewModel newsViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

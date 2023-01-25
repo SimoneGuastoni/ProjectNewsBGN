@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Repository;
+package com.example.projectnewsbgn.Repository.NewsRepository;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.Result;
@@ -12,7 +12,7 @@ public interface    INewsRepositoryWithLiveData {
 
     MutableLiveData<Result> fetchNewsChoseTopic(String country,int page,String topic,String query);
 
-    MutableLiveData<Result> fetchNewsChoseTopicAndQuery(String country, int i, List<String> topicList, String query);
+    MutableLiveData<Result> fetchNewsChoseTopicAndQuery(String country, int page, List<String> topicList, String query);
 
     MutableLiveData<Result> getFavoriteNewsList();
 

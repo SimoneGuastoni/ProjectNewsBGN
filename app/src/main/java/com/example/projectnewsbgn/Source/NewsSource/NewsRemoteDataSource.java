@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Source;
+package com.example.projectnewsbgn.Source.NewsSource;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
@@ -31,7 +31,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         List<Call<NewsApiResponse>> listCallNewsApiResponse = new ArrayList<>();
 
         for (int i = 0; i < topicList.size(); i++) {
-            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), 7, apiKey));
+            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), page, apiKey));
         }
         for (int p = 0; p < listCallNewsApiResponse.size(); p++) {
             try {
@@ -61,11 +61,10 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         }
     }
 
-
      //Fetch eseguita dal Search fragment su di un topic specifico
     @Override
     public void getNewsChoseTopic(String country, int page, String topic, String query) {
-        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topic, query,100,apiKey);
+        Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlines(country, topic, query,page,apiKey);
 
         try {
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
@@ -97,7 +96,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         List<Call<NewsApiResponse>> listCallNewsApiResponse = new ArrayList<>();
 
         for (int i = 0; i < topicList.size(); i++) {
-            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), query, 100, apiKey));
+            listCallNewsApiResponse.add(callNewsApi.callHeadlines(country, topicList.get(i), query, page, apiKey));
         }
         for (int p = 0; p < listCallNewsApiResponse.size(); p++) {
             try {
@@ -108,7 +107,6 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
                             counter--;
                             controlList.addAll(response.body().getArticles());
-                            /*newsCallBack.onSuccessFromRemote(response.body());*/
                             if (counter == 0){
                                 newsCallBack.onSuccessFromRemote(controlList);
                             }

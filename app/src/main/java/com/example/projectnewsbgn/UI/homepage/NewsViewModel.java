@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.UI.Main;
+package com.example.projectnewsbgn.UI.homepage;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,9 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.NewsRepository.INewsRepositoryWithLiveData;
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.UI.homepage.MainActivity;
 
 import java.util.List;
 
@@ -31,13 +30,12 @@ public class NewsViewModel extends ViewModel {
     public NewsViewModel(INewsRepositoryWithLiveData iNewsRepositoryWithLiveData,Application application){
         this.newsRepositoryWithLiveData = iNewsRepositoryWithLiveData;
         this.application = application;
-        this.page = 1;
+        this.page = 100;
     }
     //Metodi per eseguire il recupero delle news in locale o in remoto
 
         //Fetch eseguita dal HomeFragment
     public MutableLiveData<Result> getNews(String country, List<String> topicList, long lastUpdate){
-        //TODO Inserire controllo tempo + clear del database
         long currentTime = System.currentTimeMillis();
         if(lastUpdate == 0 || currentTime - lastUpdate > 30000) {
             SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
@@ -82,7 +80,7 @@ public class NewsViewModel extends ViewModel {
 
     //Metodi fetchNews rappresentano metodi di supporto ai metodi precedenti getNews
     private void fetchNewsWithTopicAndQuery(String country, List<String> topicList, String query) {
-        topicChoseNewsList = newsRepositoryWithLiveData.fetchNewsChoseTopicAndQuery(country,1,topicList,query);
+        topicChoseNewsList = newsRepositoryWithLiveData.fetchNewsChoseTopicAndQuery(country,page,topicList,query);
     }
 
     private void fetchNews(String country, List<String> topicList, long lastUpdate){
@@ -90,7 +88,7 @@ public class NewsViewModel extends ViewModel {
     }
 
     private void fetchNewsWithTopic(String country,String topic,String query){
-        topicChoseNewsList = newsRepositoryWithLiveData.fetchNewsChoseTopic(country,1,topic,query);
+        topicChoseNewsList = newsRepositoryWithLiveData.fetchNewsChoseTopic(country,page,topic,query);
     }
 
     // Metodi per andare a modificare lo status di favorite

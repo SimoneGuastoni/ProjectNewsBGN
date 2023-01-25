@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.UI.Main;
+package com.example.projectnewsbgn.UI.homepage;
 //questa classe permette di iniettare il repository nel viewmodel
 import android.app.Application;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.NewsRepository.INewsRepositoryWithLiveData;
 
 //necessario aggiungere iNewsRepositoty perchè funzioni
 

@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Source;
+package com.example.projectnewsbgn.Source.NewsSource;
 
 import com.example.projectnewsbgn.Models.News;
 
@@ -12,12 +12,17 @@ public abstract class BaseNewsLocalDataSource {
         this.newsCallBack = newsCallBack;
     }
 
+    //Metodi GET
     public abstract void getFavoriteNewsList();
+    public abstract void getNewsFromDatabase(Long lastUpdate);
+
+    //Metodi Update
     public abstract void updateNews(News news);
-    public abstract void deleteAllFavoriteNews();
-    public abstract void saveDataInDatabase(List<News> newsList);
     public abstract void updateDataOnDatabase(News news, boolean favourite);
     public abstract void updateNewsNotSaved(News news);
-    public abstract void getNewsFromDatabase(Long lastUpdate);
+
+    //Metodi Save/Delete
+    public abstract void saveDataInDatabase(List<News> newsList);
+    public abstract void deleteAllFavoriteNews();
     public abstract void clearDatabase();
 }

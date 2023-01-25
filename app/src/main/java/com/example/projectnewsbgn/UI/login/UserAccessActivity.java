@@ -11,8 +11,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.projectnewsbgn.R;
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
 
@@ -21,7 +26,11 @@ public class UserAccessActivity extends AppCompatActivity {
     public static final String SHARED_PREFS_COUNTRY = "SharedPrefsCountry";
     public static final String COUNTRY = "country";
 
-    public  ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+    private NavController navController;
+    private NavigationView navView;
+
+    public  ActivityResultLauncher<String> mGetContent = registerForActivityResult
+            (new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
@@ -29,7 +38,8 @@ public class UserAccessActivity extends AppCompatActivity {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         ((ImageView) findViewById(R.id.profileIcon)).setImageBitmap(bitmap);
-                        /* Creo un elemento bitmap in cui salvo l'immagine, con la seconda riga trovo un imageView e gli carico l'immagine selezionata */
+                        /* Creo un elemento bitmap in cui salvo l'immagine,
+                        con la seconda riga trovo un imageView e gli carico l'immagine selezionata */
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -41,8 +51,18 @@ public class UserAccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_access);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view, LoginFragment.class,  null).commit();
-
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.ua_fragment_container_view);
+        navController = navHostFragment.getNavController();
     }
 
+    @Override
+    public void onBackPressed() {
+        int currentDestination = navController.getCurrentDestination().getId();
+        if(currentDestination == R.id.loginFragment){
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,23 +36,21 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
     @NonNull
     @Override
     public CustomViewHolderHome onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolderHome(LayoutInflater.from(context).inflate(R.layout.custom_list_news_home,parent,false));
+        return new CustomViewHolderHome(LayoutInflater.from(context)
+                .inflate(R.layout.custom_list_news_home,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolderHome holder, int position) {
-       /* holder.bind(newsList.get(position));*/
+    public void onBindViewHolder(@NonNull CustomViewHolderHome holder,
+                                 @SuppressLint("RecyclerView") int position) {
+
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
         holder.text_description.setText(newsList.get(position).getDescription());
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.OnNewsClicked(newsList.get(position));
-            }
-        });
+        holder.container.setOnClickListener(v ->
+                listener.OnNewsClicked(newsList.get(position)));
 
         if(newsList.get(position).getUrlToImage() != null){
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);

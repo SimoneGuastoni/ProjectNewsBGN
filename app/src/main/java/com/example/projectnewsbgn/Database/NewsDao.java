@@ -1,7 +1,5 @@
 package com.example.projectnewsbgn.Database;
 
-import android.support.annotation.WorkerThread;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,14 +13,12 @@ import java.util.List;
 
 @Dao
 public interface NewsDao {
+
     @Query("SELECT * FROM news_table ORDER BY publishedAt DESC")
     List<News> getAll();
 
-    @Query("SELECT * FROM news_table WHERE id = :id")
-    News getNews(int id);
-
     @Query("SELECT * FROM news_table WHERE favourite = 1 ORDER BY publishedAt DESC")
-    List<News> getFavouriteNews();
+    List<News> getAllFavouriteNews();
 
     @Query("SELECT * FROM news_table WHERE favourite = 0 ORDER BY publishedAt DESC")
     List<News> getAllNoFavoriteNews();
@@ -39,17 +35,7 @@ public interface NewsDao {
     @Update
     void updateNews(News news);
 
-    @Update
-    void updateFavouriteNews(News news);
-
     @Delete
     void databaseCleaner(List<News> newsListNoFav);
-
-    @Delete
-    void deleteAllFavouriteNews(News news);
-
-    @Delete
-    void deleteNews(News news);
-
 
 }

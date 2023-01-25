@@ -1,4 +1,4 @@
-package com.example.projectnewsbgn.Source;
+package com.example.projectnewsbgn.Source.NewsSource;
 
 import com.example.projectnewsbgn.Database.NewsDao;
 import com.example.projectnewsbgn.Database.NewsDatabase;
@@ -16,10 +16,11 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     }
 
 
+    //Metodi Get
     @Override
     public void getFavoriteNewsList() {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            List<News> favList = newsDao.getFavouriteNews();
+            List<News> favList = newsDao.getAllFavouriteNews();
             if(favList.size() != 0){
                 newsCallBack.onSuccessFromLocal(favList);
             }
@@ -28,6 +29,14 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
         });
     }
 
+    @Override
+    public void getNewsFromDatabase(Long lastUpdate) {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate);
+        });
+    }
+
+    //Metodi Update
     @Override
     public void updateNews(News news) {
         if (news.getFavourite()){
@@ -41,19 +50,23 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     }
 
     @Override
-    public void deleteAllFavoriteNews() {
+    public void updateDataOnDatabase(News news,boolean favourite) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            List<News> favListNews = newsDao.getFavouriteNews();
-            for (int i=0 ; i < favListNews.size() ; i++){
-                favListNews.get(i).setFavourite(false);
-            }
-            favListNews = replaceNewsList(favListNews);
-            if (favListNews.size() == 0){
-                newsCallBack.onNewsFavoriteStatusChanged(favListNews);
-            }
-            else
-                newsCallBack.onFailureFromLocal(new Exception("Delete error"));
+            newsDao.updateNews(news);
+            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getAllFavouriteNews());
         });
+    }
+
+    @Override
+    public void updateNewsNotSaved(News news) {
+        if (news.getFavourite()){
+            news.setFavourite(false);
+            deleteFromDatabase(news);
+        }
+        else {
+            news.setFavourite(true);
+            insertDataOnDatabase(news);
+        }
     }
 
     @Override
@@ -77,30 +90,20 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
         });
     }
 
+    //Metodi Delete
     @Override
-    public void updateDataOnDatabase(News news,boolean favourite) {
+    public void deleteAllFavoriteNews() {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsDao.updateNews(news);
-            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getFavouriteNews());
-        });
-    }
-
-    @Override
-    public void updateNewsNotSaved(News news) {
-        if (news.getFavourite()){
-            news.setFavourite(false);
-            deleteFromDatabase(news);
-        }
-        else {
-            news.setFavourite(true);
-            insertDataOnDatabase(news);
-        }
-    }
-
-    @Override
-    public void getNewsFromDatabase(Long lastUpdate) {
-        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate);
+            List<News> favListNews = newsDao.getAllFavouriteNews();
+            for (int i=0 ; i < favListNews.size() ; i++){
+                favListNews.get(i).setFavourite(false);
+            }
+            favListNews = replaceNewsList(favListNews);
+            if (favListNews.size() == 0){
+                newsCallBack.onNewsFavoriteStatusChanged(favListNews);
+            }
+            else
+                newsCallBack.onFailureFromLocal(new Exception("Delete error"));
         });
     }
 
@@ -108,7 +111,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     public void clearDatabase() {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             List<News> listNoFavNews = newsDao.getAllNoFavoriteNews();
-            List<News> listFavNews = newsDao.getFavouriteNews();
+            List<News> listFavNews = newsDao.getAllFavouriteNews();
             int id=1;
             newsDao.databaseCleaner(listNoFavNews);
             for(News news:listFavNews){
@@ -116,27 +119,10 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 id++;
                 newsDao.updateNews(news);
             }
-            List<News> controlList =newsDao.getAll();
         });
     }
 
-    // Metodi di supporto al precedente metodo updateNewsNotSaved per le news provenienti dal Search Fragment
-    private void deleteFromDatabase(News news) {
-        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            List<News> allNewsFromDb = newsDao.getAll();
-            if(allNewsFromDb != null) {
-                for (News newsSaved : allNewsFromDb) {
-                    if (news.equals(newsSaved)) {
-                        if (newsSaved.getFavourite()){
-                            news.setId(newsSaved.getId());
-                            newsDao.updateNews(news);
-                        }
-                    }
-                }
-            }
-            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getFavouriteNews());
-        });
-    }
+    //Metodi di supporto
 
     private void insertDataOnDatabase(News news) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
@@ -155,7 +141,6 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                     }
                 }
                 if (controlCounter == allNewsFromDb.size()){
-                    //news.setId(allNewsFromDb.size() + 1);
                     int idFree = newsDao.getFreeIdRow();
                     news.setId(idFree);
                     newsDao.insertNews(news);
@@ -165,6 +150,24 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 news.setId(1);
                 newsDao.insertNews(news);
             }
+        });
+    }
+
+    // Metodi di supporto al precedente metodo updateNewsNotSaved per le news provenienti dal Search Fragment
+    private void deleteFromDatabase(News news) {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            List<News> allNewsFromDb = newsDao.getAll();
+            if(allNewsFromDb != null) {
+                for (News newsSaved : allNewsFromDb) {
+                    if (news.equals(newsSaved)) {
+                        if (newsSaved.getFavourite()){
+                            news.setId(newsSaved.getId());
+                            newsDao.updateNews(news);
+                        }
+                    }
+                }
+            }
+            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getAllFavouriteNews());
         });
     }
 

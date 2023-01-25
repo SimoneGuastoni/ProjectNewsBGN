@@ -1,9 +1,7 @@
-package com.example.projectnewsbgn.Repository;
+package com.example.projectnewsbgn.Repository.NewsRepository;
 
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,31 +9,30 @@ import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.Models.NewsResponse;
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.Source.BaseNewsLocalDataSource;
-import com.example.projectnewsbgn.Source.BaseNewsRemoteDataSource;
-import com.example.projectnewsbgn.Source.NewsCallBack;
-import com.example.projectnewsbgn.UI.homepage.MainActivity;
+import com.example.projectnewsbgn.Source.NewsSource.BaseNewsLocalDataSource;
+import com.example.projectnewsbgn.Source.NewsSource.BaseNewsRemoteDataSource;
+import com.example.projectnewsbgn.Source.NewsSource.NewsCallBack;
 
 import java.util.List;
 
-//questa classe recupera le news o in locale o in remoto
+/* La repository si occupa di decidere se mandare al ViewModel
+   delle notizie prelevate localmente o tramite fetch news chiamando la
+   classe apposita che si occupa della chiamata all'API */
 
 public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, NewsCallBack {
 
     private static final String TAG = NewsRepositoryWithLiveData.class.getSimpleName();
 
-    private final Application application;
     private final MutableLiveData<Result> allNewsMutableLiveData;
     private final MutableLiveData<Result> favoriteNewsMutableLiveData;
     private final MutableLiveData<Result> topicChoseNewsList;
     private final BaseNewsLocalDataSource newsLocalDataSource;
     private final BaseNewsRemoteDataSource newsRemoteDataSource;
 
-    public NewsRepositoryWithLiveData(Application application, BaseNewsRemoteDataSource newsRemoteDataSource, BaseNewsLocalDataSource newsLocalDataSource) {
+    public NewsRepositoryWithLiveData(BaseNewsRemoteDataSource newsRemoteDataSource, BaseNewsLocalDataSource newsLocalDataSource) {
         allNewsMutableLiveData = new MutableLiveData<>();
         favoriteNewsMutableLiveData = new MutableLiveData<>();
         topicChoseNewsList = new MutableLiveData<>();
-        this.application = application;
         this.newsLocalDataSource = newsLocalDataSource;
         this.newsRemoteDataSource = newsRemoteDataSource;
         this.newsRemoteDataSource.setNewsCallBack(this);
@@ -45,23 +42,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     //Metodi per eseguire fetch delle news in locale o da remoto
     @Override
     public MutableLiveData<Result> fetchNews(String country, List<String> topicList, int page, long lastUpdate) {
-
-        /*long currentTime = System.currentTimeMillis();
-
-        if(lastUpdate == 0 || currentTime - lastUpdate > 20000) {
-            SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            long time;
-            time = System.currentTimeMillis();
-            editor.putLong(String.valueOf(MainActivity.TIME), time);
-            editor.apply();
-            newsRemoteDataSource.getNews(country, 1, lastUpdate, topicList);
-        }
-        else {
-            newsLocalDataSource.getNewsFromDatabase(lastUpdate);
-        }*/
-        //Modifica?
-        newsRemoteDataSource.getNews(country,1,lastUpdate,topicList);
+        newsRemoteDataSource.getNews(country,page,lastUpdate,topicList);
         return allNewsMutableLiveData;
     }
 
@@ -72,9 +53,15 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public MutableLiveData<Result> fetchNewsChoseTopicAndQuery(String country, int i, List<String> topicList, String query) {
-        newsRemoteDataSource.getNewsChoseTopicQuery(country,i,topicList,query);
+    public MutableLiveData<Result> fetchNewsChoseTopicAndQuery(String country, int page, List<String> topicList, String query) {
+        newsRemoteDataSource.getNewsChoseTopicQuery(country, page,topicList,query);
         return topicChoseNewsList;
+    }
+
+    @Override
+    public MutableLiveData<Result> localFetch(Long lastUpdate) {
+        newsLocalDataSource.getNewsFromDatabase(lastUpdate);
+        return allNewsMutableLiveData;
     }
 
     @Override
@@ -100,12 +87,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         return favoriteNewsMutableLiveData;
     }
 
-    @Override
-    public MutableLiveData<Result> localFetch(Long lastUpdate) {
-        newsLocalDataSource.getNewsFromDatabase(lastUpdate);
-        return allNewsMutableLiveData;
-    }
-
+    //Metodo per pulire il database da tutte le news che non hanno uno like
     @Override
     public void clearDatabase() {
         newsLocalDataSource.clearDatabase();

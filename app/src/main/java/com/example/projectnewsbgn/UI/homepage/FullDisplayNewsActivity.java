@@ -1,31 +1,25 @@
 package com.example.projectnewsbgn.UI.homepage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.UI.Main.NewsViewModel;
-import com.klinker.android.link_builder.Link;
-import com.klinker.android.link_builder.LinkBuilder;
 import com.squareup.picasso.Picasso;
 
 public class FullDisplayNewsActivity extends AppCompatActivity {
 
-    News news;
-    TextView text_title,text_date,text_content,text_author,text_link;
-    ImageView iconNews;
-    ImageButton bntFav;
-    NewsViewModel newsViewModel;
+    private News news;
+    private TextView text_title,text_date,text_content,text_author,text_link;
+    private ImageView iconNews;
+    private ImageButton bntFav;
+    private NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 
 import com.example.projectnewsbgn.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,8 +23,7 @@ public class RegisterFragment extends Fragment {
     private ImageView profilePic;
     private CheckBox rememberCb;
     public final FragmentActivity act = getActivity();
-    SelectionInterestFragment selectionInterestFragment = new SelectionInterestFragment();
-    boolean checked = false;
+    private boolean checked = false;
 
     public RegisterFragment() {
         super(R.layout.fragment_register);
@@ -46,9 +47,6 @@ public class RegisterFragment extends Fragment {
         psw = v.findViewById(R.id.psw);
         confirmPsw = v.findViewById(R.id.confirmPsw);
 
-
-
-
        registerBtn.setOnClickListener(view -> {
             String emailString,pswString,pswStringConf,accountString;
 
@@ -65,10 +63,11 @@ public class RegisterFragment extends Fragment {
                                 checked = true;
                                 Bundle result = new Bundle();
                                 result.putBoolean("booleankey", checked);
-                                requireActivity().getSupportFragmentManager().setFragmentResult("bundleKey", result);
+                                requireActivity().getSupportFragmentManager()
+                                        .setFragmentResult("bundleKey", result);
                             }
-                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view,selectionInterestFragment).commit();
-
+                            Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_registerFragment_to_selectionInterestFragment);
                         }
                         else
                             confirmPsw.setError("Passwords doesn't match");

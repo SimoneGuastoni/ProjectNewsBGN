@@ -32,9 +32,10 @@ public class SelectionInterestFragment extends Fragment {
     private Spinner countrySpinner;
     private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
     private String name,email,psw,country;
-    private Boolean topic1 = false ,topic2 = false ,topic3 = false,topic4 = false,topic5 = false,topic6 = false, remember= false;
+    private Boolean topic1 = false ,topic2 = false ,topic3 = false,
+            topic4 = false,topic5 = false,topic6 = false, remember= false;
 
-    SelectionInterestFragment() {super(R.layout.fragment_selection_interest);}
+    public SelectionInterestFragment() {super(R.layout.fragment_selection_interest);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -47,12 +48,11 @@ public class SelectionInterestFragment extends Fragment {
         requireActivity().getSupportFragmentManager().setFragmentResultListener("bundleKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(String requestKey, Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported
                 Boolean checked = bundle.getBoolean("booleankey");
                 remember= checked;
-                // Do something with the result
             }
         });
+
         Activity act = getActivity();
 
         selectCountryTxt = act.findViewById(R.id.selectCountryTxt);
@@ -74,7 +74,8 @@ public class SelectionInterestFragment extends Fragment {
 
         completeRegistrationBtn.setOnClickListener(view -> {
 
-            if (btnTopic1.isChecked() || btnTopic2.isChecked() || btnTopic3.isChecked() || btnTopic4.isChecked() || btnTopic5.isChecked() || btnTopic6.isChecked() ){
+            if (btnTopic1.isChecked() || btnTopic2.isChecked() || btnTopic3.isChecked() ||
+                    btnTopic4.isChecked() || btnTopic5.isChecked() || btnTopic6.isChecked() ){
                 country = countrySpinner.toString();
                 if (btnTopic1.isChecked())
                     topic1=true;
@@ -101,7 +102,8 @@ public class SelectionInterestFragment extends Fragment {
                 else
                     topic6= false;
 
-                Toast.makeText(getActivity(), "You've been successfully registered", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You've been successfully registered",
+                        Toast.LENGTH_SHORT).show();
 
                 Intent goToHome = new Intent(getActivity(), MainActivity.class);
 
@@ -109,7 +111,8 @@ public class SelectionInterestFragment extends Fragment {
 
                 if(remember) {
                     Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
-                    SharedPreferences sharedPreferences = act.getSharedPreferences(SHARED_PREFS, getContext().MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = act.getSharedPreferences
+                            (SHARED_PREFS, getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", "true");
                     editor.commit();
@@ -141,7 +144,8 @@ public class SelectionInterestFragment extends Fragment {
             default: countryId = "it";
         }
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().
+                getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COUNTRY,countryId);
         editor.apply();

@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderFav> {
-    private Context context;
     private List<News> newsList;
     private FavListener listener;
 
-    public NewsFavAdapter(Context context, List<News> newsList, FavListener listener) {
-        this.context = context;
+    public NewsFavAdapter(List<News> newsList, FavListener listener) {
         this.newsList = newsList;
         this.listener = listener;
     }
@@ -40,12 +39,12 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
 
         return new CustomViewHolderFav(view);}
 
-    public void onBindViewHolder(@NonNull CustomViewHolderFav holder, int position) {
-        /*holder.bind(newsList.get(position));*/
+    public void onBindViewHolder(@NonNull CustomViewHolderFav holder,
+                                 @SuppressLint("RecyclerView") int position) {
+
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
-        /*holder.text_description.setText(newsList.get(position).getDescription());*/
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +57,6 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -73,7 +71,6 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
         public TextView text_title;
         public TextView text_source;
         public TextView text_date;
-        public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
         public ImageButton btnShare,btnDelete;
@@ -85,7 +82,6 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
             text_title = itemView.findViewById(R.id.titleFav);
             text_source = itemView.findViewById(R.id.authorFav);
             text_date = itemView.findViewById(R.id.dateFav);
-            /*text_description = itemView.findViewById(R.id.description);*/
             img_headline = itemView.findViewById(R.id.newsPicFav);
             btnShare = itemView.findViewById(R.id.btnShareFav);
             cbDelete = itemView.findViewById(R.id.cbDelete);

@@ -9,6 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface CallNewsApi {
+
+    //Call che considera una query come input
     @GET("top-headlines")
     Call<NewsApiResponse> callHeadlines(
             @Query("country")String country,
@@ -18,6 +20,7 @@ public interface CallNewsApi {
             @Query("apiKey")String apiKey
     );
 
+    //Call standard senza query
     @GET("top-headlines")
     Call<NewsApiResponse> callHeadlines(
             @Query("country")String country,
@@ -26,13 +29,4 @@ public interface CallNewsApi {
             @Query("apiKey")String apiKey
     );
 
-    /* Test multi category */
-    @GET("top-headlines")
-    Call<NewsApiResponse> callHeadlines(
-            @Query("country")String country,
-            @Query("category")List<String> category,
-            @Query("q") String query,
-            @Query("pageSize")int pageSize,
-            @Query("apiKey")String apiKey
-    );
 }

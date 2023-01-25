@@ -49,7 +49,6 @@ public class NewsApiResponse extends NewsResponse {
         return articles;
     }
 
-
     @Override
     public int describeContents() {
         return 0;

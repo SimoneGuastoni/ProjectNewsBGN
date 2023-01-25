@@ -24,16 +24,17 @@ public class StartingAnimationActivity extends AppCompatActivity {
 
     private static int Splash_animation = 2000;
 
-    boolean logged;
+    private boolean logged;
 
-    Animation topAnim,bottomAnim;
-    ImageView icon;
-    TextView welcome,slogan;
+    private Animation topAnim,bottomAnim;
+    private ImageView icon;
+    private TextView welcome,slogan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager
+                .LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_starting_animation);
 
             icon = findViewById(R.id.icon);
@@ -56,17 +57,20 @@ public class StartingAnimationActivity extends AppCompatActivity {
                         Intent intent;
 
                         if(logged){
-                             intent = new Intent(StartingAnimationActivity.this, MainActivity.class);
+                             intent = new Intent(StartingAnimationActivity.this,
+                                     MainActivity.class);
                         }
                         else{
-                             intent = new Intent(StartingAnimationActivity.this,UserAccessActivity.class);
+                             intent = new Intent(StartingAnimationActivity.this,
+                                     UserAccessActivity.class);
                         }
 
                         Pair[] pairs = new Pair[2];
                         pairs[0] = new Pair<View,String>(icon,"logo_image");
                         pairs[1] = new Pair<View,String>(welcome,"logo_txt");
 
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StartingAnimationActivity.this,pairs);
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation
+                                (StartingAnimationActivity.this,pairs);
                         startActivity(intent,options.toBundle());
                     }
             },Splash_animation);

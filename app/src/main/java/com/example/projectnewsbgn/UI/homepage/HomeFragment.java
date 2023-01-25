@@ -2,17 +2,16 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,12 +25,9 @@ import android.widget.Toast;
 import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Listener.HomeListener;
 import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Repository.INewsRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.NewsRepository.INewsRepositoryWithLiveData;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.UI.Main.NewsViewModel;
-import com.example.projectnewsbgn.UI.Main.NewsViewModelFactory;
-import com.example.projectnewsbgn.UI.login.ForgotPasswordFragment;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 
@@ -41,24 +37,19 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeListener {
 
-    /* controllo */
     private MutableLiveData<Result> newsObtained;
-
     private FullNewsFragment fullNewsFragment = new FullNewsFragment();
-    RecyclerView recyclerView;
-
-    INewsRepositoryWithLiveData newsRepositoryWithLiveData;
-    NewsViewModel newsViewModel;
-
+    private RecyclerView recyclerView;
+    private INewsRepositoryWithLiveData newsRepositoryWithLiveData;
+    private NewsViewModel newsViewModel;
     /* Test multi fetch multitopics*/
-    List<String> topicList = new ArrayList<String>();
-
-    NewsHomeAdapter newsRecyclerViewAdapter;
-    ProgressBar progressBar;
-    String country;
-    List<News> newsList;
-    ImageView internetError;
-    long timePassedFromFetch;
+    private List<String> topicList = new ArrayList<String>();
+    private NewsHomeAdapter newsRecyclerViewAdapter;
+    private ProgressBar progressBar;
+    private String country;
+    private List<News> newsList;
+    private ImageView internetError;
+    private  long timePassedFromFetch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,7 +105,6 @@ public class HomeFragment extends Fragment implements HomeListener {
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.INVISIBLE);
 
-        /* controllo */
         newsObtained = newsViewModel.getNews(country,topicList,timePassedFromFetch);
 
         newsObtained.observe(getViewLifecycleOwner(), new Observer<Result>() {
@@ -137,19 +127,13 @@ public class HomeFragment extends Fragment implements HomeListener {
 
     // Metodi del comportamento dell'adapter
 
-    //TODO fullnewsFragment
     @Override
     public void OnNewsClicked(News news) {
-        //getView().findViewById(R.id.action_homeFragment_to_fullNewsFragment);
-        FragmentTransaction toFullNews = getActivity().getSupportFragmentManager().beginTransaction();
-        toFullNews.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("full_news",news);
         fullNewsFragment.setArguments(bundle);
-        toFullNews.replace(android.R.id.content,fullNewsFragment);
-        toFullNews.addToBackStack(null);
-        toFullNews.commit();
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_fullNewsFragment,bundle);
     }
 
     @Override
@@ -168,7 +152,6 @@ public class HomeFragment extends Fragment implements HomeListener {
     }
 
     private String loadSavedCountry() {
-
         String savedCountry;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);

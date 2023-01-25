@@ -2,6 +2,11 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +21,11 @@ import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private NavController navController;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout fragmentWindow;
     public static final String SHARED_PREFS ="SharedPrefs";
@@ -27,27 +33,34 @@ public class MainActivity extends AppCompatActivity {
     public static final long TIME = 0;
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        HomeFragment homeFragment = new HomeFragment();
+       /* HomeFragment homeFragment = new HomeFragment();
         AccountFragment accountFragment = new AccountFragment();
         FavoritesFragment favouritesFragment = new FavoritesFragment();
         SearchFragment searchFragment = new SearchFragment();
+*/
+        /*Toolbar toolbar = findViewById(R.id.topBarMain);
+        setSupportActionBar(toolbar);*/
 
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.containerFragment);
+        navController = navHostFragment.getNavController();
 
         bottomNavigationView = findViewById(R.id.bottomMenu);
-        fragmentWindow = findViewById(R.id.container);
+        //fragmentWindow = findViewById(R.id.containerFragment);
 
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.homeFragment,R.id.searchFragment,R.id.favouritesFragment,R.id.accountFragment
+        ).build();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
+        NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
+
+        NavigationUI.setupWithNavController(bottomNavigationView,navController);
+
+        /*getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,8 +80,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
+    }
 
+   @Override
+    public void onBackPressed() {
+       int currentDestination = navController.getCurrentDestination().getId();
+       if(currentDestination == R.id.homeFragment){
+       }
+       else {
+           super.onBackPressed();
+       }
     }
 
     private void changeRemember() {

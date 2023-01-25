@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
@@ -31,13 +33,11 @@ public class LoginFragment extends Fragment {
     private CheckBox rememberCb;
     private Button loginBtn;
     private TextView forgotPswTxt, createAccountTxt;
-    private ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
-    RegisterFragment registerFragment = new RegisterFragment();
+    private ProgressBar progressBar;
 
     public LoginFragment() {
         super(R.layout.fragment_login);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,25 +55,26 @@ public class LoginFragment extends Fragment {
         loginBtn = v.findViewById(R.id.loginBtn);
         forgotPswTxt = v.findViewById(R.id.forgotPswText);
         createAccountTxt = v.findViewById(R.id.registerText);
+        progressBar = v.findViewById(R.id.progressIndicator);
 
         clearCountry();
 
         createAccountTxt.setOnClickListener(view -> {
-            getView().findViewById(R.id.action_loginFragment_to_registerFragment);
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view, registerFragment).commit();
-
+            progressBar.setVisibility(View.VISIBLE);
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_loginFragment_to_registerFragment);
         });
-        forgotPswTxt.setOnClickListener(view -> {
-            getView().findViewById(R.id.action_loginFragment_to_forgotPasswordFragment);
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ua_fragment_container_view, forgotPasswordFragment).commit();
 
+        forgotPswTxt.setOnClickListener(view -> {
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
         });
 
         loginBtn.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
             String emailString = email.getEditText().getText().toString();
             String pswString = psw.getEditText().getText().toString();
             Boolean booleanEmail = false, booleanPsw = false;
-
 
             booleanEmail = checkEmail(emailString);
             booleanPsw = checkPsw(pswString);
@@ -83,7 +84,8 @@ public class LoginFragment extends Fragment {
                     if (rememberCb.isChecked()) {
                         Toast.makeText(getActivity(), "You will be remembered", Toast.LENGTH_SHORT).show();
                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
-                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getActivity()
+                                .getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("name", "true");
                         editor.apply();
@@ -105,7 +107,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void clearCountry() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity()
+                .getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COUNTRY,"it");
         editor.apply();
@@ -119,7 +122,8 @@ public class LoginFragment extends Fragment {
         }
 
         private boolean checkEmail (String emailString){
-            if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailString).matches())
+            if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS
+                    .matcher(emailString).matches())
                 return true;
             else
                 return false;

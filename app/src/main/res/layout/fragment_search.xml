@@ -18,16 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="30sp">
+            android:layout_marginBottom="10sp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Search Topic of interest"
-                android:textColor="@color/Charcoal"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp" />
+
 
 
             <androidx.appcompat.widget.SearchView
@@ -89,7 +82,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Business"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/businessTopic"
@@ -117,7 +110,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Science"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/scienceTopic"
@@ -145,7 +138,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Entertainment"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/entertainmentTopic"
@@ -173,7 +166,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Health"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/healthTopic"
@@ -201,7 +194,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Sport"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/sportTopic"
@@ -229,7 +222,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="Technology"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/technologyTopic"
@@ -257,7 +250,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="General"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="12dp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/generalTopic"
@@ -278,19 +271,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </androidx.recyclerview.widget.RecyclerView>
-            <ProgressBar
+            <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
                 android:layout_gravity="center"/>
+
             <ImageView
                 android:id="@+id/waitForInputImage"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:visibility="visible"
-                android:src="@drawable/yawning_girl"/>
+                android:src="@drawable/search_news"
+                android:visibility="visible" />
 
         </LinearLayout>
     </ScrollView>

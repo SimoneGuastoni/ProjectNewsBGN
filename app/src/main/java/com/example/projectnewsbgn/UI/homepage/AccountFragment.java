@@ -12,12 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.UI.Main.NewsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +24,10 @@ public class AccountFragment extends Fragment{
 
     private MutableLiveData<Result> newsObtained;
 
-    TextView favouriteArticlesTot;
-    NewsViewModel newsViewModel;
-    List<News> newsFavList;
+    private TextView favouriteArticlesTot;
+    private NewsViewModel newsViewModel;
+    private List<News> newsFavList;
+    private int empty = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,12 +53,11 @@ public class AccountFragment extends Fragment{
         newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
-                int initialSize = this.newsFavList.size();
                 this.newsFavList.clear();
                 this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
                 favouriteArticlesTot.setText(String.valueOf(newsFavList.size()));
             } else {
-                favouriteArticlesTot.setText(String.valueOf(0));
+                favouriteArticlesTot.setText(String.valueOf(empty));
             }
         });
     }

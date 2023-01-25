@@ -57,7 +57,6 @@ public class News implements Serializable {
         this.favourite = favourite;
     }
 
-
     public long getId() {
         return id;
     }
