@@ -4,20 +4,30 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof Success) {
+        if (this instanceof NewsSuccess || this instanceof AccountSuccess) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static final class Success extends Result {
+    public static final class NewsSuccess extends Result {
         private final NewsResponse newsResponse;
-        public Success(NewsResponse newsResponse) {
+        public NewsSuccess(NewsResponse newsResponse) {
             this.newsResponse = newsResponse;
         }
         public NewsResponse getData() {
             return newsResponse;
+        }
+    }
+
+    public static final class AccountSuccess extends Result {
+        private final Account account;
+        public AccountSuccess(Account account) {
+            this.account = account;
+        }
+        public Account getData() {
+            return account;
         }
     }
 

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
@@ -36,6 +37,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
     private List<News> newsFavList,controlList;
     private NewsViewModel newsViewModel;
     private NewsFavAdapter newsFavAdapter;
+    private TextView hintText;
     private Button buttonDeleteAll;
     private ProgressBar progressBar;
     private ImageView iconNoFavNews;
@@ -68,6 +70,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
         iconNoFavNews = view.findViewById(R.id.noFavNews);
         buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
         progressBar = view.findViewById(R.id.progressBar);
+        hintText = view.findViewById(R.id.hintText);
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false);
@@ -82,16 +85,20 @@ public class FavoritesFragment extends Fragment implements FavListener {
             if(result.isSuccess()){
                 int initialSize = this.newsFavList.size();
                 this.newsFavList.clear();
-                this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
+                this.newsFavList.addAll(((Result.NewsSuccess) result).getData().getNewsList());
                 newsFavAdapter.notifyItemRangeInserted(initialSize,this.newsFavList.size());
                 newsFavAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
-                iconNoFavNews.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.GONE);
+                iconNoFavNews.setVisibility(View.GONE);
+                hintText.setVisibility(View.GONE);
                 buttonDeleteAll.setVisibility(View.VISIBLE);
+                recyclerViewFav.setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
-                buttonDeleteAll.setVisibility(view.INVISIBLE);
+                buttonDeleteAll.setVisibility(view.GONE);
+                progressBar.setVisibility(View.GONE);
                 iconNoFavNews.setVisibility(View.VISIBLE);
+                hintText.setVisibility(View.VISIBLE);
             }
         });
 

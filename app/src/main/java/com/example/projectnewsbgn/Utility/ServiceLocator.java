@@ -48,6 +48,7 @@ public class ServiceLocator {
         return NewsDatabase.getInstanceDatabase(application);
     }
 
+    //CReazione repository per le news
     public INewsRepositoryWithLiveData getNewsRepository(Application application){
         BaseNewsRemoteDataSource baseNewsRemoteDataSource;
         BaseNewsLocalDataSource baseNewsLocalDataSource;
@@ -59,6 +60,7 @@ public class ServiceLocator {
         return new NewsRepositoryWithLiveData(baseNewsRemoteDataSource,baseNewsLocalDataSource);
     }
 
+    //Creazione repository per gli account
     public IAccountRepositoryWithLiveData getAccountRepository(Application application){
         BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource;
         BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;

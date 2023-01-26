@@ -54,7 +54,7 @@ public class AccountFragment extends Fragment{
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
                 this.newsFavList.clear();
-                this.newsFavList.addAll(((Result.Success) result).getData().getNewsList());
+                this.newsFavList.addAll(((Result.NewsSuccess) result).getData().getNewsList());
                 favouriteArticlesTot.setText(String.valueOf(newsFavList.size()));
             } else {
                 favouriteArticlesTot.setText(String.valueOf(empty));

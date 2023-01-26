@@ -24,12 +24,17 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Listener.HomeListener;
+import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
+import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.Repository.NewsRepository.INewsRepositoryWithLiveData;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
+import com.example.projectnewsbgn.UI.login.AccountViewModel;
+import com.example.projectnewsbgn.UI.login.AccountViewModelFactory;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,23 +42,32 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeListener {
 
-    private MutableLiveData<Result> newsObtained;
+    private MutableLiveData<Result> newsObtained,accountDataObtained;
     private FullNewsFragment fullNewsFragment = new FullNewsFragment();
     private RecyclerView recyclerView;
     private INewsRepositoryWithLiveData newsRepositoryWithLiveData;
     private NewsViewModel newsViewModel;
     /* Test multi fetch multitopics*/
-    private List<String> topicList = new ArrayList<String>();
+    private List<String> topicList;
     private NewsHomeAdapter newsRecyclerViewAdapter;
     private ProgressBar progressBar;
     private String country;
+    private Account account;
     private List<News> newsList;
     private ImageView internetError;
+    private AccountViewModel accountViewModel;
+    private IAccountRepositoryWithLiveData accountRepository;
     private  long timePassedFromFetch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        accountRepository = ServiceLocator.getInstance().getAccountRepository
+                (requireActivity().getApplication());
+
+        accountViewModel = new ViewModelProvider(requireActivity(),
+                new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
 
         newsRepositoryWithLiveData = ServiceLocator.getInstance().getNewsRepository(
                 requireActivity().getApplication());
@@ -64,11 +78,12 @@ public class HomeFragment extends Fragment implements HomeListener {
 
         newsList = new ArrayList<>();
 
-        /* Test multiTopic */
+        topicList = new ArrayList<>();
+        /* Test multiTopic
         topicList.clear();
         topicList.add("business");
         topicList.add("entertainment");
-        topicList.add("health");
+        topicList.add("health");*/
 
     }
 
@@ -84,7 +99,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         super.onViewCreated(view, savedInstanceState);
 
 
-        country = loadSavedCountry();
+        /*account = loadSavedAccount();*/
 
         timePassedFromFetch = calculateTimeFromFetch();
 
@@ -95,34 +110,45 @@ public class HomeFragment extends Fragment implements HomeListener {
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 
-        newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(), newsList,this);
+        newsRecyclerViewAdapter = new NewsHomeAdapter(getContext(), newsList, this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(newsRecyclerViewAdapter);
 
-
-
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.INVISIBLE);
 
-        newsObtained = newsViewModel.getNews(country,topicList,timePassedFromFetch);
+        accountDataObtained = accountViewModel.getAccountData();
+        accountDataObtained.observe(getViewLifecycleOwner(), result -> {
+            if (result.isSuccess()) {
+                country = ((Result.AccountSuccess) result).getData().getCountry();
+                topicList.clear();
+                topicList = ((Result.AccountSuccess) result).getData().getFavAccountTopics();
+                if (country != null && topicList.size() != 0) {
 
-        newsObtained.observe(getViewLifecycleOwner(), new Observer<Result>() {
-            @Override
-            public void onChanged(Result result) {
-                if (result.isSuccess()) {
-                    int initialSize = HomeFragment.this.newsList.size();
-                    HomeFragment.this.newsList.clear();
-                    HomeFragment.this.newsList.addAll(((Result.Success) result).getData().getNewsList());
-                    newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
-                    progressBar.setVisibility(View.INVISIBLE);
-                } else {
-                    Toast.makeText(HomeFragment.this.getContext(), "Error 666", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                    newsObtained = newsViewModel.getNews(country, topicList, timePassedFromFetch);
+
+                    newsObtained.observe(getViewLifecycleOwner(), result2 -> {
+                        if (result2.isSuccess()) {
+                            int initialSize = HomeFragment.this.newsList.size();
+                            HomeFragment.this.newsList.clear();
+                            HomeFragment.this.newsList.addAll(((Result.NewsSuccess) result2).getData().getNewsList());
+                            newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
+                            recyclerView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                        } else {
+                            Toast.makeText(HomeFragment.this.getContext(), "Error 666", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            internetError.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
+
+            } else {
+                Toast.makeText(getContext(), "Errore recupero dati utente", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
     }
 
     // Metodi del comportamento dell'adapter
@@ -136,6 +162,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_fullNewsFragment,bundle);
     }
 
+    //TODO risolvere riciclo della recycler view che segna graficamente il like quando scorri le notizie
     @Override
     public void onFavButtonPressed(News news) {
         newsViewModel.updateNews(news);
@@ -151,11 +178,11 @@ public class HomeFragment extends Fragment implements HomeListener {
         return time;
     }
 
-    private String loadSavedCountry() {
-        String savedCountry;
+    /*private Account loadSavedAccount() {
+        Account accountLogged;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);
-        savedCountry = sharedPreferences.getString(UserAccessActivity.COUNTRY,"");
-        return savedCountry;
-    }
+        accountLogged = sharedPreferences.getString(UserAccessActivity.COUNTRY,null);
+        return accountLogged;
+    }*/
 }

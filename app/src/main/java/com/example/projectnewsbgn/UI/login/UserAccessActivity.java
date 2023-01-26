@@ -16,6 +16,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,7 +25,7 @@ import java.io.IOException;
 public class UserAccessActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String SHARED_PREFS_COUNTRY = "SharedPrefsCountry";
-    public static final String COUNTRY = "country";
+    public static final Account COUNTRY = null;
 
     private NavController navController;
     private NavigationView navView;

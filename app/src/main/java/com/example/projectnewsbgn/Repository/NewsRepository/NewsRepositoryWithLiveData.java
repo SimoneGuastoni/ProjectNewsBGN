@@ -1,8 +1,6 @@
 package com.example.projectnewsbgn.Repository.NewsRepository;
 
 
-import android.app.Application;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.projectnewsbgn.Models.News;
@@ -103,25 +101,25 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onSuccessFromRemote(NewsApiResponse newsApiResponse) {
         List<News> controlList = newsApiResponse.getArticles();
-        Result.Success result = new Result.Success(new NewsResponse(controlList));
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(controlList));
         topicChoseNewsList.postValue(result);
     }
 
     @Override
     public void onSuccessFromRemote(List<News> newsList) {
-        Result.Success result = new Result.Success(new NewsResponse(newsList));
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(newsList));
         topicChoseNewsList.postValue(result);
     }
 
     @Override
     public void onSuccessFromLocal(List<News> newsList) {
-        Result.Success result = new Result.Success(new NewsResponse(newsList));
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(newsList));
         favoriteNewsMutableLiveData.postValue(result);
     }
 
     @Override
     public void onSuccessFromLocal(List<News> newsList, Long lastUpdate) {
-        Result.Success result = new Result.Success(new NewsResponse(newsList));
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(newsList));
         allNewsMutableLiveData.postValue(result);
     }
 
@@ -150,12 +148,12 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
         Result result = allNewsMutableLiveData.getValue();
-        favoriteNewsMutableLiveData.postValue(new Result.Success(new NewsResponse(favoriteNews)));
+        favoriteNewsMutableLiveData.postValue(new Result.NewsSuccess(new NewsResponse(favoriteNews)));
     }
 
     @Override
     public void onNewsFavoriteStatusChanged(List<News> emptyNewsList) {
-        Result.Success result = new Result.Success(new NewsResponse(emptyNewsList));
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(emptyNewsList));
         favoriteNewsMutableLiveData.postValue(result);
     }
 

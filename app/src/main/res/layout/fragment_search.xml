@@ -269,21 +269,44 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSearch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
             </androidx.recyclerview.widget.RecyclerView>
-            <com.google.android.material.progressindicator.CircularProgressIndicator
+
+            <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:indeterminateOnly="true"
+                android:progressTint="@color/Gold"
+                android:outlineAmbientShadowColor="@color/Charcoal"
+                android:visibility="gone"
+                android:layout_marginTop="100sp"/>
 
+            <TextView
+                android:id="@+id/hintText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select a topic or make a request"
+                android:layout_gravity="center"
+                android:layout_marginTop="50sp"
+                android:textStyle="bold"
+                android:textColor="@color/Charcoal"
+                android:textSize="15sp"/>
+            <ImageView
+                android:id="@+id/iconInternetError"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:src="@drawable/ooops"
+                android:visibility="gone" />
             <ImageView
                 android:id="@+id/waitForInputImage"
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:src="@drawable/search_news"
+                android:layout_marginTop="30dp"
                 android:visibility="visible" />
 
         </LinearLayout>

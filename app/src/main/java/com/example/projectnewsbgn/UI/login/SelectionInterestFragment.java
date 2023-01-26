@@ -5,8 +5,10 @@ import static com.example.projectnewsbgn.UI.login.UserAccessActivity.COUNTRY;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,8 +24,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectnewsbgn.Models.Account;
+import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class SelectionInterestFragment extends Fragment {
 
@@ -32,8 +41,20 @@ public class SelectionInterestFragment extends Fragment {
     private Spinner countrySpinner;
     private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
     private String name,email,psw,country;
-    private Boolean topic1 = false ,topic2 = false ,topic3 = false,
-            topic4 = false,topic5 = false,topic6 = false, remember= false;
+    private boolean remember;
+    private List<String> topicList;
+    private AccountViewModel accountViewModel;
+    private LinearProgressIndicator progressIndicator;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        accountViewModel = new ViewModelProvider(requireActivity()).get(AccountViewModel.class);
+        accountViewModel.setAuthenticationError(false);
+        topicList = new ArrayList<>();
+        topicList.add("general");
+    }
 
     public SelectionInterestFragment() {super(R.layout.fragment_selection_interest);}
 
@@ -48,8 +69,10 @@ public class SelectionInterestFragment extends Fragment {
         requireActivity().getSupportFragmentManager().setFragmentResultListener("bundleKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(String requestKey, Bundle bundle) {
-                Boolean checked = bundle.getBoolean("booleankey");
-                remember= checked;
+                remember= bundle.getBoolean("booleankey");
+                name = bundle.getString("namekey");
+                email = bundle.getString("emailkey");
+                psw = bundle.getString("pswkey");
             }
         });
 
@@ -65,6 +88,7 @@ public class SelectionInterestFragment extends Fragment {
         btnTopic4 = act.findViewById(R.id.toggleBtnTopic4);
         btnTopic5 = act.findViewById(R.id.toggleBtnTopic5);
         btnTopic6 = act.findViewById(R.id.toggleBtnTopic6);
+        progressIndicator = act.findViewById(R.id.progressIndicator);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -74,80 +98,96 @@ public class SelectionInterestFragment extends Fragment {
 
         completeRegistrationBtn.setOnClickListener(view -> {
 
+            progressIndicator.setVisibility(View.VISIBLE);
             if (btnTopic1.isChecked() || btnTopic2.isChecked() || btnTopic3.isChecked() ||
                     btnTopic4.isChecked() || btnTopic5.isChecked() || btnTopic6.isChecked() ){
+
                 country = countrySpinner.toString();
+
                 if (btnTopic1.isChecked())
-                    topic1=true;
-                else
-                    topic1=false;
+                    topicList.add(btnTopic1.getText().toString().toLowerCase(Locale.ROOT));
                 if (btnTopic2.isChecked())
-                    topic2=true;
-                else
-                    topic2=false;
+                    topicList.add(btnTopic2.getText().toString().toLowerCase(Locale.ROOT));
                 if (btnTopic3.isChecked())
-                    topic3=true;
-                else
-                    topic3= false;
+                    topicList.add(btnTopic3.getText().toString().toLowerCase(Locale.ROOT));
                 if (btnTopic4.isChecked())
-                    topic4=true;
-                else
-                    topic4= false;
+                    topicList.add(btnTopic4.getText().toString().toLowerCase(Locale.ROOT));
                 if (btnTopic5.isChecked())
-                    topic5=true;
-                else
-                    topic5= false;
+                    topicList.add(btnTopic5.getText().toString().toLowerCase(Locale.ROOT));
                 if (btnTopic6.isChecked())
-                    topic6=true;
-                else
-                    topic6= false;
+                    topicList.add(btnTopic6.getText().toString().toLowerCase(Locale.ROOT));
 
-                Toast.makeText(getActivity(), "You've been successfully registered",
-                        Toast.LENGTH_SHORT).show();
-
+                //PARSE AccountViemodel
                 Intent goToHome = new Intent(getActivity(), MainActivity.class);
 
                 saveCountry(countrySpinner.getSelectedItem().toString());
 
-                if(remember) {
-                    Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
-                    SharedPreferences sharedPreferences = act.getSharedPreferences
-                            (SHARED_PREFS, getContext().MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("name", "true");
-                    editor.commit();
-                }
-                startActivity(goToHome);
-                getActivity().finish();
+                accountViewModel.authentication(name,email,psw,country,topicList)
+                        .observe(getViewLifecycleOwner(), result -> {
+                            if(result.isSuccess()){
+                                if(remember) {
+                                    Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
+                                    Account account = ((Result.AccountSuccess) result).getData();
+                                    /*saveAccount(account);*/
+                                    SharedPreferences sharedPreferences = act.getSharedPreferences
+                                            (SHARED_PREFS, getContext().MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("name", "true");
+                                    editor.commit();
+                                }
+                                Toast.makeText(getActivity(), "You've been successfully registered",
+                                        Toast.LENGTH_SHORT).show();
+                                startActivity(goToHome);
+                                getActivity().finish();
+                            }
+                            else{
+                                Toast.makeText(act, "Registration error", Toast.LENGTH_SHORT).show();
+                                topicList.clear();
+                                topicList.add("general");
+                                progressIndicator.setVisibility(View.GONE);
+                            }
+                        });
             }
             else {
+                progressIndicator.setVisibility(View.GONE);
                 selectTopicsTxt.setText(R.string.notificationTopics);
                 selectTopicsTxt.setError("");
             }
         });
     }
 
+    /*private void saveAccount(Account account) {
+        SharedPreferences sharedPreferences = getActivity().
+                getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(COUNTRY,account);
+        editor.apply();
+    }*/
+
     private void saveCountry(String selectedCountry) {
 
         String countryId;
 
         switch (selectedCountry){
-            case "Italy" :
+            case "Italy" : {
                 countryId = "it";
+                country = countryId;
                 break;
-            case "France" :
+            }
+            case "France" : {
                 countryId = "fr";
+                country = countryId;
                 break;
-            case "England" :
+            }
+            case "England" : {
                 countryId = "gb";
+                country = countryId;
                 break;
-            default: countryId = "it";
+            }
+            default: {
+                countryId = "it";
+                country = countryId;
+            }
         }
-
-        SharedPreferences sharedPreferences = getActivity().
-                getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(COUNTRY,countryId);
-        editor.apply();
     }
 }

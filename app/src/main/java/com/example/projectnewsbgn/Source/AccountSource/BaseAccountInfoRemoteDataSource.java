@@ -13,6 +13,6 @@ public abstract class BaseAccountInfoRemoteDataSource {
 
     public abstract void saveAccountData(Account account);
     public abstract void getAccountFavoriteNews(String idToken);
-    public abstract void getAccountPreferences(String idToken);
+    public abstract void getAccountPreferences(String email,String id);
     public abstract void saveAccountPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken);
 }

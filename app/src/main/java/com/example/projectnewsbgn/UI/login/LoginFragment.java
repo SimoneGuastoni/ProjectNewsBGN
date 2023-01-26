@@ -15,15 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
+import com.example.projectnewsbgn.Utility.ServiceLocator;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -33,7 +39,22 @@ public class LoginFragment extends Fragment {
     private CheckBox rememberCb;
     private Button loginBtn;
     private TextView forgotPswTxt, createAccountTxt;
-    private ProgressBar progressBar;
+    private LinearProgressIndicator progressBar;
+    private AccountViewModel accountViewModel;
+    private IAccountRepositoryWithLiveData accountRepository;
+    private MutableLiveData<Result> accountMutableLiveData;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        accountRepository = ServiceLocator.getInstance().getAccountRepository
+                (requireActivity().getApplication());
+
+        accountViewModel = new ViewModelProvider(requireActivity(),
+                new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
+
+    }
 
     public LoginFragment() {
         super(R.layout.fragment_login);
@@ -57,7 +78,7 @@ public class LoginFragment extends Fragment {
         createAccountTxt = v.findViewById(R.id.registerText);
         progressBar = v.findViewById(R.id.progressIndicator);
 
-        clearCountry();
+        /*clearCountry();*/
 
         createAccountTxt.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
@@ -81,22 +102,33 @@ public class LoginFragment extends Fragment {
 
             if (booleanEmail) {
                 if (booleanPsw) {
-                    if (rememberCb.isChecked()) {
-                        Toast.makeText(getActivity(), "You will be remembered", Toast.LENGTH_SHORT).show();
-                        Intent goToHome = new Intent(getActivity(), MainActivity.class);
-                        SharedPreferences sharedPreferences = getActivity()
-                                .getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("name", "true");
-                        editor.apply();
-                        startActivity(goToHome);
-                        getActivity().finish();
-                    } else {
-                        Toast.makeText(getActivity(), "You will not be remembered", Toast.LENGTH_SHORT).show();
-                        Intent goToHome = new Intent(getActivity(), MainActivity.class);
-                        startActivity(goToHome);
-                        getActivity().finish();
-                    }
+                    accountMutableLiveData = accountViewModel.authentication("",emailString,pswString,"",null);
+                    accountMutableLiveData.observe(
+                            getViewLifecycleOwner(), result -> {
+                                if(result.isSuccess()){
+                                    if (rememberCb.isChecked()) {
+                                        Toast.makeText(getActivity(), "You will be remembered", Toast.LENGTH_SHORT).show();
+                                        Intent goToHome = new Intent(getActivity(), MainActivity.class);
+                                        SharedPreferences sharedPreferences = getActivity()
+                                                .getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("name", "true");
+                                        editor.apply();
+                                        startActivity(goToHome);
+                                        getActivity().finish();
+                                    } else {
+                                        Toast.makeText(getActivity(), "You will not be remembered", Toast.LENGTH_SHORT).show();
+                                        Intent goToHome = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(goToHome);
+                                        getActivity().finish();
+                                    }
+                                }
+                                else{
+                                    accountMutableLiveData = null;
+                                    Toast.makeText(getActivity(),"Email or Password uncorrected", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            });
                 } else
                     psw.setError("Invalid Password");
             } else
@@ -106,16 +138,16 @@ public class LoginFragment extends Fragment {
 
     }
 
-    private void clearCountry() {
+   /* private void clearCountry() {
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(COUNTRY,"it");
         editor.apply();
-    }
+    }*/
 
         private boolean checkPsw (String pswString){
-            if (pswString.equals(""))
+            if (pswString.equals("") || pswString.length()<6)
                 return false;
             else
                 return true;

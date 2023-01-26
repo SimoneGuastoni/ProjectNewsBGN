@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsSearchAdapter;
@@ -39,9 +40,11 @@ public class SearchFragment extends Fragment implements SearchListener {
     private FullNewsFragment fullNewsFragment;
     private RecyclerView recyclerView;
     private NewsSearchAdapter newsSmallAdapter;
-    private ImageView businessTopic,scienceTopic,generalTopic,healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage;
+    private ImageView businessTopic,scienceTopic,generalTopic,
+            healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage,internetError;
     private ProgressBar progressBar;
     private String category = "general",country,query = "";
+    private TextView hintText;
     private SearchView searchView;
     private List<News> newsList;
     private List<String> allTopic;
@@ -86,8 +89,10 @@ public class SearchFragment extends Fragment implements SearchListener {
         sportTopic = view.findViewById(R.id.sportTopic);
         waitingImage = view.findViewById(R.id.waitForInputImage);
         searchView = view.findViewById(R.id.searchBar);
+        hintText = view.findViewById(R.id.hintText);
+        internetError = view.findViewById(R.id.iconInternetError);
 
-        country = loadSavedCountry();
+        /*country = loadSavedCountry();*/
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -101,8 +106,10 @@ public class SearchFragment extends Fragment implements SearchListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                waitingImage.setVisibility(View.INVISIBLE);
+                waitingImage.setVisibility(View.GONE);
+                hintText.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
                 newsObtained = newsViewModel.getNews(country,allTopic,query);
                 rebuildNewsList(newsObtained);
                 return true;
@@ -119,7 +126,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         businessTopic.setOnClickListener(v -> {
             category = "business";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -127,7 +136,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         healthTopic.setOnClickListener(v -> {
             category = "health";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -135,7 +146,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         sportTopic.setOnClickListener(v -> {
             category = "sport";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -143,7 +156,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         entertainmentTopic.setOnClickListener(v -> {
             category = "entertainment";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -151,7 +166,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         technologyTopic.setOnClickListener(v -> {
             category = "technology";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -159,7 +176,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         generalTopic.setOnClickListener(v -> {
             category = "general";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -167,7 +186,9 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         scienceTopic.setOnClickListener(v -> {
             category = "science";
-            waitingImage.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            waitingImage.setVisibility(View.GONE);
+            hintText.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             newsObtained = newsViewModel.getNews(country,category,query);
             rebuildNewsList(newsObtained);
@@ -193,13 +214,13 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     // Metodi di supporto al fragment
 
-    private String loadSavedCountry() {
+   /* private String loadSavedCountry() {
         String savedCountry;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);
         savedCountry = sharedPreferences.getString(UserAccessActivity.COUNTRY,"");
         return savedCountry;
-    }
+    }*/
 
 
     private void rebuildNewsList(MutableLiveData<Result> newsObtained) {
@@ -207,13 +228,15 @@ public class SearchFragment extends Fragment implements SearchListener {
             if(result.isSuccess()){
                 int initialSize = this.newsList.size();
                 this.newsList.clear();
-                this.newsList.addAll(((Result.Success) result).getData().getNewsList());
+                this.newsList.addAll(((Result.NewsSuccess) result).getData().getNewsList());
                 newsSmallAdapter.notifyItemRangeChanged(initialSize,this.newsList.size());
                 newsSmallAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             } else {
                 Toast.makeText(getContext(), result.toString(), Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.GONE);
+                internetError.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -12,32 +12,38 @@ import java.util.List;
 public class Account {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String accountName,email,psw,country;
+    private String accountName,email,country,id;
     private List<String> favAccountTopics;
     /*ImageView icon;*/
 
-    public Account(int id,String accountName,String email,String psw,String country,List<String> favAccountTopics){
+    public Account(String id,String accountName,String email,String country,List<String> favAccountTopics){
 
         this.id = id;
         this.accountName = accountName;
         this.email = email;
-        this.psw = psw;
         this.country = country;
         this.favAccountTopics = favAccountTopics;
         /*this.icon = icon;*/
 
     }
 
+    public List<String> getFavAccountTopics() {
+        return favAccountTopics;
+    }
+
+    public void setFavAccountTopics(List<String> favAccountTopics) {
+        this.favAccountTopics = favAccountTopics;
+    }
+
     public String getCountry() {
         return country;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,14 +65,6 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPsw() {
-        return psw;
-    }
-
-    public void setPsw(String psw) {
-        this.psw = psw;
     }
 
     /*public ImageView getIcon() {

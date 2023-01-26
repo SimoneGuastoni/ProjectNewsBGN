@@ -7,13 +7,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
+import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class RegisterFragment extends Fragment {
@@ -22,8 +29,15 @@ public class RegisterFragment extends Fragment {
     private Button registerBtn;
     private ImageView profilePic;
     private CheckBox rememberCb;
+    private LinearProgressIndicator progressIndicator;
     public final FragmentActivity act = getActivity();
     private boolean checked = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     public RegisterFragment() {
         super(R.layout.fragment_register);
@@ -46,8 +60,10 @@ public class RegisterFragment extends Fragment {
         email = v.findViewById(R.id.email);
         psw = v.findViewById(R.id.psw);
         confirmPsw = v.findViewById(R.id.confirmPsw);
+        progressIndicator = v.findViewById(R.id.progressIndicator);
 
        registerBtn.setOnClickListener(view -> {
+           progressIndicator.setVisibility(View.VISIBLE);
             String emailString,pswString,pswStringConf,accountString;
 
             accountString = accountName.getEditText().getText().toString();
@@ -60,28 +76,48 @@ public class RegisterFragment extends Fragment {
                     if(controlPsw(pswString) && controlPsw(pswStringConf)){
                         if (comparePsw(pswString,pswStringConf)) {
                             if (rememberCb.isChecked()) {
-                                checked = true;
-                                Bundle result = new Bundle();
-                                result.putBoolean("booleankey", checked);
-                                requireActivity().getSupportFragmentManager()
-                                        .setFragmentResult("bundleKey", result);
+                                prepareDataForRegister(true,accountString,emailString,pswString);
+                                Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_registerFragment_to_selectionInterestFragment);
                             }
-                            Navigation.findNavController(requireView())
-                                    .navigate(R.id.action_registerFragment_to_selectionInterestFragment);
+                            else {
+                                prepareDataForRegister(false,accountString,emailString,pswString);
+                                Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_registerFragment_to_selectionInterestFragment);
+                            }
+
                         }
-                        else
+                        else {
+                            progressIndicator.setVisibility(View.GONE);
                             confirmPsw.setError("Passwords doesn't match");
                         }
-                    else
+                        }
+                    else {
+                        progressIndicator.setVisibility(View.GONE);
                         psw.setError("Invalid password");
                     }
-                else
+                    }
+                else {
+                    progressIndicator.setVisibility(View.GONE);
                     email.setError("Invalid email");
                 }
-            else
+                }
+            else {
+                progressIndicator.setVisibility(View.GONE);
                 accountName.setError("Invalid account name");
+            }
         });
 
+    }
+
+    private void prepareDataForRegister(boolean checked, String accountString, String emailString, String pswString) {
+        Bundle rememberResult = new Bundle();
+        rememberResult.putBoolean("booleankey", checked);
+        rememberResult.putString("namekey",accountString);
+        rememberResult.putString("emailkey",emailString);
+        rememberResult.putString("pswkey",pswString);
+        requireActivity().getSupportFragmentManager()
+                .setFragmentResult("bundleKey", rememberResult);
     }
 
     private boolean comparePsw(String pswString, String pswStringConf) {
@@ -92,12 +128,13 @@ public class RegisterFragment extends Fragment {
     }
 
     private boolean controlPsw(String pswStringConf) {
-        if (pswStringConf.equals(""))
+        if (pswStringConf.equals("") || pswStringConf.length()<6)
             return false;
         else
             return true;
     }
 
+    //TODO sistemare controllo e-mail
     private boolean controlEmailString(String emailString) {
         if(emailString.equals(""))
             return false;

@@ -16,6 +16,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateOnly="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/Gold"
+                app:layout_constraintBottom_toBottomOf="@+id/registerText"
+                android:layout_marginTop="5dp"
+                app:trackColor="@color/Charcoal" />
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
