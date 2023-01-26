@@ -14,7 +14,6 @@ public class Account {
     @PrimaryKey(autoGenerate = true)
     private String accountName,email,country,id;
     private List<String> favAccountTopics;
-    /*ImageView icon;*/
 
     public Account(String id,String accountName,String email,String country,List<String> favAccountTopics){
 
@@ -23,7 +22,6 @@ public class Account {
         this.email = email;
         this.country = country;
         this.favAccountTopics = favAccountTopics;
-        /*this.icon = icon;*/
 
     }
 
@@ -66,13 +64,5 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    /*public ImageView getIcon() {
-        return icon;
-    }
-
-    public void setIcon(ImageView icon) {
-        this.icon = icon;
-    }*/
 
 }

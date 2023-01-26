@@ -3,6 +3,7 @@ package com.example.projectnewsbgn.UI.homepage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
+import com.example.projectnewsbgn.UI.login.AccountViewModel;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -27,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
-    private FrameLayout fragmentWindow;
+    private AccountViewModel accountViewModel;
+    private NewsViewModel newsViewModel;
     public static final String SHARED_PREFS ="SharedPrefs";
     public static final String SHARED_PREFS_FETCH ="SharedPrefsFetch";
     public static final long TIME = 0;
@@ -37,20 +40,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* HomeFragment homeFragment = new HomeFragment();
-        AccountFragment accountFragment = new AccountFragment();
-        FavoritesFragment favouritesFragment = new FavoritesFragment();
-        SearchFragment searchFragment = new SearchFragment();
-*/
-        /*Toolbar toolbar = findViewById(R.id.topBarMain);
-        setSupportActionBar(toolbar);*/
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        accountViewModel = new ViewModelProvider(this).get(AccountViewModel.class);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
                 findFragmentById(R.id.containerFragment);
         navController = navHostFragment.getNavController();
 
         bottomNavigationView = findViewById(R.id.bottomMenu);
-        //fragmentWindow = findViewById(R.id.containerFragment);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment,R.id.searchFragment,R.id.favouritesFragment,R.id.accountFragment
@@ -59,28 +56,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
 
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-        /*getSupportFragmentManager().beginTransaction().add(R.id.container,HomeFragment.class,null).commit();
-
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
-                        return true;
-                    case R.id.search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,searchFragment).commit();
-                        return true;
-                    case R.id.favourites:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,favouritesFragment).commit();
-                        return true;
-                    case R.id.account:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,accountFragment).commit();
-                        return true;
-                }
-                return false;
-            }
-        });*/
     }
 
    @Override
@@ -116,11 +91,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.logout:
+            case R.id.logout: {
+                accountViewModel.logOut();
+                newsViewModel.clearAllDatabase();
                 changeRemember();
                 Intent intent = new Intent(MainActivity.this, UserAccessActivity.class);
                 startActivity(intent);
                 finish();
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }

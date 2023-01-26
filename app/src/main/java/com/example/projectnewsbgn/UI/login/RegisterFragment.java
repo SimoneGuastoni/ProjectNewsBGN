@@ -1,6 +1,7 @@
 package com.example.projectnewsbgn.UI.login;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,8 @@ public class RegisterFragment extends Fragment {
 
     private TextInputLayout accountName,email,psw,confirmPsw;
     private Button registerBtn;
-    private ImageView profilePic;
     private CheckBox rememberCb;
     private LinearProgressIndicator progressIndicator;
-    public final FragmentActivity act = getActivity();
-    private boolean checked = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +51,6 @@ public class RegisterFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         View v = getView();
-        profilePic = v.findViewById(R.id.profileIcon);
         registerBtn = v.findViewById(R.id.registerBtn);
         rememberCb = v.findViewById(R.id.rememberCbRegister);
         accountName = v.findViewById(R.id.account);
@@ -134,12 +131,12 @@ public class RegisterFragment extends Fragment {
             return true;
     }
 
-    //TODO sistemare controllo e-mail
     private boolean controlEmailString(String emailString) {
-        if(emailString.equals(""))
-            return false;
-        else
+        if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS
+                .matcher(emailString).matches())
             return true;
+        else
+            return false;
     }
 
     private boolean controlAccountString(String accountString) {

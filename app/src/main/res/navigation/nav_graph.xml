@@ -10,6 +10,9 @@
         android:name="com.example.projectnewsbgn.UI.homepage.AccountFragment"
         android:label="AccountFragment"
         tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -46,5 +49,14 @@
         <argument
             android:name="News"
             app:argType="com.example.projectnewsbgn.Models.News" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.projectnewsbgn.UI.homepage.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

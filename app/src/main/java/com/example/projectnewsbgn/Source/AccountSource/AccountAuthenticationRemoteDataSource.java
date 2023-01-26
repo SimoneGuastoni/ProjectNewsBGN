@@ -1,5 +1,7 @@
 package com.example.projectnewsbgn.Source.AccountSource;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.projectnewsbgn.Models.Account;
@@ -22,20 +24,38 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
     }
 
     @Override
-    public void getLoggedAccount() {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser != null){
-            accountCallBack.onSuccessFromAuthentication(
-                    firebaseUser.getEmail(),firebaseUser.getUid());
-        }
-        else{
-            accountCallBack.onFailureFromAuthentication("Errore utente non trovato");
-        }
+    public void login(String email, String password) {
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if(firebaseUser != null){
+                    accountCallBack.onSuccessFromAuthentication
+                            (firebaseUser.getEmail(),firebaseUser.getUid());
+                }
+                else{
+                    accountCallBack.onFailureFromAuthentication("Account equal null");
+                }
+            }
+            else {
+                accountCallBack.onFailureFromAuthentication("Call error");
+            }
+        });
     }
 
     @Override
     public void logout() {
-
+        FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    firebaseAuth.removeAuthStateListener(this);
+                    Log.d(TAG, "User logged out");
+                    //TODO Callback?
+                }
+            }
+        };
+        firebaseAuth.addAuthStateListener(authStateListener);
+        firebaseAuth.signOut();
     }
 
     @Override
@@ -56,24 +76,15 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
     }
 
     @Override
-    public void login(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if(firebaseUser != null){
-                    accountCallBack.onSuccessFromAuthentication
-                            (firebaseUser.getEmail(),firebaseUser.getUid());
-                    /*accountCallBack.onSuccessFromAuthentication(new Account
-                            (firebaseUser.getUid(),firebaseUser.getDisplayName(),
-                                    email,null,null));*/
-                }
-                else{
-                    accountCallBack.onFailureFromAuthentication("Account equal null");
-                }
-            }
-            else {
-                accountCallBack.onFailureFromAuthentication("Call error");
-            }
-        });
+    public void getLoggedAccount() {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null){
+            accountCallBack.onSuccessFromAuthentication(
+                    firebaseUser.getEmail(),firebaseUser.getUid());
+        }
+        else{
+            accountCallBack.onFailureFromAuthentication("Errore utente non trovato");
+        }
     }
+
 }

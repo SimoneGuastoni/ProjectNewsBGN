@@ -24,11 +24,11 @@ import java.io.IOException;
 
 public class UserAccessActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "SharedPrefs";
-    public static final String SHARED_PREFS_COUNTRY = "SharedPrefsCountry";
-    public static final Account COUNTRY = null;
+
+    public static final String SHARED_PREFS_ACCOUNT = "SharedPrefsAccount";
+    public static final String ACCOUNT= "Account";
 
     private NavController navController;
-    private NavigationView navView;
 
     public  ActivityResultLauncher<String> mGetContent = registerForActivityResult
             (new ActivityResultContracts.GetContent(),

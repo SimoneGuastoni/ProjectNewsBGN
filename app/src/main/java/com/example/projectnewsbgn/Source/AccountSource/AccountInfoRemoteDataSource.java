@@ -59,8 +59,32 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
     }
 
     @Override
-    public void getAccountFavoriteNews(String idToken) {
-
+    public void changeAccountDataRemote(String accountId,String email,String newName, String newCountry, List<String> newTopicList) {
+        databaseReference.child("account").child(accountId)
+                .child("accountName").setValue(newName).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        databaseReference.child("account").child(accountId)
+                                .child("country").setValue(newCountry).addOnCompleteListener(task2 -> {
+                                    if (task2.isSuccessful()){
+                                        databaseReference.child("account").child(accountId)
+                                                .child("favAccountTopics").setValue(newTopicList).addOnCompleteListener(task3 -> {
+                                                    if (task3.isSuccessful()){
+                                                        accountCallBack.onSuccessFromRemoteDatabase(new Account(accountId,newName,email,newCountry,newTopicList));
+                                                    }
+                                                    else {
+                                                        accountCallBack.onFailureFromRemoteDatabase("Error can't change info");
+                                                    }
+                                                });
+                                    }
+                                    else {
+                                        accountCallBack.onFailureFromRemoteDatabase("Error can't change info");
+                                    }
+                                });
+                    }
+                    else {
+                        accountCallBack.onFailureFromRemoteDatabase("Error can't change info");
+                    }
+        });
     }
 
     @Override
@@ -105,8 +129,4 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
         });
     }
 
-    @Override
-    public void saveAccountPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-
-    }
 }

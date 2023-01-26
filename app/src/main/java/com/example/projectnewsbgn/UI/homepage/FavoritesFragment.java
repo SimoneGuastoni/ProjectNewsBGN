@@ -66,9 +66,10 @@ public class FavoritesFragment extends Fragment implements FavListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
         recyclerViewFav = view.findViewById(R.id.recyclerViewFav);
         iconNoFavNews = view.findViewById(R.id.noFavNews);
-        buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
         progressBar = view.findViewById(R.id.progressBar);
         hintText = view.findViewById(R.id.hintText);
 
@@ -94,7 +95,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 buttonDeleteAll.setVisibility(View.VISIBLE);
                 recyclerViewFav.setVisibility(View.VISIBLE);
             } else {
-                Toast.makeText(getContext(), "No favorite news yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 buttonDeleteAll.setVisibility(view.GONE);
                 progressBar.setVisibility(View.GONE);
                 iconNoFavNews.setVisibility(View.VISIBLE);

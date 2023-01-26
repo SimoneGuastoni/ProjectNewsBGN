@@ -26,4 +26,5 @@ public interface    INewsRepositoryWithLiveData {
 
     void updateNewsNotSaved(News news);
 
+    void clearAllDb();
 }

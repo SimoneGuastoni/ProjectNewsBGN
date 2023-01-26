@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         android:indeterminateOnly="true"
-        android:backgroundTint="@color/Charcoal"
+        android:indeterminateTint="@color/Charcoal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

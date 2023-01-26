@@ -35,6 +35,7 @@ import com.example.projectnewsbgn.UI.login.AccountViewModelFactory;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,6 @@ public class HomeFragment extends Fragment implements HomeListener {
     private RecyclerView recyclerView;
     private INewsRepositoryWithLiveData newsRepositoryWithLiveData;
     private NewsViewModel newsViewModel;
-    /* Test multi fetch multitopics*/
     private List<String> topicList;
     private NewsHomeAdapter newsRecyclerViewAdapter;
     private ProgressBar progressBar;
@@ -79,11 +79,6 @@ public class HomeFragment extends Fragment implements HomeListener {
         newsList = new ArrayList<>();
 
         topicList = new ArrayList<>();
-        /* Test multiTopic
-        topicList.clear();
-        topicList.add("business");
-        topicList.add("entertainment");
-        topicList.add("health");*/
 
     }
 
@@ -98,15 +93,15 @@ public class HomeFragment extends Fragment implements HomeListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        //TODO sharePresAccount??
         /*account = loadSavedAccount();*/
-
-        timePassedFromFetch = calculateTimeFromFetch();
 
         progressBar = view.findViewById(R.id.progressBar);
         internetError = view.findViewById(R.id.iconInternetError);
-
         recyclerView = view.findViewById(R.id.RecyclerViewcontainer);
+
+        timePassedFromFetch = calculateTimeFromFetch();
+
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -118,12 +113,14 @@ public class HomeFragment extends Fragment implements HomeListener {
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.INVISIBLE);
 
+
+
         accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), result -> {
-            if (result.isSuccess()) {
-                country = ((Result.AccountSuccess) result).getData().getCountry();
-                topicList.clear();
-                topicList = ((Result.AccountSuccess) result).getData().getFavAccountTopics();
+            if(result.isSuccess()){
+                account = ((Result.AccountSuccess) result).getData();
+                country = account.getCountry();
+                topicList = account.getFavAccountTopics();
                 if (country != null && topicList.size() != 0) {
 
                     newsObtained = newsViewModel.getNews(country, topicList, timePassedFromFetch);
@@ -134,22 +131,26 @@ public class HomeFragment extends Fragment implements HomeListener {
                             HomeFragment.this.newsList.clear();
                             HomeFragment.this.newsList.addAll(((Result.NewsSuccess) result2).getData().getNewsList());
                             newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
+                            newsRecyclerViewAdapter.notifyDataSetChanged();
                             recyclerView.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
                         } else {
-                            Toast.makeText(HomeFragment.this.getContext(), "Error 666", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeFragment.this.getContext(), result2.getClass().toString(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.VISIBLE);
                         }
                     });
                 }
 
-            } else {
-                Toast.makeText(getContext(), "Errore recupero dati utente", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
+
         });
     }
+
 
     // Metodi del comportamento dell'adapter
 
@@ -178,11 +179,14 @@ public class HomeFragment extends Fragment implements HomeListener {
         return time;
     }
 
-    /*private Account loadSavedAccount() {
+    private Account loadSavedAccount() {
         Account accountLogged;
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);
-        accountLogged = sharedPreferences.getString(UserAccessActivity.COUNTRY,null);
+        SharedPreferences sharedPreferences = getActivity()
+                .getSharedPreferences(UserAccessActivity.SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Account", "");
+        accountLogged = gson.fromJson(json, Account.class);
         return accountLogged;
-    }*/
+    }
 }

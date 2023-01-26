@@ -279,7 +279,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:indeterminateOnly="true"
-                android:progressTint="@color/Gold"
+                android:indeterminateTint="@color/Charcoal"
                 android:outlineAmbientShadowColor="@color/Charcoal"
                 android:visibility="gone"
                 android:layout_marginTop="100sp"/>

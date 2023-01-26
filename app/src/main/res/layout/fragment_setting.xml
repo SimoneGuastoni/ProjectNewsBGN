@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UI.homepage.SettingFragment"
+    android:background="@color/Tan"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20sp">
+
+        <TextView
+            android:id="@+id/selectCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Choose a country"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:layout_gravity="center"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15sp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="20sp"
+            android:background="@color/Charcoal"
+            android:contentDescription="@string/countryList"
+            android:minHeight="48dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/account"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/accountName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Account name"
+                android:drawableStart="@drawable/ic_baseline_account_box_24"
+                android:drawablePadding="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Country"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/countryName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Country"
+                android:editable="false"
+                android:drawableStart="@drawable/flag"
+                android:drawablePadding="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminateTint="@color/Charcoal"
+            />
+
+        <TextView
+            android:id="@+id/selectInterestTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Topic of interest"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:layout_gravity="center"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/Tan"
+            android:layout_marginStart="10dp"
+            app:cardElevation="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/cbTopic1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Business"
+                        android:textColor="@color/Charcoal" />
+
+                    <CheckBox
+                        android:id="@+id/cbTopic2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:textColor="@color/Charcoal"
+                        android:text="Entertainment"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/cbTopic3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:textColor="@color/Charcoal"
+                        android:text="Health"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="50sp"
+                    android:gravity="center"
+                    >
+                    <CheckBox
+                        android:id="@+id/cbTopic4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:textColor="@color/Charcoal"
+                        android:text="Science"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/cbTopic5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:textColor="@color/Charcoal"
+                        android:text="Sports"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/cbTopic6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:textColor="@color/Charcoal"
+                        android:text="Technology"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Update"
+            android:layout_marginTop="30sp"
+            android:textColor="@color/Cream"
+            android:backgroundTint="@color/Charcoal"
+            android:layout_marginBottom="200dp"/>
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

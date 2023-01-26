@@ -25,4 +25,6 @@ public abstract class BaseNewsLocalDataSource {
     public abstract void saveDataInDatabase(List<News> newsList);
     public abstract void deleteAllFavoriteNews();
     public abstract void clearDatabase();
+    public abstract  void clearAllDatabase();
+
 }

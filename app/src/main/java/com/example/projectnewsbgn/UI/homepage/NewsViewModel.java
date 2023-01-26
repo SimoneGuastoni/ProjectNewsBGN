@@ -36,6 +36,7 @@ public class NewsViewModel extends ViewModel {
 
         //Fetch eseguita dal HomeFragment
     public MutableLiveData<Result> getNews(String country, List<String> topicList, long lastUpdate){
+        //TODO senza connessione scarica notizie in locale?Eventuale if che controlla se il dispositivo è connesso
         long currentTime = System.currentTimeMillis();
         if(lastUpdate == 0 || currentTime - lastUpdate > 30000) {
             SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
@@ -103,5 +104,9 @@ public class NewsViewModel extends ViewModel {
     //Metodo per andare a salvare news specifiche che non sono state salvate ma a cui metto like
     public void updateNewsNotSaved(News news) {
         newsRepositoryWithLiveData.updateNewsNotSaved(news);
+    }
+
+    public void clearAllDatabase() {
+        newsRepositoryWithLiveData.clearAllDb();
     }
 }

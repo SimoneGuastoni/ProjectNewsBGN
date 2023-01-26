@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,9 +26,11 @@ import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsSearchAdapter;
 import com.example.projectnewsbgn.Listener.SearchListener;
+import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
+import com.example.projectnewsbgn.UI.login.AccountViewModel;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 
 import java.util.ArrayList;
@@ -36,14 +39,15 @@ import java.util.List;
 public class SearchFragment extends Fragment implements SearchListener {
 
     private NewsViewModel newsViewModel;
-    private MutableLiveData<Result> newsObtained;
+    private MutableLiveData<Result> newsObtained,accountObtained;
     private FullNewsFragment fullNewsFragment;
     private RecyclerView recyclerView;
     private NewsSearchAdapter newsSmallAdapter;
+    private AccountViewModel accountViewModel;
     private ImageView businessTopic,scienceTopic,generalTopic,
             healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage,internetError;
     private ProgressBar progressBar;
-    private String category = "general",country,query = "";
+    private String category,country,query;
     private TextView hintText;
     private SearchView searchView;
     private List<News> newsList;
@@ -54,17 +58,13 @@ public class SearchFragment extends Fragment implements SearchListener {
         super.onCreate(savedInstanceState);
 
         newsViewModel = new ViewModelProvider(requireActivity()).get(NewsViewModel.class);
+        accountViewModel = new ViewModelProvider(requireActivity()).get(AccountViewModel.class);
         newsList = new ArrayList<>();
         fullNewsFragment = new FullNewsFragment();
 
+        country="general";
+        query="";
         allTopic = new ArrayList<String>();
-        allTopic.add("general");
-        allTopic.add("sport");
-        allTopic.add("health");
-        allTopic.add("business");
-        allTopic.add("technology");
-        allTopic.add("entertainment");
-        allTopic.add("science");
     }
 
     @Override
@@ -92,6 +92,17 @@ public class SearchFragment extends Fragment implements SearchListener {
         hintText = view.findViewById(R.id.hintText);
         internetError = view.findViewById(R.id.iconInternetError);
 
+        accountObtained = accountViewModel.getAccountData();
+        accountObtained.observe(getViewLifecycleOwner(), result -> {
+            if (result.isSuccess()){
+                country = ((Result.AccountSuccess) result).getData().getCountry();
+
+            }
+            else{
+                Toast.makeText(getActivity(), "Error retrieve account data", Toast.LENGTH_SHORT).show();
+            }
+
+        });
         /*country = loadSavedCountry();*/
 
         RecyclerView.LayoutManager layoutManager =
@@ -214,15 +225,6 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     // Metodi di supporto al fragment
 
-   /* private String loadSavedCountry() {
-        String savedCountry;
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(UserAccessActivity.SHARED_PREFS_COUNTRY,MODE_PRIVATE);
-        savedCountry = sharedPreferences.getString(UserAccessActivity.COUNTRY,"");
-        return savedCountry;
-    }*/
-
-
     private void rebuildNewsList(MutableLiveData<Result> newsObtained) {
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
@@ -234,7 +236,7 @@ public class SearchFragment extends Fragment implements SearchListener {
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             } else {
-                Toast.makeText(getContext(), result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 internetError.setVisibility(View.VISIBLE);
             }

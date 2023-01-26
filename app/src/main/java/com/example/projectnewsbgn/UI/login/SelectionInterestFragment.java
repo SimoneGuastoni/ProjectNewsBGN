@@ -1,9 +1,9 @@
 package com.example.projectnewsbgn.UI.login;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.COUNTRY;
+import static com.example.projectnewsbgn.UI.login.UserAccessActivity.ACCOUNT;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_COUNTRY;
+import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_ACCOUNT;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,6 +29,7 @@ import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.Locale;
 
 public class SelectionInterestFragment extends Fragment {
 
-    private TextView selectCountryTxt,selectTopicsTxt;
+    private TextView selectTopicsTxt;
     private Button completeRegistrationBtn;
     private Spinner countrySpinner;
     private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
@@ -78,9 +79,9 @@ public class SelectionInterestFragment extends Fragment {
 
         Activity act = getActivity();
 
-        selectCountryTxt = act.findViewById(R.id.selectCountryTxt);
-        selectTopicsTxt = act.findViewById(R.id.selectInterestTxt);
         completeRegistrationBtn = act.findViewById(R.id.completeRegisterBtn);
+        progressIndicator = act.findViewById(R.id.progressIndicator);
+        selectTopicsTxt = act.findViewById(R.id.selectInterestTxt);
         countrySpinner = act.findViewById(R.id.spinnerCountry);
         btnTopic1 = act.findViewById(R.id.toggleBtnTopic1);
         btnTopic2 = act.findViewById(R.id.toggleBtnTopic2);
@@ -88,7 +89,6 @@ public class SelectionInterestFragment extends Fragment {
         btnTopic4 = act.findViewById(R.id.toggleBtnTopic4);
         btnTopic5 = act.findViewById(R.id.toggleBtnTopic5);
         btnTopic6 = act.findViewById(R.id.toggleBtnTopic6);
-        progressIndicator = act.findViewById(R.id.progressIndicator);
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -117,7 +117,6 @@ public class SelectionInterestFragment extends Fragment {
                 if (btnTopic6.isChecked())
                     topicList.add(btnTopic6.getText().toString().toLowerCase(Locale.ROOT));
 
-                //PARSE AccountViemodel
                 Intent goToHome = new Intent(getActivity(), MainActivity.class);
 
                 saveCountry(countrySpinner.getSelectedItem().toString());
@@ -128,7 +127,7 @@ public class SelectionInterestFragment extends Fragment {
                                 if(remember) {
                                     Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
                                     Account account = ((Result.AccountSuccess) result).getData();
-                                    /*saveAccount(account);*/
+                                    saveAccount(account);
                                     SharedPreferences sharedPreferences = act.getSharedPreferences
                                             (SHARED_PREFS, getContext().MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -141,7 +140,7 @@ public class SelectionInterestFragment extends Fragment {
                                 getActivity().finish();
                             }
                             else{
-                                Toast.makeText(act, "Registration error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(act, result.getClass().toString(), Toast.LENGTH_SHORT).show();
                                 topicList.clear();
                                 topicList.add("general");
                                 progressIndicator.setVisibility(View.GONE);
@@ -156,13 +155,15 @@ public class SelectionInterestFragment extends Fragment {
         });
     }
 
-    /*private void saveAccount(Account account) {
-        SharedPreferences sharedPreferences = getActivity().
-                getSharedPreferences(SHARED_PREFS_COUNTRY,MODE_PRIVATE);
+    private void saveAccount(Account account) {
+        SharedPreferences sharedPreferences = getActivity()
+                .getSharedPreferences(SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(COUNTRY,account);
+        Gson gson = new Gson();
+        String json = gson.toJson(account);
+        editor.putString(ACCOUNT,json);
         editor.apply();
-    }*/
+    }
 
     private void saveCountry(String selectedCountry) {
 

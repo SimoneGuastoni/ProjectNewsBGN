@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -57,8 +58,6 @@ public class FullNewsFragment extends Fragment {
         text_link = view.findViewById(R.id.linkNews);
         bntFav = view.findViewById(R.id.btnFavourite);
 
-        /*news = (News) getIntent().getSerializableExtra("news");*/
-
         text_title.setText(news.getTitle());
         text_date.setText(news.getPublishedAt());
         text_content.setText(news.getContent());
@@ -73,6 +72,8 @@ public class FullNewsFragment extends Fragment {
 
         bntFav.setOnClickListener(v -> {
             newsViewModel.updateNewsNotSaved(news);
+            //TODO cambiare icona se like o meno
+            /*bntFav.setImageDrawable(AppCompatResources.getDrawable(this.R.));*/
         });
     }
 }

@@ -51,4 +51,13 @@ public class AccountViewModel extends ViewModel {
     private void getLoggedAccount(){
         accountMutableLiveData = accountRepository.getLoggedAccount();
     }
+
+    public MutableLiveData<Result> changeAccountData(String accountId, String email,String newName, String newCountry, List<String> newTopicList) {
+        accountMutableLiveData = accountRepository.changeAccountDataFirebase(accountId,email,newName,newCountry,newTopicList);
+        return accountMutableLiveData;
+    }
+
+    public void logOut() {
+        accountRepository.logout();
+    }
 }

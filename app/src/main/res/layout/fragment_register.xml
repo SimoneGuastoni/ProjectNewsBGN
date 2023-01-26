@@ -44,8 +44,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="25dp"
                         android:textColor="@color/Charcoal"
+                        android:textSize="16dp"
                         android:text="@string/welcome_here_you_can_create_an_account"
                         android:textStyle="bold"
                         android:layout_gravity="center"
@@ -53,12 +54,13 @@
 
                     <ImageView
                         android:id="@+id/profileIcon"
-                        android:layout_width="103dp"
-                        android:layout_height="90dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"
-                        android:background="@color/Cream"
-                        app:srcCompat="@drawable/ic_baseline_account_box_24" />
+                        android:transitionName="profile_image"
+                        android:background="@color/Gold"
+                        app:srcCompat="@drawable/compile" />
 
                     <TextView
                         android:id="@+id/avatarSelectTExt"
@@ -66,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/Charcoal"
-                        android:text="@string/avatarSelectText"
+                        android:text="Please insert all data"
                         android:layout_gravity="center"
                         />
 
@@ -173,7 +175,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/register"
-                        android:layout_marginTop="60sp"
+                        android:layout_marginTop="40sp"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:textColor="@color/Cream"
@@ -182,7 +184,7 @@
 
                     <CheckBox
                         android:id="@+id/rememberCbRegister"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@color/Cream"

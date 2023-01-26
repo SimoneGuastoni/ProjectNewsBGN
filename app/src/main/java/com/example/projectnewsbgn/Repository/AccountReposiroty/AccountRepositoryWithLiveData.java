@@ -23,15 +23,11 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     private final BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;
     private final BaseNewsLocalDataSource newsLocalDataSource;
     private final MutableLiveData<Result> accountMutableLiveData;
-    private final MutableLiveData<Result> accountFavoriteNewsMutableLiveData;
-    private final MutableLiveData<Result> accountPreferencesMutableLiveData;
 
     public AccountRepositoryWithLiveData(BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource,
                           BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource,
                           BaseNewsLocalDataSource newsLocalDataSource) {
         this.accountMutableLiveData = new MutableLiveData<>();
-        this.accountPreferencesMutableLiveData = new MutableLiveData<>();
-        this.accountFavoriteNewsMutableLiveData = new MutableLiveData<>();
         this.baseAccountAuthenticationRemoteDataSource = baseAccountAuthenticationRemoteDataSource;
         this.baseAccountInfoRemoteDataSource = baseAccountInfoRemoteDataSource;
         this.newsLocalDataSource = newsLocalDataSource;
@@ -53,23 +49,20 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     }
 
     @Override
-    public MutableLiveData<Result> getAccountFavoriteNews(String idToken) {
-        return null;
-    }
-
-    @Override
-    public MutableLiveData<Result> getAccountPreferences(String idToken) {
-        return null;
-    }
-
-    @Override
     public MutableLiveData<Result> logout() {
-        return null;
+        baseAccountAuthenticationRemoteDataSource.logout();
+        return accountMutableLiveData;
     }
 
     @Override
     public MutableLiveData<Result> getLoggedAccount() {
         baseAccountAuthenticationRemoteDataSource.getLoggedAccount();
+        return accountMutableLiveData;
+    }
+
+    @Override
+    public MutableLiveData<Result> changeAccountDataFirebase(String accountId,String email ,String newName, String newCountry, List<String> newTopicList) {
+        baseAccountInfoRemoteDataSource.changeAccountDataRemote(accountId,email,newName,newCountry,newTopicList);
         return accountMutableLiveData;
     }
 
@@ -84,10 +77,7 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
         baseAccountAuthenticationRemoteDataSource.login(email,password);
     }
 
-    @Override
-    public void saveAccountPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-
-    }
+    //Metodi onSuccess
 
     @Override
     public void onSuccessFromAuthentication(Account account) {
@@ -103,12 +93,7 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
         }
     }
 
-    @Override
-    public void onFailureFromAuthentication(String message) {
-        Result.Error result = new Result.Error(message);
-        accountMutableLiveData.postValue(result);
-    }
-
+    //TODO onsuccesslogout
     @Override
     public void onSuccessLogout() {
 
@@ -127,14 +112,11 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
         accountMutableLiveData.postValue(result);
     }
 
+    //Metodi OnFailure
     @Override
-    public void onSuccessFromRemoteDatabase(List<News> newsList) {
-
-    }
-
-    @Override
-    public void onSuccessFromGettingUserPreferences() {
-
+    public void onFailureFromAuthentication(String message) {
+        Result.Error result = new Result.Error(message);
+        accountMutableLiveData.postValue(result);
     }
 
     @Override
@@ -142,6 +124,8 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
         Result.Error result = new Result.Error(message);
         accountMutableLiveData.postValue(result);
     }
+
+    //Onsuccess e Onfailure della localNewsDataSource
 
     @Override
     public void onSuccessFromRemote(List<News> newsList, long lastUpdate) {

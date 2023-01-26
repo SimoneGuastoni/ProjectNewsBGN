@@ -80,6 +80,11 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
+    public void clearAllDb() {
+        newsLocalDataSource.clearAllDatabase();
+    }
+
+    @Override
     public MutableLiveData<Result> deleteAllFavoriteNews() {
         newsLocalDataSource.deleteAllFavoriteNews();
         return favoriteNewsMutableLiveData;

@@ -122,6 +122,15 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
         });
     }
 
+    @Override
+    public void clearAllDatabase() {
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
+            List<News> allNews = newsDao.getAll();
+            newsDao.databaseCleaner(allNews);
+            //TODO aggiungere callback?
+        });
+    }
+
     //Metodi di supporto
 
     private void insertDataOnDatabase(News news) {

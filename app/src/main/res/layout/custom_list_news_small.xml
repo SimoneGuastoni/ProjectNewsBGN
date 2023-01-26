@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/not_found" />
+                android:src="@drawable/error_v2" />
 
         </LinearLayout>
 

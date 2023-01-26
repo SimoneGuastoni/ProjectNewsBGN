@@ -30,11 +30,13 @@
                     android:src="@drawable/ic_baseline_account_circle_24"
                     android:layout_centerVertical="true"/>
                 <TextView
+                    android:id="@+id/accountNametxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Account name"
+                    android:textColor="@color/Charcoal"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:layout_toEndOf="@id/profilePic"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"/>
@@ -103,6 +105,7 @@
                     android:layout_marginBottom="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nameTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Account name"
@@ -119,6 +122,7 @@
                     android:layout_marginBottom="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="E-Mail"
@@ -128,21 +132,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:layout_marginBottom="10dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="***********"
-                        android:editable="false"
-                        android:drawableStart="@drawable/ic_baseline_shield_24"
-                        android:drawablePadding="10dp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -151,11 +140,12 @@
                     android:layout_marginBottom="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/countryTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Country"
                         android:editable="false"
-                        android:drawableStart="@drawable/ic_baseline_flag_24"
+                        android:drawableStart="@drawable/flag"
                         android:drawablePadding="10dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -169,6 +159,7 @@
                     android:textSize="15sp"
                     android:textStyle="italic"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
                     />
 
                 <androidx.cardview.widget.CardView
@@ -195,6 +186,7 @@
                                 android:id="@+id/toggleBtnTopic1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:text="Business"
                                 android:textColor="@color/Charcoal" />
 
@@ -202,14 +194,16 @@
                                 android:id="@+id/toggleBtnTopic2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Entertainment"
                                 />
 
                             <CheckBox
-                                android:id="@+id/toggleBtnTopidc3"
+                                android:id="@+id/toggleBtnTopic3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Health"
                                 />
@@ -227,6 +221,7 @@
                                 android:id="@+id/toggleBtnTopic4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Science"
                                 />
@@ -235,14 +230,16 @@
                                 android:id="@+id/toggleBtnTopic5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Sports"
                                 />
 
                             <CheckBox
-                                android:id="@+id/toggleBtnTopidc6"
+                                android:id="@+id/toggleBtnTopic6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
+                                android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Technology"
                                 />
@@ -254,10 +251,11 @@
 
 
                 <Button
-                    android:id="@+id/udpateBtn"
+                    android:id="@+id/updateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Update"
+                    android:layout_marginTop="60sp"
                     android:textColor="@color/Cream"
                     android:backgroundTint="@color/Charcoal"
                     android:layout_marginBottom="200dp"/>
