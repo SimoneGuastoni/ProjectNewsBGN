@@ -85,6 +85,7 @@ public class SettingFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySpinner.setAdapter(adapter);
 
+        //TODO change account checkbox segnate
         accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()) {

@@ -65,6 +65,14 @@ public class SearchFragment extends Fragment implements SearchListener {
         country="general";
         query="";
         allTopic = new ArrayList<String>();
+        allTopic.add("general");
+        allTopic.add("sport");
+        allTopic.add("health");
+        allTopic.add("science");
+        allTopic.add("business");
+        allTopic.add("entertainment");
+        allTopic.add("technology");
+
     }
 
     @Override
@@ -238,7 +246,7 @@ public class SearchFragment extends Fragment implements SearchListener {
             } else {
                 Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
-                internetError.setVisibility(View.VISIBLE);
+                /*internetError.setVisibility(View.VISIBLE);*/
             }
         });
     }
