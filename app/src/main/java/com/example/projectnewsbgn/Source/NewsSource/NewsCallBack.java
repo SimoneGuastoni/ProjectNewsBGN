@@ -23,4 +23,6 @@ public interface NewsCallBack {
     void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews);
     void onNewsFavoriteStatusChanged(List<News> news);
     void onFailureEmptyFavouriteList(Exception exception);
+
+    void onSuccessFromLocalClear(List<News> clearList);
 }

@@ -26,6 +26,7 @@ public class NewsViewModel extends ViewModel {
     //tra parentesi angolari c'è il tipo di dato che noi ci aspettiamo venga restituito dal liveData
     private MutableLiveData<Result> favoriteNewsListLiveData;
     private MutableLiveData<Result> topicChoseNewsList;
+    private MutableLiveData<Result> resultNewsMutableLiveData;
 
     public NewsViewModel(INewsRepositoryWithLiveData iNewsRepositoryWithLiveData,Application application){
         this.newsRepositoryWithLiveData = iNewsRepositoryWithLiveData;
@@ -93,8 +94,9 @@ public class NewsViewModel extends ViewModel {
     }
 
     // Metodi per andare a modificare lo status di favorite
-    public void updateNews(News news) {
-        newsRepositoryWithLiveData.updateNews(news);
+    public MutableLiveData<Result> updateNews(News news) {
+        favoriteNewsListLiveData = newsRepositoryWithLiveData.updateNews(news);
+        return favoriteNewsListLiveData;
     }
 
     private void deleteAllFavoriteNews(){
@@ -102,11 +104,13 @@ public class NewsViewModel extends ViewModel {
     }
 
     //Metodo per andare a salvare news specifiche che non sono state salvate ma a cui metto like
-    public void updateNewsNotSaved(News news) {
-        newsRepositoryWithLiveData.updateNewsNotSaved(news);
+    public MutableLiveData<Result> updateNewsNotSaved(News news) {
+        favoriteNewsListLiveData = newsRepositoryWithLiveData.updateNewsNotSaved(news);
+        return favoriteNewsListLiveData;
     }
 
-    public void clearAllDatabase() {
-        newsRepositoryWithLiveData.clearAllDb();
+    public MutableLiveData<Result> clearAllDatabase() {
+        resultNewsMutableLiveData = newsRepositoryWithLiveData.clearAllDb();
+        return resultNewsMutableLiveData;
     }
 }

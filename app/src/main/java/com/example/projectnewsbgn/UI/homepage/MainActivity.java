@@ -3,6 +3,9 @@ package com.example.projectnewsbgn.UI.homepage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
 /*import com.example.projectnewsbgn.login.LoginActivity;*/
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private AccountViewModel accountViewModel;
     private NewsViewModel newsViewModel;
+    private MutableLiveData<Result> controlResult;
     public static final String SHARED_PREFS ="SharedPrefs";
     public static final String SHARED_PREFS_FETCH ="SharedPrefsFetch";
     public static final long TIME = 0;
@@ -56,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
 
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
+
+        //TODO ??
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setElevation(50);
     }
 
    @Override
@@ -92,12 +101,25 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.logout: {
-                accountViewModel.logOut();
-                newsViewModel.clearAllDatabase();
-                changeRemember();
-                Intent intent = new Intent(MainActivity.this, UserAccessActivity.class);
-                startActivity(intent);
-                finish();
+                controlResult = accountViewModel.logOut();
+                controlResult.observe(this, (Observer<Result>) result -> {
+                    if (result.isSuccess()){
+                        newsViewModel.clearAllDatabase().observe(this, result1 -> {
+                            if (result1.isSuccess()){
+                                changeRemember();
+                                Intent intent = new Intent(MainActivity.this, UserAccessActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(this, result1.getClass().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(this, result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             default:
                 return super.onOptionsItemSelected(item);

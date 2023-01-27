@@ -24,6 +24,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     private final MutableLiveData<Result> allNewsMutableLiveData;
     private final MutableLiveData<Result> favoriteNewsMutableLiveData;
     private final MutableLiveData<Result> topicChoseNewsList;
+    private final MutableLiveData<Result> resultMutableLiveData;
     private final BaseNewsLocalDataSource newsLocalDataSource;
     private final BaseNewsRemoteDataSource newsRemoteDataSource;
 
@@ -31,6 +32,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         allNewsMutableLiveData = new MutableLiveData<>();
         favoriteNewsMutableLiveData = new MutableLiveData<>();
         topicChoseNewsList = new MutableLiveData<>();
+        resultMutableLiveData = new MutableLiveData<>();
         this.newsLocalDataSource = newsLocalDataSource;
         this.newsRemoteDataSource = newsRemoteDataSource;
         this.newsRemoteDataSource.setNewsCallBack(this);
@@ -70,18 +72,21 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
 
     //Metodi per modificare lo stato di favorite delle news
     @Override
-    public void updateNews(News news) {
+    public MutableLiveData<Result> updateNews(News news) {
         newsLocalDataSource.updateNews(news);
+        return favoriteNewsMutableLiveData;
     }
 
     @Override
-    public void updateNewsNotSaved(News news) {
+    public MutableLiveData<Result> updateNewsNotSaved(News news) {
         newsLocalDataSource.updateNewsNotSaved(news);
+        return favoriteNewsMutableLiveData;
     }
 
     @Override
-    public void clearAllDb() {
+    public MutableLiveData<Result> clearAllDb() {
         newsLocalDataSource.clearAllDatabase();
+        return resultMutableLiveData;
     }
 
     @Override
@@ -128,6 +133,12 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         allNewsMutableLiveData.postValue(result);
     }
 
+    @Override
+    public void onSuccessFromLocalClear(List<News> clearedList) {
+        Result.NewsSuccess  result = new Result.NewsSuccess(new NewsResponse(clearedList));
+        resultMutableLiveData.postValue(result);
+    }
+
     // Metodi onFailure
 
     @Override
@@ -135,6 +146,9 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         Result.Error result = new Result.Error(exception.getMessage());
         favoriteNewsMutableLiveData.postValue(result);
     }
+
+
+
 
     @Override
     public void onFailureFromRemote(Exception exception) {
@@ -152,8 +166,10 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     //Metodi onSuccess dela modifica di stato di favorite
     @Override
     public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
-        Result result = allNewsMutableLiveData.getValue();
-        favoriteNewsMutableLiveData.postValue(new Result.NewsSuccess(new NewsResponse(favoriteNews)));
+        /*Result result = allNewsMutableLiveData.getValue();*/
+        Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(favoriteNews));
+        favoriteNewsMutableLiveData.postValue(result);
+        /*favoriteNewsMutableLiveData.postValue(new Result.NewsSuccess(new NewsResponse(favoriteNews)));*/
     }
 
     @Override

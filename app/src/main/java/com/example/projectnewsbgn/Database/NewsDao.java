@@ -17,6 +17,9 @@ public interface NewsDao {
     @Query("SELECT * FROM news_table ORDER BY publishedAt DESC")
     List<News> getAll();
 
+    @Query("SELECT * FROM news_table WHERE id = :id")
+    News getNews(long id);
+
     @Query("SELECT * FROM news_table WHERE favourite = 1 ORDER BY publishedAt DESC")
     List<News> getAllFavouriteNews();
 

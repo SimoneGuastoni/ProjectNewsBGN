@@ -4,8 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,6 +68,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favorite");
 
         buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
         recyclerViewFav = view.findViewById(R.id.recyclerViewFav);
@@ -104,15 +107,20 @@ public class FavoritesFragment extends Fragment implements FavListener {
         });
 
         buttonDeleteAll.setOnClickListener(v -> {
-            int size = controlList.size();
-            News controlNews;
-          for (int i=size-1 ; i>-1; i--){
-              controlNews = controlList.get(i);
-              controlList.remove(i);
-              newsFavAdapter.notifyItemRemoved(newsFavList.indexOf(controlNews));
-              onDeleteButtonPressed(controlNews);
-              newsFavList.remove(controlNews);
-          }
+            if(controlList.size()>0){
+                int size = controlList.size();
+                News controlNews;
+                for (int i=size-1 ; i>-1; i--){
+                    controlNews = controlList.get(i);
+                    controlList.remove(i);
+                    newsFavAdapter.notifyItemRemoved(newsFavList.indexOf(controlNews));
+                    onDeleteButtonPressed(controlNews);
+                    newsFavList.remove(controlNews);
+                }
+            }
+            else {
+                Toast.makeText(getContext(), "Check at least one news or click the delete icon", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -128,7 +136,11 @@ public class FavoritesFragment extends Fragment implements FavListener {
 
     @Override
     public void onDeleteButtonPressed(News news) {
-        newsViewModel.updateNews(news);
+        newsViewModel.updateNews(news).observe(getViewLifecycleOwner(), result -> {
+            if (!result.isSuccess()){
+                Toast.makeText(getContext(), "Cancel error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -53,7 +53,12 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
     public void updateDataOnDatabase(News news,boolean favourite) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             newsDao.updateNews(news);
-            newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getAllFavouriteNews());
+            if(newsDao.getNews(news.getId()).getFavourite() == news.getFavourite()){
+                newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getAllFavouriteNews());
+            }
+            else{
+                newsCallBack.onFailureFromLocal(new Exception("Change like error"));
+            }
         });
     }
 
@@ -79,7 +84,6 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                         newsList.set(newsList.indexOf(news), news);
                     }
                 }
-                //TODO Errore negli id????
                 List<Long> insertedNewsId = newsDao.insertNewsList(newsList);
                 for (int i = 0; i < newsList.size(); i++) {
                     newsList.get(i).setId(insertedNewsId.get(i));
@@ -127,12 +131,17 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             List<News> allNews = newsDao.getAll();
             newsDao.databaseCleaner(allNews);
-            //TODO aggiungere callback?
+            if(newsDao.getAll().size() == 0){
+                newsCallBack.onSuccessFromLocalClear(newsDao.getAll());
+            }
+            else{
+                newsCallBack.onFailureFromRemote(new Exception("Errore nel pulire il database"));
+            }
         });
     }
 
     //Metodi di supporto
-
+//TODO dove mettere onfailurecallbak? effettuare controllo?
     private void insertDataOnDatabase(News news) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             List<News> allNewsFromDb = newsDao.getAll();

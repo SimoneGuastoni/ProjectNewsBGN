@@ -14,7 +14,7 @@ public class AccountViewModel extends ViewModel {
 
     private final IAccountRepositoryWithLiveData accountRepository;
     private MutableLiveData<Result> accountMutableLiveData;
-    private MutableLiveData<Result> accountFavoriteNewsMutableLiveData;
+    private MutableLiveData<Result> resultMutableLiveData;
     private MutableLiveData<Result> accountPreferencesMutableLiveData;
     private boolean authenticationError;
 
@@ -57,7 +57,8 @@ public class AccountViewModel extends ViewModel {
         return accountMutableLiveData;
     }
 
-    public void logOut() {
-        accountRepository.logout();
+    public MutableLiveData<Result> logOut() {
+        resultMutableLiveData = accountRepository.logout();
+        return resultMutableLiveData;
     }
 }

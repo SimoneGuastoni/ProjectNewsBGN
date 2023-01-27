@@ -1,9 +1,7 @@
 package com.example.projectnewsbgn.UI.login;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.ACCOUNT;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_ACCOUNT;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -127,7 +125,6 @@ public class SelectionInterestFragment extends Fragment {
                                 if(remember) {
                                     Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
                                     Account account = ((Result.AccountSuccess) result).getData();
-                                    saveAccount(account);
                                     SharedPreferences sharedPreferences = act.getSharedPreferences
                                             (SHARED_PREFS, getContext().MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -153,16 +150,6 @@ public class SelectionInterestFragment extends Fragment {
                 selectTopicsTxt.setError("");
             }
         });
-    }
-
-    private void saveAccount(Account account) {
-        SharedPreferences sharedPreferences = getActivity()
-                .getSharedPreferences(SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(account);
-        editor.putString(ACCOUNT,json);
-        editor.apply();
     }
 
     private void saveCountry(String selectedCountry) {

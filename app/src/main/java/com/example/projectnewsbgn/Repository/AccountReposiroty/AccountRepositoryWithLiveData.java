@@ -13,7 +13,6 @@ import com.example.projectnewsbgn.Source.NewsSource.BaseNewsLocalDataSource;
 import com.example.projectnewsbgn.Source.NewsSource.NewsCallBack;
 
 import java.util.List;
-import java.util.Set;
 
 public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLiveData, AccountCallBack, NewsCallBack {
 
@@ -23,11 +22,13 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     private final BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;
     private final BaseNewsLocalDataSource newsLocalDataSource;
     private final MutableLiveData<Result> accountMutableLiveData;
+    private final MutableLiveData<Result> resultMutableLiveData;
 
     public AccountRepositoryWithLiveData(BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource,
                           BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource,
                           BaseNewsLocalDataSource newsLocalDataSource) {
         this.accountMutableLiveData = new MutableLiveData<>();
+        this.resultMutableLiveData = new MutableLiveData<>();
         this.baseAccountAuthenticationRemoteDataSource = baseAccountAuthenticationRemoteDataSource;
         this.baseAccountInfoRemoteDataSource = baseAccountInfoRemoteDataSource;
         this.newsLocalDataSource = newsLocalDataSource;
@@ -51,7 +52,7 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     @Override
     public MutableLiveData<Result> logout() {
         baseAccountAuthenticationRemoteDataSource.logout();
-        return accountMutableLiveData;
+        return resultMutableLiveData;
     }
 
     @Override
@@ -93,10 +94,10 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
         }
     }
 
-    //TODO onsuccesslogout
     @Override
-    public void onSuccessLogout() {
-
+    public void onSuccessLogout(Account currentUser) {
+        Result.AccountSuccess result = new Result.AccountSuccess(currentUser);
+        resultMutableLiveData.postValue(result);
     }
 
     @Override
@@ -176,4 +177,10 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     public void onFailureEmptyFavouriteList(Exception exception) {
 
     }
+
+    @Override
+    public void onSuccessFromLocalClear(List<News> clearList) {
+
+    }
+
 }

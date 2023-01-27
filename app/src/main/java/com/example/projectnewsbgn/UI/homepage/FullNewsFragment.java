@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,7 +27,7 @@ public class FullNewsFragment extends Fragment {
     private News news;
     private TextView text_title,text_date,text_content,text_author,text_link;
     private ImageView iconNews;
-    private ImageButton bntFav;
+    private ImageButton btnFav;
     private NewsViewModel newsViewModel;
 
     @Override
@@ -50,13 +51,15 @@ public class FullNewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("NewsBGN");
+
         text_title = view.findViewById(R.id.titleFullNews);
         text_date = view.findViewById(R.id.dateFullNews);
         text_content = view.findViewById(R.id.contentFullNews);
         text_author = view.findViewById(R.id.linkNews);
         iconNews = view.findViewById(R.id.iconFullNews);
         text_link = view.findViewById(R.id.linkNews);
-        bntFav = view.findViewById(R.id.btnFavourite);
+        btnFav = view.findViewById(R.id.btnFavourite);
 
         text_title.setText(news.getTitle());
         text_date.setText(news.getPublishedAt());
@@ -65,15 +68,32 @@ public class FullNewsFragment extends Fragment {
         text_link.setText(news.getUrl());
         Picasso.get().load(news.getUrlToImage()).into(iconNews);
 
+        if (news.getFavourite()){
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (getContext(),R.drawable.ic_baseline_favorite_24));
+        }
+
         text_author.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getUrl()));
             startActivity(browserIntent);
         });
 
-        bntFav.setOnClickListener(v -> {
+        btnFav.setOnClickListener(v -> {
+            changeLikeIcon(btnFav,news.getFavourite());
+            btnFav.refreshDrawableState();
             newsViewModel.updateNewsNotSaved(news);
-            //TODO cambiare icona se like o meno
-            /*bntFav.setImageDrawable(AppCompatResources.getDrawable(this.R.));*/
+
         });
+    }
+
+    private void changeLikeIcon(ImageButton btnFav, boolean favourite) {
+        if(favourite){
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (getContext(),R.drawable.ic_baseline_favorite_border_24));
+        }
+        else {
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (getContext(),R.drawable.ic_baseline_favorite_24));
+        }
     }
 }

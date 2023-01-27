@@ -50,8 +50,10 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
                 if (firebaseAuth.getCurrentUser() == null) {
                     firebaseAuth.removeAuthStateListener(this);
                     Log.d(TAG, "User logged out");
-                    //TODO Callback?
+                    accountCallBack.onSuccessLogout(new Account("","","","",null));
                 }
+                else
+                    accountCallBack.onFailureFromAuthentication("Logout error");
             }
         };
         firebaseAuth.addAuthStateListener(authStateListener);

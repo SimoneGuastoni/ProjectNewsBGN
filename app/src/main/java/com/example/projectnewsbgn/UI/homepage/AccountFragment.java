@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -65,6 +66,8 @@ public class AccountFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account");
+
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
         accountNameTxt = view.findViewById(R.id.accountNametxt);
         btnUpdate = view.findViewById(R.id.updateBtn);
@@ -99,8 +102,9 @@ public class AccountFragment extends Fragment{
                 accountNameTxt.setText(copyAccount.getAccountName());
                 name.setText(copyAccount.getAccountName());
                 email.setText(copyAccount.getEmail());
-                topicList.clear();
+                /*topicList.clear();*/
                 topicList = ((Result.AccountSuccess) result).getData().getFavAccountTopics();
+                clearCb(cb1,cb2,cb3,cb4,cb5,cb6);
                 for(int i=0; i<topicList.size();i++){
                     if(topicList.get(i).equals(cb1.getText().toString().toLowerCase(Locale.ROOT))){
                         cb1.setChecked(true);
@@ -131,6 +135,15 @@ public class AccountFragment extends Fragment{
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_accountFragment_to_settingFragment);
         });
+    }
+
+    private void clearCb(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {
+        cb1.setChecked(false);
+        cb2.setChecked(false);
+        cb3.setChecked(false);
+        cb4.setChecked(false);
+        cb5.setChecked(false);
+        cb6.setChecked(false);
     }
 
     private String findCountryNameAndSetIcon(String countryId,TextInputEditText countryTxt) {

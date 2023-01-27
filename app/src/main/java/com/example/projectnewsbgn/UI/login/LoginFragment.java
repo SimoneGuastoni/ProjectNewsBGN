@@ -2,9 +2,7 @@ package com.example.projectnewsbgn.UI.login;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.ACCOUNT;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
-import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS_ACCOUNT;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -80,8 +78,6 @@ public class LoginFragment extends Fragment {
         createAccountTxt = v.findViewById(R.id.registerText);
         progressBar = v.findViewById(R.id.progressIndicator);
 
-        clearAccount();
-
         createAccountTxt.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
             Navigation.findNavController(requireView())
@@ -109,7 +105,6 @@ public class LoginFragment extends Fragment {
                             getViewLifecycleOwner(), result -> {
                                 if(result.isSuccess()){
                                     Account account = ((Result.AccountSuccess) result).getData();
-                                    saveAccountLocal(account);
                                     if (rememberCb.isChecked()) {
                                         Toast.makeText(getActivity(), "You will be remembered", Toast.LENGTH_SHORT).show();
                                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
@@ -140,24 +135,6 @@ public class LoginFragment extends Fragment {
 
         });
 
-    }
-
-    private void saveAccountLocal(Account account) {
-        SharedPreferences sharedPreferences = getActivity()
-                .getSharedPreferences(SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(account);
-        editor.putString(ACCOUNT,json);
-        editor.apply();
-    }
-
-    private void clearAccount() {
-        SharedPreferences sharedPreferences = getActivity()
-                .getSharedPreferences(SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
     }
 
         private boolean checkPsw (String pswString){

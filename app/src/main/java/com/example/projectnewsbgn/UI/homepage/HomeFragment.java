@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -93,8 +94,7 @@ public class HomeFragment extends Fragment implements HomeListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO sharePresAccount??
-        /*account = loadSavedAccount();*/
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("NewsBGN");
 
         progressBar = view.findViewById(R.id.progressBar);
         internetError = view.findViewById(R.id.iconInternetError);
@@ -166,7 +166,12 @@ public class HomeFragment extends Fragment implements HomeListener {
     //TODO risolvere riciclo della recycler view che segna graficamente il like quando scorri le notizie
     @Override
     public void onFavButtonPressed(News news) {
-        newsViewModel.updateNews(news);
+
+        newsViewModel.updateNews(news).observe(getViewLifecycleOwner(), result -> {
+            if(!result.isSuccess()){
+                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Metodi di supporto al fragment
@@ -177,16 +182,5 @@ public class HomeFragment extends Fragment implements HomeListener {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS_FETCH,MODE_PRIVATE);
         time = sharedPreferences.getLong(String.valueOf(MainActivity.TIME),0);
         return time;
-    }
-
-    private Account loadSavedAccount() {
-        Account accountLogged;
-
-        SharedPreferences sharedPreferences = getActivity()
-                .getSharedPreferences(UserAccessActivity.SHARED_PREFS_ACCOUNT,MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("Account", "");
-        accountLogged = gson.fromJson(json, Account.class);
-        return accountLogged;
     }
 }

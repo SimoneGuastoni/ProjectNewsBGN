@@ -25,9 +25,6 @@ import java.io.IOException;
 public class UserAccessActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "SharedPrefs";
 
-    public static final String SHARED_PREFS_ACCOUNT = "SharedPrefsAccount";
-    public static final String ACCOUNT= "Account";
-
     private NavController navController;
 
     public  ActivityResultLauncher<String> mGetContent = registerForActivityResult

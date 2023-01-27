@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -85,6 +86,8 @@ public class SearchFragment extends Fragment implements SearchListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search News");
 
         recyclerView = view.findViewById(R.id.recyclerViewSearch);
         progressBar = view.findViewById(R.id.progressBar);
@@ -227,7 +230,12 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     @Override
     public void onFavButtonPressed(News news) {
-        newsViewModel.updateNewsNotSaved(news);
+
+        newsViewModel.updateNewsNotSaved(news).observe(getViewLifecycleOwner(), result -> {
+            if(!result.isSuccess()){
+                Toast.makeText(getContext(), "Errore, news non salvata correttamente", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

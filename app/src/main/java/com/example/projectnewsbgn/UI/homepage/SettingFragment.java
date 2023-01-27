@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -67,6 +68,9 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO alternativa?
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+
         countrySpinner = view.findViewById(R.id.spinnerCountry);
         accountName = view.findViewById(R.id.accountName);
         countryName = view.findViewById(R.id.countryName);
@@ -85,7 +89,6 @@ public class SettingFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySpinner.setAdapter(adapter);
 
-        //TODO change account checkbox segnate
         accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()) {
