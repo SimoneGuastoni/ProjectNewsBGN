@@ -61,7 +61,6 @@ public class ServiceLocator {
     }
 
     //Creazione repository per gli account
-    //TODO newslocaldatasource serve?
     public IAccountRepositoryWithLiveData getAccountRepository(Application application){
         BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource;
         BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;
@@ -69,10 +68,8 @@ public class ServiceLocator {
         baseAccountAuthenticationRemoteDataSource = new AccountAuthenticationRemoteDataSource();
         baseAccountInfoRemoteDataSource = new AccountInfoRemoteDataSource();
 
-        BaseNewsLocalDataSource newsLocalDataSource =new NewsLocalDataSource(getNewsDao(application));
-
         return new AccountRepositoryWithLiveData(baseAccountAuthenticationRemoteDataSource,
-                baseAccountInfoRemoteDataSource,newsLocalDataSource);
+                baseAccountInfoRemoteDataSource);
     }
 
 }

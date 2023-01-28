@@ -104,6 +104,10 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
                 notifyItemRemoved(getAdapterPosition());
                 listener.onDeleteButtonPressed(newsClicked);
             });
+
+            btnShare.setOnClickListener(v -> {
+                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
+            });
         }
 
         @Override

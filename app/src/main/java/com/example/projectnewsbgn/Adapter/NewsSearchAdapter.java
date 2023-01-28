@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
 
 
 
-    public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, @SuppressLint("RecyclerView") int position) {
         /*holder.bind(newsList.get(position));*/
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
@@ -94,6 +95,10 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
                 News newsClicked = newsList.get(getAdapterPosition());
                 changeFavIcon(newsList.get(getAdapterPosition()).getFavourite());
                 listener.onFavButtonPressed(newsClicked);
+            });
+
+            btnShare.setOnClickListener(v -> {
+                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
             });
 
         }

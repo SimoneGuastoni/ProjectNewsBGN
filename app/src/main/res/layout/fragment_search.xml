@@ -22,18 +22,28 @@
 
 
 
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchBar"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                app:defaultQueryHint="Search News"
-                app:iconifiedByDefault="false"
-                />
+                android:layout_margin="3dp"
+                android:backgroundTint="@color/Charcoal"
+                android:elevation="8dp">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:defaultQueryHint="Search News"
+                    app:iconifiedByDefault="false"
+                    android:background="@color/Gold"
+
+                    />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -50,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:scrollbarStyle="outsideOverlay"
                 >
 
                 <LinearLayout

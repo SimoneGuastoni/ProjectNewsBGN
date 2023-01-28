@@ -7,4 +7,6 @@ public interface SearchListener {
         void OnNewsClicked(News news);
 
         void onFavButtonPressed(News news);
+
+        void onShareButtonPressed(News news);
 }

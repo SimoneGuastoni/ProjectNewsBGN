@@ -8,4 +8,5 @@ public interface HomeListener {
 
         void onFavButtonPressed(News news);
 
+        void onShareButtonPressed(News news);
 }

@@ -1,5 +1,6 @@
 package com.example.projectnewsbgn.UI.homepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -151,5 +152,14 @@ public class FavoritesFragment extends Fragment implements FavListener {
         else {
             controlList.remove(news);
         }
+    }
+
+    @Override
+    public void onShareButtonPressed(News news) {
+        Intent shareLink = new Intent();
+        shareLink.setAction(Intent.ACTION_SEND);
+        shareLink.putExtra(Intent.EXTRA_TEXT, news.getUrl());
+        shareLink.setType("text/plain");
+        startActivity(shareLink);
     }
 }

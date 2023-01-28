@@ -90,9 +90,21 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
             container = itemView.findViewById(R.id.containerListNews);
 
+            //TODO colorare il quelo giusto se la notizia ha già un like
+            if (getAdapterPosition() > 0){
+                if(newsList.get(getAdapterPosition()).getFavourite()){
+                    btnFav.setImageDrawable(AppCompatResources.getDrawable
+                            (context,R.drawable.ic_baseline_favorite_24));
+                }
+            }
+
             btnFav.setOnClickListener(v -> {
                 changeFavIcon(newsList.get(getAdapterPosition()).getFavourite());
                 listener.onFavButtonPressed(newsList.get(getAdapterPosition()));
+            });
+
+            btnShare.setOnClickListener(v -> {
+                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
             });
         }
 

@@ -2,6 +2,7 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -103,6 +104,8 @@ public class SearchFragment extends Fragment implements SearchListener {
         hintText = view.findViewById(R.id.hintText);
         internetError = view.findViewById(R.id.iconInternetError);
 
+        internetError.setVisibility(View.GONE);
+
         accountObtained = accountViewModel.getAccountData();
         accountObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()){
@@ -111,6 +114,7 @@ public class SearchFragment extends Fragment implements SearchListener {
             }
             else{
                 Toast.makeText(getActivity(), "Error retrieve account data", Toast.LENGTH_SHORT).show();
+                internetError.setVisibility(View.VISIBLE);
             }
 
         });
@@ -238,6 +242,15 @@ public class SearchFragment extends Fragment implements SearchListener {
         });
     }
 
+    @Override
+    public void onShareButtonPressed(News news) {
+        Intent shareLink = new Intent();
+        shareLink.setAction(Intent.ACTION_SEND);
+        shareLink.putExtra(Intent.EXTRA_TEXT, news.getUrl());
+        shareLink.setType("text/plain");
+        startActivity(shareLink);
+    }
+
 
     // Metodi di supporto al fragment
 
@@ -254,6 +267,7 @@ public class SearchFragment extends Fragment implements SearchListener {
             } else {
                 Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
+                internetError.setVisibility(View.VISIBLE);
                 /*internetError.setVisibility(View.VISIBLE);*/
             }
         });

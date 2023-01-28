@@ -2,6 +2,7 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.example.projectnewsbgn.UI.login.AccountViewModelFactory;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment implements HomeListener {
     private List<String> topicList;
     private NewsHomeAdapter newsRecyclerViewAdapter;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private String country;
     private Account account;
     private List<News> newsList;
@@ -99,6 +103,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         progressBar = view.findViewById(R.id.progressBar);
         internetError = view.findViewById(R.id.iconInternetError);
         recyclerView = view.findViewById(R.id.RecyclerViewcontainer);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
 
         timePassedFromFetch = calculateTimeFromFetch();
 
@@ -111,31 +116,32 @@ public class HomeFragment extends Fragment implements HomeListener {
         recyclerView.setAdapter(newsRecyclerViewAdapter);
 
         progressBar.setVisibility(View.VISIBLE);
-        internetError.setVisibility(View.INVISIBLE);
-
+        internetError.setVisibility(View.GONE);
 
 
         accountDataObtained = accountViewModel.getAccountData();
-        accountDataObtained.observe(getViewLifecycleOwner(), result -> {
-            if(result.isSuccess()){
-                account = ((Result.AccountSuccess) result).getData();
+        accountDataObtained.observe(getViewLifecycleOwner(), resultAccount -> {
+            if(resultAccount.isSuccess()){
+                account = ((Result.AccountSuccess) resultAccount).getData();
                 country = account.getCountry();
                 topicList = account.getFavAccountTopics();
                 if (country != null && topicList.size() != 0) {
 
                     newsObtained = newsViewModel.getNews(country, topicList, timePassedFromFetch);
 
-                    newsObtained.observe(getViewLifecycleOwner(), result2 -> {
-                        if (result2.isSuccess()) {
+                    newsObtained.observe(getViewLifecycleOwner(), resultNewsCall -> {
+                        if (resultNewsCall.isSuccess()) {
                             int initialSize = HomeFragment.this.newsList.size();
                             HomeFragment.this.newsList.clear();
-                            HomeFragment.this.newsList.addAll(((Result.NewsSuccess) result2).getData().getNewsList());
+                            HomeFragment.this.newsList.addAll(((Result.NewsSuccess) resultNewsCall).getData().getNewsList());
                             newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
                             newsRecyclerViewAdapter.notifyDataSetChanged();
                             recyclerView.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
+                            internetError.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(HomeFragment.this.getContext(), result2.getClass().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeFragment.this.getContext(), resultNewsCall.getClass().toString(), Toast.LENGTH_SHORT).show();
+                            recyclerView.setVisibility(View.GONE);
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.VISIBLE);
                         }
@@ -144,9 +150,30 @@ public class HomeFragment extends Fragment implements HomeListener {
 
             }
             else{
-                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), resultAccount.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
+                internetError.setVisibility(View.VISIBLE);
             }
+
+            swipeRefreshLayout.setOnRefreshListener(() -> {
+                newsViewModel.getNews(country,topicList,0)
+                        .observe(getViewLifecycleOwner(), resultRefresh -> {
+                            if(resultRefresh.isSuccess()){
+                                int initialSize = HomeFragment.this.newsList.size();
+                                recyclerView.setVisibility(View.GONE);
+                                HomeFragment.this.newsList.clear();
+                                HomeFragment.this.newsList.addAll(((Result.NewsSuccess) resultRefresh).getData().getNewsList());
+                                newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
+                                newsRecyclerViewAdapter.notifyDataSetChanged();
+                                recyclerView.setVisibility(View.VISIBLE);
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                            else {
+                                Snackbar.make(view,resultRefresh.getClass().toString(),Snackbar.LENGTH_SHORT).show();
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                });
+            });
 
         });
     }
@@ -172,6 +199,15 @@ public class HomeFragment extends Fragment implements HomeListener {
                 Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onShareButtonPressed(News news) {
+        Intent shareLink = new Intent();
+        shareLink.setAction(Intent.ACTION_SEND);
+        shareLink.putExtra(Intent.EXTRA_TEXT, news.getUrl());
+        shareLink.setType("text/plain");
+        startActivity(shareLink);
     }
 
     // Metodi di supporto al fragment

@@ -56,7 +56,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                newsCallBack.onFailureFromRemote(e);
             }
         }
     }
@@ -84,7 +84,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            newsCallBack.onFailureFromRemote(e);
         }
     }
 
@@ -121,7 +121,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                newsCallBack.onFailureFromRemote(e);
             }
         }
     }

@@ -14,27 +14,23 @@ import com.example.projectnewsbgn.Source.NewsSource.NewsCallBack;
 
 import java.util.List;
 
-public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLiveData, AccountCallBack, NewsCallBack {
+public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLiveData, AccountCallBack {
 
     private static final String TAG = AccountRepositoryWithLiveData.class.getSimpleName();
 
     private final BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource;
     private final BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;
-    private final BaseNewsLocalDataSource newsLocalDataSource;
     private final MutableLiveData<Result> accountMutableLiveData;
     private final MutableLiveData<Result> resultMutableLiveData;
 
     public AccountRepositoryWithLiveData(BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource,
-                          BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource,
-                          BaseNewsLocalDataSource newsLocalDataSource) {
+                          BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource) {
         this.accountMutableLiveData = new MutableLiveData<>();
         this.resultMutableLiveData = new MutableLiveData<>();
         this.baseAccountAuthenticationRemoteDataSource = baseAccountAuthenticationRemoteDataSource;
         this.baseAccountInfoRemoteDataSource = baseAccountInfoRemoteDataSource;
-        this.newsLocalDataSource = newsLocalDataSource;
         this.baseAccountAuthenticationRemoteDataSource.setAccountCallBack(this);
         this.baseAccountInfoRemoteDataSource.setAccountCallBack(this);
-        this.newsLocalDataSource.setNewsCallBack(this);
     }
 
     @Override
@@ -124,63 +120,6 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     public void onFailureFromRemoteDatabase(String message) {
         Result.Error result = new Result.Error(message);
         accountMutableLiveData.postValue(result);
-    }
-
-    //Onsuccess e Onfailure della localNewsDataSource
-
-    @Override
-    public void onSuccessFromRemote(List<News> newsList, long lastUpdate) {
-
-    }
-
-    @Override
-    public void onSuccessFromRemote(NewsApiResponse newsApiResponse) {
-
-    }
-
-    @Override
-    public void onSuccessFromRemote(List<News> newsList) {
-
-    }
-
-    @Override
-    public void onFailureFromRemote(Exception exception) {
-
-    }
-
-    @Override
-    public void onFailureFromLocal(Exception exception) {
-
-    }
-
-    @Override
-    public void onSuccessFromLocal(List<News> newsList) {
-
-    }
-
-    @Override
-    public void onSuccessFromLocal(List<News> newsList, Long lastUpdate) {
-
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
-
-    }
-
-    @Override
-    public void onNewsFavoriteStatusChanged(List<News> news) {
-
-    }
-
-    @Override
-    public void onFailureEmptyFavouriteList(Exception exception) {
-
-    }
-
-    @Override
-    public void onSuccessFromLocalClear(List<News> clearList) {
-
     }
 
 }

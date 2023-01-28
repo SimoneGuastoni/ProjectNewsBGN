@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select news"
-                android:textColor="@color/Gold"
+                android:textColor="@color/Cream"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnDeleteFav"
                 app:layout_constraintStart_toStartOf="parent"

@@ -153,6 +153,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     @Override
     public void onFailureFromRemote(Exception exception) {
         Result.Error result = new Result.Error("Api call fail");
+        topicChoseNewsList.postValue(result);
         allNewsMutableLiveData.postValue(result);
     }
 

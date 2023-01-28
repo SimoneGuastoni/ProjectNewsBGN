@@ -9,4 +9,6 @@ public interface FavListener {
     void onDeleteButtonPressed(News news);
 
     void deleteNewsChecked(News news,Boolean checked);
+
+    void onShareButtonPressed(News news);
 }
