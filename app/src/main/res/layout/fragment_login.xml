@@ -18,7 +18,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/Gold"
+            android:layout_margin="15dp"
+            style="@style/Theme.MaterialComponents">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progressIndicator"
@@ -35,143 +38,152 @@
                 app:layout_constraintVertical_bias="0.004"
                 app:trackColor="@color/Charcoal" />
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="162dp"
-                android:layout_height="102dp"
-                android:layout_marginTop="24dp"
-                android:transitionName="logo_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo" />
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="162dp"
+                    android:layout_height="102dp"
+                    android:layout_marginTop="24dp"
+                    android:transitionName="logo_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/logo" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardElevation="40dp"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/signTxt"
-                android:backgroundTint="@color/Charcoal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardElevation="40dp"
+                    style="@style/Theme.MaterialComponents"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/signTxt"
+                    android:backgroundTint="@color/Charcoal">
 
 
-                    <LinearLayout
-                        android:id="@+id/layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" >
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/emailLayout"
+                        <LinearLayout
+                            android:id="@+id/layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            app:endIconMode="clear_text"
-                            android:textColorHint="@color/Charcoal"
-                            app:hintTextColor="@color/Charcoal"
-                            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
-                            app:startIconTint="@color/Charcoal"
-                            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            style="@style/Theme.MaterialComponents"
+                            >
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginBottom="20dp"
-                                android:inputType="textEmailAddress"
-                                android:textColor="@color/Charcoal"
-                                android:background="@color/Cream"
-                                android:hint="@string/e_mail" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/pswLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:endIconMode="password_toggle"
-                            app:endIconTint="@color/Charcoal"
-                            android:textColorHint="@color/Charcoal"
-                            app:layout_constraintTop_toBottomOf="@id/emailLayout"
-                            app:startIconDrawable="@drawable/ic_baseline_shield_24"
-                            app:startIconTint="@color/Charcoal">
-
-                            <com.google.android.material.textfield.TextInputEditText
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/emailLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:layout_marginBottom="20dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:hint="@string/password"
-                                android:inputType="textPassword"
-                                android:textColor="@color/Charcoal"
-                                android:background="@color/Cream"
-                                android:minHeight="48dp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                app:endIconMode="clear_text"
+                                android:textColorHint="@color/Charcoal"
+                                app:hintTextColor="@color/Charcoal"
+                                app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+                                app:startIconTint="@color/Charcoal"
+                                style="@style/Theme.MaterialComponents"
+                                >
 
-                        <TextView
-                            android:id="@+id/forgotPswText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="@string/forgotPswText"
-                            android:layout_marginBottom="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:textColor="@color/Cream"
-                            android:layout_gravity="right"
-                            android:textStyle="bold" />
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Theme.MaterialComponents"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:inputType="textEmailAddress"
+                                    android:textColor="@color/Charcoal"
+                                    android:background="@color/Cream"
+                                    android:hint="@string/e_mail" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                    </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/pswLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:endIconMode="password_toggle"
+                                app:endIconTint="@color/Charcoal"
+                                android:textColorHint="@color/Charcoal"
+                                app:layout_constraintTop_toBottomOf="@id/emailLayout"
+                                app:startIconDrawable="@drawable/ic_baseline_shield_24"
+                                app:startIconTint="@color/Charcoal">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:hint="@string/password"
+                                    style="@style/Theme.MaterialComponents"
+                                    android:inputType="textPassword"
+                                    android:textColor="@color/Charcoal"
+                                    android:background="@color/Cream"
+                                    android:minHeight="48dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:id="@+id/forgotPswText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                style="@style/Theme.MaterialComponents"
+                                android:text="@string/forgotPswText"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:textColor="@color/Cream"
+                                android:layout_gravity="right"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/welcomeText"
+                style="@style/Theme.MaterialComponents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/welcomeText"
                 android:textColor="@color/Charcoal"
-                android:transitionName="logo_txt"
                 android:textSize="40sp"
                 android:textStyle="bold"
+                android:transitionName="logo_txt"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.149"
+                app:layout_constraintHorizontal_bias="0.104"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logo" />
 
             <TextView
-                android:id="@+id/signTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign to continue"
-                android:textColor="@color/Charcoal"
-                android:textSize="15sp"
-                android:textStyle="italic"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.052"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/welcomeText" />
+                    android:id="@+id/signTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign to continue"
+                    android:textColor="@color/Charcoal"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.052"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/welcomeText" />
 
             <Button
                 android:id="@+id/loginBtn"
-                android:layout_width="371dp"
+                style="@style/Theme.MaterialComponents"
+                android:layout_width="300dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:backgroundTint="@color/Charcoal"
                 android:text="@string/login"
                 android:textColor="@color/Cream"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
@@ -180,31 +192,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:drawableEnd="@drawable/ic_baseline_account_box_24"
+                android:drawableEnd="@drawable/ic_baseline_account_circle_24"
                 android:text="@string/registerText"
                 android:textColor="@color/Charcoal"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rememberCb"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <CheckBox
-                android:id="@+id/rememberCb"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/Cream"
-                android:minHeight="48dp"
-                android:text="@string/remember_me"
-                android:textColor="@color/Charcoal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/loginBtn" />
+                    android:id="@+id/rememberCb"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/Gold"
+                    style="@style/Theme.MaterialComponents"
+                    android:minHeight="48dp"
+                    android:text="@string/remember_me"
+                    android:textColor="@color/Charcoal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loginBtn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

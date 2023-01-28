@@ -37,6 +37,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
+                    style="@style/Theme.MaterialComponents"
                     app:defaultQueryHint="Search News"
                     app:iconifiedByDefault="false"
                     android:background="@color/Gold"
@@ -99,7 +100,8 @@
                                         android:id="@+id/businessTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo" />
+                                        android:src="@drawable/logo"
+                                        style="@style/Theme.MaterialComponents"/>
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -277,12 +279,20 @@
                     </LinearLayout>
             </HorizontalScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSearch"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@color/Gold"
+                android:layout_margin="15dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progressBar"

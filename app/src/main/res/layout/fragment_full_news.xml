@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/Cream"
+        style="@style/Theme.MaterialComponents"
         app:cardElevation="20sp"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         >
 
         <ScrollView

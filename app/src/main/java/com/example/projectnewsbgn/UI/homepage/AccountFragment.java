@@ -55,6 +55,7 @@ public class AccountFragment extends Fragment{
         topicList = new ArrayList<>();
     }
 
+    //TODO sncakbar al posto delle toast
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

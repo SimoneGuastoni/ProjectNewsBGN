@@ -257,6 +257,7 @@
                     android:text="Update"
                     android:layout_marginTop="60sp"
                     android:textColor="@color/Cream"
+                    style="@style/Theme.MaterialComponents"
                     android:backgroundTint="@color/Charcoal"
                     android:layout_marginBottom="200dp"/>
 
