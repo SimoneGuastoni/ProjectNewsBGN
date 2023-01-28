@@ -31,6 +31,8 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
         databaseReference = firebaseDatabase.getReference().getRef();
     }
 
+
+
     @Override
     public void saveAccountData(Account account) {
         databaseReference.child("account").child(account.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,6 +89,7 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
         });
     }
 
+    //TODO firebase rilevare connessione  (OnConnectionChanged)
     @Override
     public void getAccountPreferences(String email,String id) {
         databaseReference.child("account").child(id).child("country")

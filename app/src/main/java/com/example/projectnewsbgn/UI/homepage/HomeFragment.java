@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,11 +34,8 @@ import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
 import com.example.projectnewsbgn.UI.login.AccountViewModelFactory;
-import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +114,6 @@ public class HomeFragment extends Fragment implements HomeListener {
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.GONE);
 
-
         accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), resultAccount -> {
             if(resultAccount.isSuccess()){
@@ -132,11 +127,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                     newsObtained.observe(getViewLifecycleOwner(), resultNewsCall -> {
                         if (resultNewsCall.isSuccess()) {
                             int initialSize = HomeFragment.this.newsList.size();
-                            HomeFragment.this.newsList.clear();
-                            HomeFragment.this.newsList.addAll(((Result.NewsSuccess) resultNewsCall).getData().getNewsList());
-                            newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
-                            newsRecyclerViewAdapter.notifyDataSetChanged();
-                            recyclerView.setVisibility(View.VISIBLE);
+                            rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultNewsCall);
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.GONE);
                         } else {
@@ -153,6 +144,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                 Toast.makeText(getContext(), resultAccount.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
                 internetError.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
 
             swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -160,12 +152,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                         .observe(getViewLifecycleOwner(), resultRefresh -> {
                             if(resultRefresh.isSuccess()){
                                 int initialSize = HomeFragment.this.newsList.size();
-                                recyclerView.setVisibility(View.GONE);
-                                HomeFragment.this.newsList.clear();
-                                HomeFragment.this.newsList.addAll(((Result.NewsSuccess) resultRefresh).getData().getNewsList());
-                                newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
-                                newsRecyclerViewAdapter.notifyDataSetChanged();
-                                recyclerView.setVisibility(View.VISIBLE);
+                                rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultRefresh);
                                 swipeRefreshLayout.setRefreshing(false);
                             }
                             else {
@@ -176,6 +163,15 @@ public class HomeFragment extends Fragment implements HomeListener {
             });
 
         });
+    }
+
+    private void rebuildList(int initialSize, List<News> newsList, NewsHomeAdapter newsRecyclerViewAdapter, RecyclerView recyclerView, Result result) {
+        recyclerView.setVisibility(View.GONE);
+        HomeFragment.this.newsList.clear();
+        HomeFragment.this.newsList.addAll(((Result.NewsSuccess) result).getData().getNewsList());
+        newsRecyclerViewAdapter.notifyItemRangeInserted(initialSize, HomeFragment.this.newsList.size());
+        newsRecyclerViewAdapter.notifyDataSetChanged();
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
 
@@ -190,7 +186,6 @@ public class HomeFragment extends Fragment implements HomeListener {
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_fullNewsFragment,bundle);
     }
 
-    //TODO risolvere riciclo della recycler view che segna graficamente il like quando scorri le notizie
     @Override
     public void onFavButtonPressed(News news) {
 

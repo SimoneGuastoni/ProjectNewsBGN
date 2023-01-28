@@ -142,8 +142,8 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     // Metodi onFailure
 
     @Override
-    public void onFailureEmptyFavouriteList(Exception exception) {
-        Result.Error result = new Result.Error(exception.getMessage());
+    public void onFailureEmptyFavouriteList(String message) {
+        Result.Error result = new Result.Error(message);
         favoriteNewsMutableLiveData.postValue(result);
     }
 
@@ -151,14 +151,14 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
 
 
     @Override
-    public void onFailureFromRemote(Exception exception) {
+    public void onFailureFromRemote(String message) {
         Result.Error result = new Result.Error("Api call fail");
         topicChoseNewsList.postValue(result);
         allNewsMutableLiveData.postValue(result);
     }
 
     @Override
-    public void onFailureFromLocal(Exception exception) {
+    public void onFailureFromLocal(String message) {
         Result.Error result = new Result.Error("Error from local");
         favoriteNewsMutableLiveData.postValue(result);
         allNewsMutableLiveData.postValue(result);

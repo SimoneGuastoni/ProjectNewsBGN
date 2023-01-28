@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
 
-        //TODO ??
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setElevation(50);
     }

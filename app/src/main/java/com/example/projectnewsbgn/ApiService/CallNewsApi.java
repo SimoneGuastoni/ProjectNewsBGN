@@ -29,4 +29,12 @@ public interface CallNewsApi {
             @Query("apiKey")String apiKey
     );
 
+    //Call eseguita dalla searchBar su tutte le notizie disponibili, non solo su quelle più nuove
+    @GET("everything")
+    Call<NewsApiResponse> callHeadlinesQuery(
+            @Query("language") String country,
+            @Query("q") String query,
+            @Query("pageSize") int pageSize,
+            @Query("apiKey")String apiKey
+    );
 }

@@ -6,7 +6,6 @@ import com.example.projectnewsbgn.Models.NewsApiResponse;
 import java.util.List;
 
 public interface NewsCallBack {
-    //TODO controllare onSuccess onFailure
 
     //Onsuccess
     void onSuccessFromRemote(List<News> newsList, long lastUpdate);
@@ -16,13 +15,13 @@ public interface NewsCallBack {
     void onSuccessFromLocal(List<News> newsList,Long lastUpdate);
 
     //Onfailure
-    void onFailureFromRemote(Exception exception);
-    void onFailureFromLocal(Exception exception);
+    void onFailureFromRemote(String message);
+    void onFailureFromLocal(String message);
 
     //NewsStatusChange
     void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews);
     void onNewsFavoriteStatusChanged(List<News> news);
-    void onFailureEmptyFavouriteList(Exception exception);
+    void onFailureEmptyFavouriteList(String message);
 
     void onSuccessFromLocalClear(List<News> clearList);
 }

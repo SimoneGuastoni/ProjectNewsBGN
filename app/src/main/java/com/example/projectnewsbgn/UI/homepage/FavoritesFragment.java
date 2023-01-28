@@ -84,7 +84,6 @@ public class FavoritesFragment extends Fragment implements FavListener {
         recyclerViewFav.setLayoutManager(layoutManager);
         recyclerViewFav.setAdapter(newsFavAdapter);
 
-        //TODO se scarico una notizia che ho già a cui ho già messo like il cuore è pieno
         newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){

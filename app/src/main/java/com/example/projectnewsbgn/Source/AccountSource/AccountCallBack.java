@@ -5,7 +5,6 @@ import com.example.projectnewsbgn.Models.Account;
 import java.util.List;
 
 public interface AccountCallBack {
-    //TODO controllare onsuccess onfailure
 
     void onSuccessFromAuthentication(Account account);
     void onSuccessFromAuthentication(String email,String id);

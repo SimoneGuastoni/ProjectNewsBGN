@@ -27,7 +27,7 @@ public class FullNewsFragment extends Fragment {
     private News news;
     private TextView text_title,text_date,text_content,text_author,text_link;
     private ImageView iconNews;
-    private ImageButton btnFav;
+    private ImageButton btnFav,btnShare;
     private NewsViewModel newsViewModel;
 
     @Override
@@ -60,6 +60,7 @@ public class FullNewsFragment extends Fragment {
         iconNews = view.findViewById(R.id.iconFullNews);
         text_link = view.findViewById(R.id.linkNews);
         btnFav = view.findViewById(R.id.btnFavourite);
+        btnShare = view.findViewById(R.id.btnShare);
 
         text_title.setText(news.getTitle());
         text_date.setText(news.getPublishedAt());
@@ -67,6 +68,10 @@ public class FullNewsFragment extends Fragment {
         text_author.setText(news.getAuthor());
         text_link.setText(news.getUrl());
         Picasso.get().load(news.getUrlToImage()).into(iconNews);
+
+        String text = text_content.getText().toString();
+        text = text.replaceAll("\\[\\+\\w+\\s+chars\\]", "clicca per continuare a leggere");
+        text_content.setText(text);
 
         if (news.getFavourite()){
             btnFav.setImageDrawable(AppCompatResources.getDrawable
@@ -83,6 +88,14 @@ public class FullNewsFragment extends Fragment {
             btnFav.refreshDrawableState();
             newsViewModel.updateNewsNotSaved(news);
 
+        });
+
+        btnShare.setOnClickListener(v -> {
+            Intent shareLink = new Intent();
+            shareLink.setAction(Intent.ACTION_SEND);
+            shareLink.putExtra(Intent.EXTRA_TEXT, news.getUrl());
+            shareLink.setType("text/plain");
+            startActivity(shareLink);
         });
     }
 

@@ -25,7 +25,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 newsCallBack.onSuccessFromLocal(favList);
             }
             else
-                newsCallBack.onFailureEmptyFavouriteList(new Exception("Empty list"));
+                newsCallBack.onFailureEmptyFavouriteList("Empty list");
         });
     }
 
@@ -57,7 +57,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 newsCallBack.onNewsFavoriteStatusChanged(news,newsDao.getAllFavouriteNews());
             }
             else{
-                newsCallBack.onFailureFromLocal(new Exception("Change like error"));
+                newsCallBack.onFailureFromLocal("Change like error");
             }
         });
     }
@@ -107,7 +107,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 newsCallBack.onNewsFavoriteStatusChanged(favListNews);
             }
             else
-                newsCallBack.onFailureFromLocal(new Exception("Delete error"));
+                newsCallBack.onFailureFromLocal("Delete error");
         });
     }
 
@@ -135,13 +135,12 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
                 newsCallBack.onSuccessFromLocalClear(newsDao.getAll());
             }
             else{
-                newsCallBack.onFailureFromRemote(new Exception("Errore nel pulire il database"));
+                newsCallBack.onFailureFromRemote("Errore nel pulire il database");
             }
         });
     }
 
     //Metodi di supporto
-//TODO dove mettere onfailurecallbak? effettuare controllo?
     private void insertDataOnDatabase(News news) {
         NewsDatabase.dataBaseWriteExecutor.execute(() -> {
             List<News> allNewsFromDb = newsDao.getAll();

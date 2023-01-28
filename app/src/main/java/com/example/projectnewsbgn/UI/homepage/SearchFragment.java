@@ -49,7 +49,7 @@ public class SearchFragment extends Fragment implements SearchListener {
     private ImageView businessTopic,scienceTopic,generalTopic,
             healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage,internetError;
     private ProgressBar progressBar;
-    private String category,country,query;
+    private String category,country,query,language;
     private TextView hintText;
     private SearchView searchView;
     private List<News> newsList;
@@ -118,7 +118,6 @@ public class SearchFragment extends Fragment implements SearchListener {
             }
 
         });
-        /*country = loadSavedCountry();*/
 
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -132,12 +131,16 @@ public class SearchFragment extends Fragment implements SearchListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                language = calculateLanguage(country);
                 waitingImage.setVisibility(View.GONE);
                 hintText.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
-                newsObtained = newsViewModel.getNews(country,allTopic,query);
+                newsObtained = newsViewModel.getNews(language,allTopic,query);
                 rebuildNewsList(newsObtained);
+                if (newsList.size()==0){
+                    Toast.makeText(getContext(), "Nothing found", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
 
@@ -222,6 +225,28 @@ public class SearchFragment extends Fragment implements SearchListener {
 
     }
 
+    private String calculateLanguage(String country) {
+        String language;
+        switch (country){
+            case "it" : {
+                language = "it";
+                break;
+            }
+            case "fr" : {
+                language = "fr";
+                break;
+            }
+            case "gb" : {
+                language = "en";
+                break;
+            }
+            default: {
+                language = "it";
+            }
+        }
+        return language;
+    }
+
     // Metodi del comportamento dell'adapter
 
     @Override
@@ -268,7 +293,6 @@ public class SearchFragment extends Fragment implements SearchListener {
                 Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 internetError.setVisibility(View.VISIBLE);
-                /*internetError.setVisibility(View.VISIBLE);*/
             }
         });
     }

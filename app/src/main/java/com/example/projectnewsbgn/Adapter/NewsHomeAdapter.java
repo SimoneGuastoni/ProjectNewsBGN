@@ -56,6 +56,19 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
         }
 
+        setIconFav(newsList.get(position).getFavourite(),holder.btnFav);
+
+    }
+
+    private void setIconFav(boolean favourite, ImageButton btnFav) {
+        if(!favourite){
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (context,R.drawable.ic_baseline_favorite_border_24));
+        }
+        else{
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (context,R.drawable.ic_baseline_favorite_24));
+        }
     }
 
     @Override
@@ -90,7 +103,6 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
             container = itemView.findViewById(R.id.containerListNews);
 
-            //TODO colorare il quelo giusto se la notizia ha già un like
             if (getAdapterPosition() > 0){
                 if(newsList.get(getAdapterPosition()).getFavourite()){
                     btnFav.setImageDrawable(AppCompatResources.getDrawable

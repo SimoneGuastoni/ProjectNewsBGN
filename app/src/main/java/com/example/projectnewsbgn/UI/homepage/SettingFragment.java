@@ -151,7 +151,6 @@ public class SettingFragment extends Fragment {
                 if (cb6.isChecked())
                     newTopicList.add(cb6.getText().toString().toLowerCase(Locale.ROOT));
 
-                //TODO
                 accountViewModel.changeAccountData(accountId,copyEmail,newName,newCountry,newTopicList)
                         .observe(getViewLifecycleOwner(), new Observer<Result>() {
                     @Override

@@ -23,7 +23,6 @@ public class AccountViewModel extends ViewModel {
         authenticationError = false;
     }
 
-    //TODO cambiare nome al flusso di metodo??
     public MutableLiveData<Result> authentication(String accountName, String emailString,
                                                   String pswString, String country, List<String> topicList) {
         getAccountFromRepository(accountName,emailString,pswString,country,topicList);
