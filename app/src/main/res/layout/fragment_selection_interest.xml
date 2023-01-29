@@ -49,7 +49,7 @@
                         android:layout_height="200dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
-                        android:background="@color/Gold"
+                        android:background="@color/Gold2"
                         android:scaleType="centerCrop"
                         android:transitionName="profile_image"
                         app:srcCompat="@drawable/compile" />
@@ -94,7 +94,10 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:background="@color/Gold3"
+                            android:elevation="8dp">
+
 
                             <TextView
                                 android:id="@+id/selectInterestTxt"
@@ -110,7 +113,10 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/Gold2"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -120,7 +126,7 @@
                                     android:layout_height="48dp"
                                     android:text="Business"
                                     android:textStyle="bold"
-                                    android:background="@color/Gold"
+
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -128,6 +134,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:text="Entertainment"
+                                    android:textStyle="bold"
 
                                     android:textColor="@color/Charcoal" />
 
@@ -136,6 +143,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:text="Health"
+                                    android:textStyle="bold"
                                     android:textColor="@color/Charcoal" />
 
                             </LinearLayout>
@@ -143,7 +151,10 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="0dp"
+                                android:background="@color/Gold2"
                                 android:layout_marginBottom="50sp"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -153,6 +164,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:text="Science"
+                                    android:textStyle="bold"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -160,6 +172,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:text="Sports"
+                                    android:textStyle="bold"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -167,6 +180,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:text="Technology"
+                                    android:textStyle="bold"
                                     android:textColor="@color/Charcoal" />
 
                             </LinearLayout>

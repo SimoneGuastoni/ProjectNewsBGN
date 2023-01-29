@@ -14,5 +14,14 @@
     <color name="Tan">#B68D40</color>
     <color name="Cream">#F4EBD0</color>
     <color name="Charcoal">#122620</color>
-    <color name="Gold">#D6AD60</color>
+
+    <color name="Gold">#896115</color>
+    <color name="Gold2">#B38836</color>
+    <color name="Gold3">#D6AD60</color>
+    <color name="Gold4">#FDDB99</color>
+    <color name="Gold5">#FFEAC2</color>
+
+
+
+
 </resources>

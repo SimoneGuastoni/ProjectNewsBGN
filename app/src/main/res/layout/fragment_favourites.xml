@@ -21,27 +21,27 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="382dp"
+        android:layout_height="573dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/Gold"
+        android:elevation="40dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="@color/Gold"
-        android:layout_margin="10dp"
-        android:elevation="40dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/hintText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Try like a news and customize youre experience"
             android:layout_gravity="center"
-            android:visibility="gone"
             android:layout_marginTop="200sp"
-            android:textStyle="bold"
+            android:text="Try like a news and customize youre experience"
             android:textColor="@color/Charcoal"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/noFavNews"
@@ -57,10 +57,10 @@
             android:id="@+id/recyclerViewFav"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:visibility="gone" />
 
     </androidx.cardview.widget.CardView>
 

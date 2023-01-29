@@ -108,10 +108,11 @@
                         android:id="@+id/nameTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Account name"
-                        android:editable="false"
                         android:drawableStart="@drawable/ic_baseline_account_box_24"
-                        android:drawablePadding="10dp" />
+                        android:drawablePadding="10dp"
+                        android:editable="false"
+                        android:text="Account name"
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,6 +189,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:text="Business"
+                                android:textStyle="bold"
                                 android:textColor="@color/Charcoal" />
 
                             <CheckBox
@@ -196,6 +198,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
+                                android:textStyle="bold"
                                 android:text="Entertainment"
                                 />
 
@@ -205,6 +208,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
+                                android:textStyle="bold"
                                 android:text="Health"
                                 />
 
@@ -224,6 +228,7 @@
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Science"
+                                android:textStyle="bold"
                                 />
 
                             <CheckBox
@@ -233,6 +238,7 @@
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Sports"
+                                android:textStyle="bold"
                                 />
 
                             <CheckBox
@@ -242,6 +248,7 @@
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:text="Technology"
+                                android:textStyle="bold"
                                 />
 
                         </LinearLayout>
