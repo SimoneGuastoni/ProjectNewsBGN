@@ -98,7 +98,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 buttonDeleteAll.setVisibility(View.VISIBLE);
                 recyclerViewFav.setVisibility(View.VISIBLE);
             } else {
-                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                 buttonDeleteAll.setVisibility(view.GONE);
                 progressBar.setVisibility(View.GONE);
                 iconNoFavNews.setVisibility(View.VISIBLE);

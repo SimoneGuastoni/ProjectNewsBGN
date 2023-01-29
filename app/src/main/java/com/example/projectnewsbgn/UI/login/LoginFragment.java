@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment {
                                 }
                                 else{
                                     accountMutableLiveData = null;
-                                    Toast.makeText(getActivity(),result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             });

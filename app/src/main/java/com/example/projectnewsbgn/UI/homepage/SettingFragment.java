@@ -122,7 +122,7 @@ public class SettingFragment extends Fragment {
                 }
 
             } else {
-                Toast.makeText(getContext(), "Errore recupero dati utente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,7 +165,7 @@ public class SettingFragment extends Fragment {
                         }
                         else {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), "Error, can't change info", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

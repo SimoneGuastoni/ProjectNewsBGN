@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(HomeFragment.this.getContext(), resultNewsCall.getClass().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeFragment.this.getContext(),((Result.Error)resultNewsCall).getMessage(), Toast.LENGTH_SHORT).show();
                             recyclerView.setVisibility(View.GONE);
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.VISIBLE);
@@ -141,7 +141,7 @@ public class HomeFragment extends Fragment implements HomeListener {
 
             }
             else{
-                Toast.makeText(getContext(), resultAccount.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),((Result.Error)resultAccount).getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
                 internetError.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                                 swipeRefreshLayout.setRefreshing(false);
                             }
                             else {
-                                Snackbar.make(view,resultRefresh.getClass().toString(),Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view,((Result.Error)resultRefresh).getMessage(),Snackbar.LENGTH_SHORT).show();
                                 swipeRefreshLayout.setRefreshing(false);
                             }
                 });

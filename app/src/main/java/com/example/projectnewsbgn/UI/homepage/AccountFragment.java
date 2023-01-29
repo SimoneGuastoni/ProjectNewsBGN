@@ -128,7 +128,7 @@ public class AccountFragment extends Fragment{
                 }
 
             } else {
-                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

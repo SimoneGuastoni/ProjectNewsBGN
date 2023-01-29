@@ -137,7 +137,7 @@ public class SelectionInterestFragment extends Fragment {
                                 getActivity().finish();
                             }
                             else{
-                                Toast.makeText(act, result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(act,((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                                 topicList.clear();
                                 topicList.add("general");
                                 progressIndicator.setVisibility(View.GONE);

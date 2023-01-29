@@ -113,7 +113,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
             }
             else{
-                Toast.makeText(getActivity(), "Error retrieve account data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                 internetError.setVisibility(View.VISIBLE);
             }
 
@@ -290,7 +290,7 @@ public class SearchFragment extends Fragment implements SearchListener {
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             } else {
-                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 internetError.setVisibility(View.VISIBLE);
             }
