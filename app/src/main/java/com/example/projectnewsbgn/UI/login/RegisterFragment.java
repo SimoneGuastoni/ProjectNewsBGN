@@ -91,7 +91,7 @@ public class RegisterFragment extends Fragment {
                         }
                     else {
                         progressIndicator.setVisibility(View.GONE);
-                        psw.setError("Invalid password");
+                        psw.setError("Invalid password,at least 6 characters");
                     }
                     }
                 else {

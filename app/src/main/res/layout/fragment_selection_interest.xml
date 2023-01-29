@@ -21,16 +21,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progressIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:indeterminateOnly="true"
-                android:visibility="gone"
-                app:indicatorColor="@color/Gold"
-                app:trackColor="@color/Charcoal" />
-
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
@@ -41,7 +31,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/Gold"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:elevation="6dp">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progressIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:indeterminateOnly="true"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/Gold"
+                        app:trackColor="@color/Charcoal" />
 
                     <ImageView
                         android:id="@+id/profileIcon"
@@ -49,7 +50,7 @@
                         android:layout_height="200dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
-                        android:background="@color/Gold2"
+                        android:background="@color/Gold"
                         android:scaleType="centerCrop"
                         android:transitionName="profile_image"
                         app:srcCompat="@drawable/compile" />
@@ -68,7 +69,8 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:drawableEndCompat="@drawable/flag"
-                        app:drawableStartCompat="@drawable/flag" />
+                        app:drawableStartCompat="@drawable/flag"
+                        android:elevation="6dp"/>
 
                     <Spinner
                         android:id="@+id/spinnerCountry"
@@ -81,7 +83,8 @@
                         android:layout_marginBottom="20sp"
                         android:background="@color/Charcoal"
                         android:contentDescription="@string/countryList"
-                        android:minHeight="48dp" />
+                        android:minHeight="48dp"
+                        android:elevation="6dp"/>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -95,7 +98,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:background="@color/Gold3"
+                            android:background="@color/Gold"
                             android:elevation="8dp">
 
 
@@ -113,12 +116,13 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/Gold2"
+                                android:background="@color/Gold3"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:elevation="10dp">
 
                                 <CheckBox
                                     android:id="@+id/toggleBtnTopic1"
@@ -126,7 +130,7 @@
                                     android:layout_height="48dp"
                                     android:text="Business"
                                     android:textStyle="bold"
-
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -135,7 +139,7 @@
                                     android:layout_height="48dp"
                                     android:text="Entertainment"
                                     android:textStyle="bold"
-
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -144,6 +148,7 @@
                                     android:layout_height="48dp"
                                     android:text="Health"
                                     android:textStyle="bold"
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                             </LinearLayout>
@@ -154,10 +159,11 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginTop="0dp"
-                                android:background="@color/Gold2"
+                                android:background="@color/Gold3"
                                 android:layout_marginBottom="50sp"
                                 android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:elevation="10dp">
 
                                 <CheckBox
                                     android:id="@+id/toggleBtnTopic4"
@@ -165,6 +171,7 @@
                                     android:layout_height="48dp"
                                     android:text="Science"
                                     android:textStyle="bold"
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -173,6 +180,7 @@
                                     android:layout_height="48dp"
                                     android:text="Sports"
                                     android:textStyle="bold"
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                                 <CheckBox
@@ -181,6 +189,7 @@
                                     android:layout_height="48dp"
                                     android:text="Technology"
                                     android:textStyle="bold"
+                                    android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
 
                             </LinearLayout>
@@ -198,7 +207,8 @@
                         android:layout_marginBottom="20dp"
                         android:backgroundTint="@color/Charcoal"
                         android:text="@string/complete_registration"
-                        android:textColor="@color/Cream" />
+                        android:textColor="@color/Cream"
+                        android:elevation="6dp"/>
 
                 </LinearLayout>
             </FrameLayout>

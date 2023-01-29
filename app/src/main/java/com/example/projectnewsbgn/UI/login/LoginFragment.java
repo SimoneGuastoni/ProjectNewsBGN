@@ -128,10 +128,14 @@ public class LoginFragment extends Fragment {
                                     progressBar.setVisibility(View.GONE);
                                 }
                             });
-                } else
+                } else {
                     psw.setError("Invalid Password");
-            } else
+                    progressBar.setVisibility(View.GONE);
+                }
+            } else {
                 email.setError("Invalid E-mail");
+                progressBar.setVisibility(View.GONE);
+            }
 
         });
 

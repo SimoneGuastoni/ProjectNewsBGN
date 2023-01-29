@@ -1,6 +1,7 @@
 package com.example.projectnewsbgn.UI.homepage;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -56,7 +57,6 @@ public class FullNewsFragment extends Fragment {
         text_title = view.findViewById(R.id.titleFullNews);
         text_date = view.findViewById(R.id.dateFullNews);
         text_content = view.findViewById(R.id.contentFullNews);
-        text_author = view.findViewById(R.id.linkNews);
         iconNews = view.findViewById(R.id.iconFullNews);
         text_link = view.findViewById(R.id.linkNews);
         btnFav = view.findViewById(R.id.btnFavourite);
@@ -65,8 +65,8 @@ public class FullNewsFragment extends Fragment {
         text_title.setText(news.getTitle());
         text_date.setText(news.getPublishedAt());
         text_content.setText(news.getContent());
-        text_author.setText(news.getAuthor());
         text_link.setText(news.getUrl());
+        text_link.setTextColor(Color.BLUE);
         Picasso.get().load(news.getUrlToImage()).into(iconNews);
 
         String text = text_content.getText().toString();
@@ -78,7 +78,7 @@ public class FullNewsFragment extends Fragment {
                     (getContext(),R.drawable.ic_baseline_favorite_24));
         }
 
-        text_author.setOnClickListener(v -> {
+        text_link.setOnClickListener(v -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(news.getUrl()));
             startActivity(browserIntent);
         });

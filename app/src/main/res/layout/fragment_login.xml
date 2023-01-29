@@ -21,7 +21,8 @@
             android:layout_height="match_parent"
             android:background="@color/Gold"
             android:layout_margin="15dp"
-            style="@style/Theme.MaterialComponents">
+            style="@style/Theme.MaterialComponents"
+            android:elevation="6dp">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progressIndicator"
@@ -48,14 +49,16 @@
                     app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/logo" />
+                    style="@style/Theme.MaterialComponents"
+                    android:elevation="10dp"
+                    app:srcCompat="@drawable/logo2" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    app:cardElevation="40dp"
+                    app:cardElevation="10dp"
                     style="@style/Theme.MaterialComponents"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -149,11 +152,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/welcomeText"
+                android:text="Welcome to Homer"
                 android:textColor="@color/Charcoal"
-                android:textSize="40sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
                 android:transitionName="logo_txt"
+                android:elevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.104"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,6 +171,7 @@
                     android:textColor="@color/Charcoal"
                     android:textSize="15sp"
                     android:textStyle="bold"
+                    android:elevation="10dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.052"
@@ -181,6 +186,7 @@
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/Charcoal"
                 android:text="@string/login"
+                android:elevation="10dp"
                 android:textColor="@color/Cream"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.492"
@@ -205,19 +211,20 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <CheckBox
-                    android:id="@+id/rememberCb"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/Gold"
-                    style="@style/Theme.MaterialComponents"
-                    android:minHeight="48dp"
-                    android:text="@string/remember_me"
-                    android:textColor="@color/Charcoal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/loginBtn" />
+                android:id="@+id/rememberCb"
+                style="@style/Theme.MaterialComponents"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/Gold"
+                android:minHeight="48dp"
+                android:text="@string/remember_me"
+                android:textColor="@color/Cream"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginBtn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

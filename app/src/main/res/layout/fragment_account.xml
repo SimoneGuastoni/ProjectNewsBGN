@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:padding="20dp"
+                android:elevation="20dp"
                 android:background="@color/Gold">
 
                 <ImageView
@@ -48,13 +49,14 @@
                 android:layout_marginTop="-70dp"
                 android:layout_gravity="center"
                 android:layout_width="300dp"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:elevation="30sp">
                 <com.google.android.material.card.MaterialCardView
                     android:layout_height="125dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    cardElevation="20dp">
+                    cardElevation="40dp">
 
                     <RelativeLayout
                         android:layout_height="match_parent"
@@ -96,13 +98,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:elevation="12dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/account"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:elevation="14dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/nameTxtEdit"
@@ -120,7 +124,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/e_mail"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:elevation="14dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailTxtEdit"
@@ -138,7 +143,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Country"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:elevation="14dp"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/countryTxtEdit"
@@ -169,7 +176,7 @@
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/Tan"
                     android:layout_marginStart="10dp"
-                    app:cardElevation="40dp">
+                    app:cardElevation="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -190,6 +197,7 @@
                                 android:enabled="false"
                                 android:text="Business"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 android:textColor="@color/Charcoal" />
 
                             <CheckBox
@@ -199,6 +207,7 @@
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 android:text="Entertainment"
                                 />
 
@@ -209,6 +218,7 @@
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 android:text="Health"
                                 />
 
@@ -229,6 +239,7 @@
                                 android:textColor="@color/Charcoal"
                                 android:text="Science"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 />
 
                             <CheckBox
@@ -239,6 +250,7 @@
                                 android:textColor="@color/Charcoal"
                                 android:text="Sports"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 />
 
                             <CheckBox
@@ -249,6 +261,7 @@
                                 android:textColor="@color/Charcoal"
                                 android:text="Technology"
                                 android:textStyle="bold"
+                                android:elevation="14dp"
                                 />
 
                         </LinearLayout>
@@ -266,7 +279,8 @@
                     android:textColor="@color/Cream"
                     style="@style/Theme.MaterialComponents"
                     android:backgroundTint="@color/Charcoal"
-                    android:layout_marginBottom="200dp"/>
+                    android:layout_marginBottom="200dp"
+                    android:elevation="16dp"/>
 
             </LinearLayout>
 

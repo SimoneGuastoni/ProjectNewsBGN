@@ -15,13 +15,27 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/Gold"
         style="@style/Theme.MaterialComponents"
+        android:elevation="10dp"
         >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="@color/Charcoal"
+            android:visibility="visible"
+            style="@style/Theme.MaterialComponents"
+            android:layout_gravity="center"
+            />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Theme.MaterialComponents"
+            android:foregroundTint="@color/Charcoal"
+            android:elevation="14dp"
             >
 
 
@@ -31,8 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="76dp"
                 style="@style/Theme.MaterialComponents"
-                android:elevation="80dp"
-                />
+                android:elevation="14dp" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -50,18 +63,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/linearLayout2"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateOnly="true"
-        android:indeterminateTint="@color/Charcoal"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/linearLayout2"
-        style="@style/Theme.MaterialComponents"
-        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
