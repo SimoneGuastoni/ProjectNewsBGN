@@ -116,7 +116,7 @@
                                 android:layout_height="100dp"
                                 android:layout_marginRight="10dp"
                                 android:backgroundTint="#00000000"
-                                app:cardElevation="12dp">
+                                app:cardElevation="10dp">
 
                                 <FrameLayout
                                     android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                                         android:id="@+id/entertainmentTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/Camera"
+                                        android:src="@drawable/camera"
                                         android:padding="20dp"/>
 
                                 </FrameLayout>
@@ -221,7 +221,7 @@
                                         android:id="@+id/sportTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/Sport"
+                                        android:src="@drawable/sport"
                                         android:padding="20dp"/>
 
                                 </FrameLayout>
@@ -250,7 +250,7 @@
                                         android:id="@+id/technologyTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/Tech"
+                                        android:src="@drawable/tech"
                                         android:padding="25dp"/>
 
                                 </FrameLayout>
