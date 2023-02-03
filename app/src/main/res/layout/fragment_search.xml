@@ -99,13 +99,14 @@
                                         android:textSize="20dp"
                                         android:layout_marginBottom="10dp"
                                         android:textStyle="bold"/>
+
                                     <ImageView
                                         android:id="@+id/businessTopic"
+                                        style="@style/Theme.MaterialComponents"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
                                         android:padding="20dp"
-                                        style="@style/Theme.MaterialComponents"/>
+                                        android:src="@drawable/dollar" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -129,12 +130,13 @@
                                         android:textColor="@color/Charcoal"
                                         android:textSize="20dp"
                                         android:textStyle="bold"/>
+
                                     <ImageView
                                         android:id="@+id/scienceTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
-                                        android:padding="20dp"/>
+
+                                        android:src="@drawable/atom" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -162,7 +164,7 @@
                                         android:id="@+id/entertainmentTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
+                                        android:src="@drawable/Camera"
                                         android:padding="20dp"/>
 
                                 </FrameLayout>
@@ -190,7 +192,7 @@
                                         android:id="@+id/healthTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
+                                        android:src="@drawable/cross"
                                         android:padding="20dp"/>
 
                                 </FrameLayout>
@@ -219,7 +221,7 @@
                                         android:id="@+id/sportTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
+                                        android:src="@drawable/Sport"
                                         android:padding="20dp"/>
 
                                 </FrameLayout>
@@ -248,8 +250,8 @@
                                         android:id="@+id/technologyTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
-                                        android:padding="20dp"/>
+                                        android:src="@drawable/Tech"
+                                        android:padding="25dp"/>
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -277,8 +279,8 @@
                                         android:id="@+id/generalTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/logo"
-                                        android:padding="20dp"/>
+                                        android:src="@drawable/earth"
+                                        android:padding="25dp"/>
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
