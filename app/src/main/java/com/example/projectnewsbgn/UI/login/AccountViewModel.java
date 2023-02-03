@@ -38,6 +38,11 @@ public class AccountViewModel extends ViewModel {
         authenticationError = authenticationErrorFromRegister;
     }
 
+    public void sendResetEmailPassword(String emailAddress)
+    {
+        accountRepository.sendPasswordResetEmail(emailAddress);
+    }
+
     public MutableLiveData<Result> getAccountData(){
         //livedata != null se passo dal login o registrazione
         if(accountMutableLiveData == null){

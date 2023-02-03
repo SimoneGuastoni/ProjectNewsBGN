@@ -82,6 +82,19 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
         });
     }
 
+    public void sendPassword(String emailAddress)
+    {
+        firebaseAuth.sendPasswordResetEmail(emailAddress).
+                addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
+    }
+
     @Override
     public void getLoggedAccount() {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -93,5 +106,7 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
                 accountCallBack.onFailureFromAuthentication("Errore utente non trovato");
             }
     }
+
+
 
 }

@@ -14,4 +14,5 @@ public abstract class BaseAccountAuthenticationRemoteDataSource {
     public abstract void logout();
     public abstract void signUp(String accountName,String email, String password,String country,List<String> topicList);
     public abstract void login(String email, String password);
+    public abstract void sendPassword(String emailAddress);
 }

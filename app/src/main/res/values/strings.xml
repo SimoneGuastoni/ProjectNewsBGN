@@ -25,6 +25,7 @@
     <string name="search">Search</string>
     <string name="countryAccount">it</string>
     <string name="FireBaseDBLink">https://newsbgn-78fbd-default-rtdb.europe-west1.firebasedatabase.app/</string>
+    <string name="sendmail">Send mail to retrieve password</string>
 
     <string-array name="CountryList">
         <item>England</item>
