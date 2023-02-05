@@ -97,6 +97,7 @@ public class ForgotPasswordFragment extends Fragment {
         else
             return false;
     }
+
     private void prepareDataForRegister(boolean checked, String emailString) {
         Bundle rememberResult = new Bundle();
         rememberResult.putBoolean("booleankey", checked);

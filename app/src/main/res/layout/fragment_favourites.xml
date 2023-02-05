@@ -73,7 +73,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:backgroundTint="@color/Charcoal"
-        android:text="Delete all selected news"
+        android:text="Delete selected news"
         android:textSize="13dp"
         android:textColor="@color/Cream"
         android:visibility="visible"
