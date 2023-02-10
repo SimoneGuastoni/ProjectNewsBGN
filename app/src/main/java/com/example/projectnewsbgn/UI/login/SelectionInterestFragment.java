@@ -1,6 +1,5 @@
 package com.example.projectnewsbgn.UI.login;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREFS;
 
 import androidx.annotation.Nullable;
@@ -9,6 +8,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,14 +20,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.gson.Gson;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,21 +122,21 @@ public class SelectionInterestFragment extends Fragment {
                         .observe(getViewLifecycleOwner(), result -> {
                             if(result.isSuccess()){
                                 if(remember) {
-                                    Toast.makeText(getActivity(), "remember true", Toast.LENGTH_SHORT).show();
                                     Account account = ((Result.AccountSuccess) result).getData();
+                                    getContext();
                                     SharedPreferences sharedPreferences = act.getSharedPreferences
-                                            (SHARED_PREFS, getContext().MODE_PRIVATE);
+                                            (SHARED_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("name", "true");
                                     editor.commit();
                                 }
-                                Toast.makeText(getActivity(), "You've been successfully registered",
-                                        Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view,"You have been successfully registered",
+                                        Snackbar.LENGTH_SHORT).show();
                                 startActivity(goToHome);
                                 getActivity().finish();
                             }
                             else{
-                                Toast.makeText(act,((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view,((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
                                 topicList.clear();
                                 topicList.add("general");
                                 progressIndicator.setVisibility(View.GONE);

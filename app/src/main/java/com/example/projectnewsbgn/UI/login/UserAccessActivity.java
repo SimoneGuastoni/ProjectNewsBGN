@@ -12,13 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
-import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.R;
-import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
 
@@ -57,10 +52,9 @@ public class UserAccessActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int currentDestination = navController.getCurrentDestination().getId();
-        if(currentDestination == R.id.loginFragment){
-        }
-        else {
+        if(currentDestination != R.id.loginFragment){
             super.onBackPressed();
         }
+
     }
 }

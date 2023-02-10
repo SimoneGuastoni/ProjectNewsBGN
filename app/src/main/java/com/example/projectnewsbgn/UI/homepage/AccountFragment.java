@@ -16,13 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ public class AccountFragment extends Fragment{
         topicList = new ArrayList<>();
     }
 
-    //TODO sncakbar al posto delle toast
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -128,7 +126,7 @@ public class AccountFragment extends Fragment{
                 }
 
             } else {
-                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, ((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
             }
         });
 

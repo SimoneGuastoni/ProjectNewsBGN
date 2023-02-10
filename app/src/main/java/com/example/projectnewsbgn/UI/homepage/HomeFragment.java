@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Listener.HomeListener;
@@ -131,7 +130,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(HomeFragment.this.getContext(),((Result.Error)resultNewsCall).getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(view,((Result.Error)resultNewsCall).getMessage(),Snackbar.LENGTH_SHORT).show();
                             recyclerView.setVisibility(View.GONE);
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.VISIBLE);
@@ -141,7 +140,7 @@ public class HomeFragment extends Fragment implements HomeListener {
 
             }
             else{
-                Toast.makeText(getContext(),((Result.Error)resultAccount).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(view,((Result.Error)resultAccount).getMessage(),Snackbar.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
                 internetError.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -191,7 +190,7 @@ public class HomeFragment extends Fragment implements HomeListener {
 
         newsViewModel.updateNews(news).observe(getViewLifecycleOwner(), result -> {
             if(!result.isSuccess()){
-                Toast.makeText(getContext(), result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), result.getClass().toString(),Snackbar.LENGTH_SHORT).show();
             }
         });
     }

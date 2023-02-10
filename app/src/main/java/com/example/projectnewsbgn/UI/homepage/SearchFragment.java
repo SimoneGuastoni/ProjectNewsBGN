@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.projectnewsbgn.Adapter.NewsSearchAdapter;
 import com.example.projectnewsbgn.Listener.SearchListener;
@@ -34,6 +34,7 @@ import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
             }
             else{
-                Toast.makeText(getActivity(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(),((Result.Error)result).getMessage(), Snackbar.LENGTH_SHORT).show();
                 internetError.setVisibility(View.VISIBLE);
             }
 
@@ -139,7 +140,7 @@ public class SearchFragment extends Fragment implements SearchListener {
                 newsObtained = newsViewModel.getNews(language,allTopic,query);
                 rebuildNewsList(newsObtained);
                 if (newsList.size()==0){
-                    Toast.makeText(getContext(), "Nothing found", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(requireView(), "Nothing found", Snackbar.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -262,7 +263,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         newsViewModel.updateNewsNotSaved(news).observe(getViewLifecycleOwner(), result -> {
             if(!result.isSuccess()){
-                Toast.makeText(getContext(), "Errore, news non salvata correttamente", Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), "Errore, news non salvata correttamente",Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -290,7 +291,7 @@ public class SearchFragment extends Fragment implements SearchListener {
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             } else {
-                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(),((Result.Error)result).getMessage(), Snackbar.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 internetError.setVisibility(View.VISIBLE);
             }

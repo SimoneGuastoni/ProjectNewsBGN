@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,6 +25,7 @@ import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -72,8 +72,8 @@ public class ForgotPasswordFragment extends Fragment {
             {
                 prepareDataForRegister(true, emailString);
                 accountViewModel.sendResetEmailPassword(emailString);
-                Toast.makeText(getContext(),"mail sent, check your inbox please",
-                        Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(),"mail sent, it should arrive shortly",
+                        Snackbar.LENGTH_SHORT).show();
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_forgotPasswordFragment_to_loginFragment);
 
@@ -83,7 +83,7 @@ public class ForgotPasswordFragment extends Fragment {
             {
                 progressIndicator.setVisibility(View.GONE);
 
-                Toast.makeText(getContext(),"mail format not valid", Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(),"mail format not valid", Snackbar.LENGTH_SHORT).show();
 
             }
         });

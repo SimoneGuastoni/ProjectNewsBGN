@@ -2,8 +2,6 @@ package com.example.projectnewsbgn.UI.homepage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,16 +16,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.view.View;
 
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
-/*import com.example.projectnewsbgn.login.LoginActivity;*/
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
 import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,12 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        View view = findViewById(android.R.id.content);
         switch (item.getItemId()){
             case R.id.notification:
-                Toast.makeText(this, "Notifications", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view,"Notifications", Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Settings",Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.logout: {
                 controlResult = accountViewModel.logOut();
@@ -111,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
                                 finish();
                             }
                             else {
-                                Toast.makeText(this, result1.getClass().toString(), Toast.LENGTH_SHORT).show();
+                                Snackbar.make(view,result1.getClass().toString(),Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     }
                     else {
-                        Toast.makeText(this, result.getClass().toString(), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(view, result.getClass().toString(), Snackbar.LENGTH_SHORT).show();
                     }
                 });
             }

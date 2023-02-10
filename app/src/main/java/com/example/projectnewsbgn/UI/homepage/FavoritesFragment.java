@@ -21,13 +21,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.projectnewsbgn.Adapter.NewsFavAdapter;
 import com.example.projectnewsbgn.Listener.FavListener;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 buttonDeleteAll.setVisibility(View.VISIBLE);
                 recyclerViewFav.setVisibility(View.VISIBLE);
             } else {
-                Toast.makeText(getContext(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, ((Result.Error)result).getMessage(), Snackbar.LENGTH_SHORT).show();
                 buttonDeleteAll.setVisibility(view.GONE);
                 progressBar.setVisibility(View.GONE);
                 iconNoFavNews.setVisibility(View.VISIBLE);
@@ -119,7 +119,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 }
             }
             else {
-                Toast.makeText(getContext(), "Check at least one news or click the delete icon", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Check at least one news or click the delete icon",Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -138,7 +138,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
     public void onDeleteButtonPressed(News news) {
         newsViewModel.updateNews(news).observe(getViewLifecycleOwner(), result -> {
             if (!result.isSuccess()){
-                Toast.makeText(getContext(), "Cancel error", Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(),"Cancel error",Snackbar.LENGTH_SHORT).show();
             }
         });
     }

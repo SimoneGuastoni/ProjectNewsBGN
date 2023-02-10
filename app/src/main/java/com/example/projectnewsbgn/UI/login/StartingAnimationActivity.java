@@ -22,7 +22,7 @@ public class StartingAnimationActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "SharedPrefs";
 
-    private static int Splash_animation = 2000;
+    private static final int Splash_animation = 2000;
 
     private boolean logged;
 

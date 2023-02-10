@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,8 +28,10 @@ import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositor
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 
 public class LoginFragment extends Fragment {
@@ -106,7 +107,7 @@ public class LoginFragment extends Fragment {
                                 if(result.isSuccess()){
                                     Account account = ((Result.AccountSuccess) result).getData();
                                     if (rememberCb.isChecked()) {
-                                        Toast.makeText(getActivity(), "You will be remembered", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view,"You will be remembered", Snackbar.LENGTH_SHORT).show();
                                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
                                         SharedPreferences sharedPreferences = getActivity()
                                                 .getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -116,7 +117,7 @@ public class LoginFragment extends Fragment {
                                         startActivity(goToHome);
                                         getActivity().finish();
                                     } else {
-                                        Toast.makeText(getActivity(), "You will not be remembered", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view,"You will not be remembered", Snackbar.LENGTH_SHORT).show();
                                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
                                         startActivity(goToHome);
                                         getActivity().finish();
@@ -124,7 +125,7 @@ public class LoginFragment extends Fragment {
                                 }
                                 else{
                                     accountMutableLiveData = null;
-                                    Toast.makeText(getActivity(),((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(view, ((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                 }
                             });
