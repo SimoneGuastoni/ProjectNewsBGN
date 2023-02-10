@@ -27,7 +27,7 @@ import com.example.projectnewsbgn.Adapter.NewsHomeAdapter;
 import com.example.projectnewsbgn.Listener.HomeListener;
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.Repository.NewsRepository.INewsRepositoryWithLiveData;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
@@ -42,10 +42,9 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeListener {
 
-    private MutableLiveData<Result> newsObtained,accountDataObtained;
-    private FullNewsFragment fullNewsFragment = new FullNewsFragment();
+    private MutableLiveData<Result> newsObtained;
+    private final FullNewsFragment fullNewsFragment = new FullNewsFragment();
     private RecyclerView recyclerView;
-    private INewsRepositoryWithLiveData newsRepositoryWithLiveData;
     private NewsViewModel newsViewModel;
     private List<String> topicList;
     private NewsHomeAdapter newsRecyclerViewAdapter;
@@ -56,20 +55,19 @@ public class HomeFragment extends Fragment implements HomeListener {
     private List<News> newsList;
     private ImageView internetError;
     private AccountViewModel accountViewModel;
-    private IAccountRepositoryWithLiveData accountRepository;
     private  long timePassedFromFetch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        accountRepository = ServiceLocator.getInstance().getAccountRepository
+        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
                 (requireActivity().getApplication());
 
         accountViewModel = new ViewModelProvider(requireActivity(),
                 new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
 
-        newsRepositoryWithLiveData = ServiceLocator.getInstance().getNewsRepository(
+        INewsRepositoryWithLiveData newsRepositoryWithLiveData = ServiceLocator.getInstance().getNewsRepository(
                 requireActivity().getApplication());
 
         newsViewModel = new ViewModelProvider(
@@ -113,7 +111,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         progressBar.setVisibility(View.VISIBLE);
         internetError.setVisibility(View.GONE);
 
-        accountDataObtained = accountViewModel.getAccountData();
+        MutableLiveData<Result> accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), resultAccount -> {
             if(resultAccount.isSuccess()){
                 account = ((Result.AccountSuccess) resultAccount).getData();
@@ -146,20 +144,18 @@ public class HomeFragment extends Fragment implements HomeListener {
                 recyclerView.setVisibility(View.VISIBLE);
             }
 
-            swipeRefreshLayout.setOnRefreshListener(() -> {
-                newsViewModel.getNews(country,topicList,0)
-                        .observe(getViewLifecycleOwner(), resultRefresh -> {
-                            if(resultRefresh.isSuccess()){
-                                int initialSize = HomeFragment.this.newsList.size();
-                                rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultRefresh);
-                                swipeRefreshLayout.setRefreshing(false);
-                            }
-                            else {
-                                Snackbar.make(view,((Result.Error)resultRefresh).getMessage(),Snackbar.LENGTH_SHORT).show();
-                                swipeRefreshLayout.setRefreshing(false);
-                            }
-                });
-            });
+            swipeRefreshLayout.setOnRefreshListener(() -> newsViewModel.getNews(country,topicList,0)
+                    .observe(getViewLifecycleOwner(), resultRefresh -> {
+                        if(resultRefresh.isSuccess()){
+                            int initialSize = HomeFragment.this.newsList.size();
+                            rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultRefresh);
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                        else {
+                            Snackbar.make(view,((Result.Error)resultRefresh).getMessage(),Snackbar.LENGTH_SHORT).show();
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+            }));
 
         });
     }

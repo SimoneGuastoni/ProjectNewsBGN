@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-import javax.xml.transform.Source;
 
 @Entity (tableName = "news_table")
 public class News implements Serializable {
@@ -40,13 +39,13 @@ public class News implements Serializable {
         this.content = content;
         this.favourite = favourite;
     }
-
+//TODO CONTROLLO
     @Override
     public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         News news = (News) obj;
-        return this.url.equals(((News) obj).url);
+        return this.url.equals(news.url);
     }
 
     public boolean getFavourite() {

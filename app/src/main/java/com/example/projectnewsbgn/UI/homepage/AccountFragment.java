@@ -27,18 +27,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AccountFragment extends Fragment{
-
-    private MutableLiveData<Result> newsObtained;
 
     private TextView favouriteArticlesTot,accountNameTxt;
     private TextInputEditText name,email,country;
     private NewsViewModel newsViewModel;
     private List<News> newsFavList;
-    private MutableLiveData<Result> accountDataObtained;
-    private int empty = 0;
-    private Button btnUpdate;
+    private final int empty = 0;
     private List<String> topicList;
     private CheckBox cb1,cb2,cb3,cb4,cb5,cb6;
     private AccountViewModel accountViewModel;
@@ -65,11 +62,11 @@ public class AccountFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(requireActivity())).getSupportActionBar()).setTitle("Account");
 
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
         accountNameTxt = view.findViewById(R.id.accountNametxt);
-        btnUpdate = view.findViewById(R.id.updateBtn);
+        Button btnUpdate = view.findViewById(R.id.updateBtn);
         country = view.findViewById(R.id.countryTxtEdit);
         email = view.findViewById(R.id.emailTxtEdit);
         name = view.findViewById(R.id.nameTxtEdit);
@@ -81,7 +78,7 @@ public class AccountFragment extends Fragment{
         cb6 = view.findViewById(R.id.toggleBtnTopic6);
 
 
-        newsObtained = newsViewModel.getAllFavNews();
+        MutableLiveData<Result> newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
                 this.newsFavList.clear();
@@ -92,7 +89,7 @@ public class AccountFragment extends Fragment{
             }
         });
 
-        accountDataObtained = accountViewModel.getAccountData();
+        MutableLiveData<Result> accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()) {
                 Account copyAccount = ((Result.AccountSuccess) result).getData();
@@ -130,10 +127,8 @@ public class AccountFragment extends Fragment{
             }
         });
 
-        btnUpdate.setOnClickListener(v -> {
-            Navigation.findNavController(requireView())
-                    .navigate(R.id.action_accountFragment_to_settingFragment);
-        });
+        btnUpdate.setOnClickListener(v -> Navigation.findNavController(requireView())
+                .navigate(R.id.action_accountFragment_to_settingFragment));
     }
 
     private void clearCb(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {

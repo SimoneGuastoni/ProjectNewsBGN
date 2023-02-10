@@ -31,9 +31,7 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
 
     @Override
     public void getNewsFromDatabase(Long lastUpdate) {
-        NewsDatabase.dataBaseWriteExecutor.execute(() -> {
-            newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate);
-        });
+        NewsDatabase.dataBaseWriteExecutor.execute(() -> newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate));
     }
 
     //Metodi Update

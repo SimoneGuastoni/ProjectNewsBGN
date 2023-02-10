@@ -26,9 +26,7 @@ import com.squareup.picasso.Picasso;
 public class FullNewsFragment extends Fragment {
 
     private News news;
-    private TextView text_title,text_date,text_content,text_author,text_link;
-    private ImageView iconNews;
-    private ImageButton btnFav,btnShare;
+    private ImageButton btnFav;
     private NewsViewModel newsViewModel;
 
     @Override
@@ -54,13 +52,13 @@ public class FullNewsFragment extends Fragment {
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("NewsBGN");
 
-        text_title = view.findViewById(R.id.titleFullNews);
-        text_date = view.findViewById(R.id.dateFullNews);
-        text_content = view.findViewById(R.id.contentFullNews);
-        iconNews = view.findViewById(R.id.iconFullNews);
-        text_link = view.findViewById(R.id.linkNews);
+        TextView text_title = view.findViewById(R.id.titleFullNews);
+        TextView text_date = view.findViewById(R.id.dateFullNews);
+        TextView text_content = view.findViewById(R.id.contentFullNews);
+        ImageView iconNews = view.findViewById(R.id.iconFullNews);
+        TextView text_link = view.findViewById(R.id.linkNews);
         btnFav = view.findViewById(R.id.btnFavourite);
-        btnShare = view.findViewById(R.id.btnShare);
+        ImageButton btnShare = view.findViewById(R.id.btnShare);
 
         text_title.setText(news.getTitle());
         text_date.setText(news.getPublishedAt());
@@ -75,7 +73,7 @@ public class FullNewsFragment extends Fragment {
 
         if (news.getFavourite()){
             btnFav.setImageDrawable(AppCompatResources.getDrawable
-                    (getContext(),R.drawable.ic_baseline_favorite_24));
+                    (requireContext(),R.drawable.ic_baseline_favorite_24));
         }
 
         text_link.setOnClickListener(v -> {
@@ -102,11 +100,11 @@ public class FullNewsFragment extends Fragment {
     private void changeLikeIcon(ImageButton btnFav, boolean favourite) {
         if(favourite){
             btnFav.setImageDrawable(AppCompatResources.getDrawable
-                    (getContext(),R.drawable.ic_baseline_favorite_border_24));
+                    (requireContext(),R.drawable.ic_baseline_favorite_border_24));
         }
         else {
             btnFav.setImageDrawable(AppCompatResources.getDrawable
-                    (getContext(),R.drawable.ic_baseline_favorite_24));
+                    (requireContext(),R.drawable.ic_baseline_favorite_24));
         }
     }
 }

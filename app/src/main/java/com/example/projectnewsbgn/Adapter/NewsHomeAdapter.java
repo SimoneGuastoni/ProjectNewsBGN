@@ -23,9 +23,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.CustomViewHolderHome>{
-    private Context context;
-    private List<News> newsList;
-    private HomeListener listener;
+    private final Context context;
+    private final List<News> newsList;
+    private final HomeListener listener;
 
     public NewsHomeAdapter(Context context, List<News> newsList, HomeListener listener) {
         this.context = context;
@@ -115,9 +115,7 @@ public class NewsHomeAdapter extends RecyclerView.Adapter<NewsHomeAdapter.Custom
                 listener.onFavButtonPressed(newsList.get(getAdapterPosition()));
             });
 
-            btnShare.setOnClickListener(v -> {
-                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
-            });
+            btnShare.setOnClickListener(v -> listener.onShareButtonPressed(newsList.get(getAdapterPosition())));
         }
 
         private void changeFavIcon(boolean favourite) {

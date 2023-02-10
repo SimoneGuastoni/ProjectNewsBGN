@@ -1,5 +1,7 @@
 package com.example.projectnewsbgn.Source.NewsSource;
 
+import androidx.annotation.NonNull;
+
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.ApiService.CallNewsApi;
@@ -36,7 +38,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         for (int p = 0; p < listCallNewsApiResponse.size(); p++) {
                 listCallNewsApiResponse.get(p).enqueue(new Callback<NewsApiResponse>() {
                     @Override
-                    public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+                    public void onResponse(@NonNull Call<NewsApiResponse> call, @NonNull Response<NewsApiResponse> response) {
                         if (response.body() != null && response.isSuccessful() &&
                                 !response.body().getStatus().equals("errorStatusResponseBody")) {
                             counter--;
@@ -50,7 +52,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                     }
 
                     @Override
-                    public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<NewsApiResponse> call, @NonNull Throwable t) {
                         newsCallBack.onFailureFromRemote("Error from retrofit");
                     }
                 });
@@ -64,7 +66,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
 
             newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
                 @Override
-                public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+                public void onResponse(@NonNull Call<NewsApiResponse> call, @NonNull Response<NewsApiResponse> response) {
                     if (response.body() != null && response.isSuccessful() &&
                             !response.body().getStatus().equals("errorStatusResponseBody")) {
                         newsCallBack.onSuccessFromRemote(response.body());
@@ -74,7 +76,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
                 }
 
                 @Override
-                public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<NewsApiResponse> call, @NonNull Throwable t) {
                     newsCallBack.onFailureFromRemote("Error from retrofit");
                 }
             });
@@ -87,7 +89,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
         Call<NewsApiResponse> newsApiResponseCall = callNewsApi.callHeadlinesQuery(language,query,pageSize,apiKey);
         newsApiResponseCall.enqueue(new Callback<NewsApiResponse>() {
             @Override
-            public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+            public void onResponse(@NonNull Call<NewsApiResponse> call, @NonNull Response<NewsApiResponse> response) {
                 if (response.body() != null && response.isSuccessful() &&
                         !response.body().getStatus().equals("errorStatusResponseBody")) {
                     newsCallBack.onSuccessFromRemote(response.body().getArticles());
@@ -98,7 +100,7 @@ public class NewsRemoteDataSource extends BaseNewsRemoteDataSource {
             }
 
             @Override
-            public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewsApiResponse> call, @NonNull Throwable t) {
                 newsCallBack.onFailureFromRemote("Connection Error");
             }
         });

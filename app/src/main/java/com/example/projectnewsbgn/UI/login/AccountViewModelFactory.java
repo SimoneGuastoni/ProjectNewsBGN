@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
 
 public class AccountViewModelFactory implements ViewModelProvider.Factory {
 

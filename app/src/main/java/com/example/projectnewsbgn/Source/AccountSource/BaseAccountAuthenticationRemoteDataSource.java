@@ -1,7 +1,5 @@
 package com.example.projectnewsbgn.Source.AccountSource;
 
-import com.example.projectnewsbgn.Models.Account;
-
 import java.util.List;
 
 public abstract class BaseAccountAuthenticationRemoteDataSource {

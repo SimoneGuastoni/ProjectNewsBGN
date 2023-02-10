@@ -24,14 +24,12 @@ import androidx.navigation.Navigation;
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 
 public class LoginFragment extends Fragment {

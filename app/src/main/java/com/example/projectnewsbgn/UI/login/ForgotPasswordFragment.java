@@ -9,20 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
-import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.R;
-import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
 import com.example.projectnewsbgn.Utility.ServiceLocator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;

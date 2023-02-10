@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.projectnewsbgn.Models.Result;
-import com.example.projectnewsbgn.Repository.AccountReposiroty.IAccountRepositoryWithLiveData;
+import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
 
 import java.util.List;
 

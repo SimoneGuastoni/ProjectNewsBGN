@@ -19,7 +19,6 @@ import java.util.List;
 
 public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, NewsCallBack {
 
-    private static final String TAG = NewsRepositoryWithLiveData.class.getSimpleName();
 
     private final MutableLiveData<Result> allNewsMutableLiveData;
     private final MutableLiveData<Result> favoriteNewsMutableLiveData;

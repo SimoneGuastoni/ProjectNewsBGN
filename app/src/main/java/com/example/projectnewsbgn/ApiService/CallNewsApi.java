@@ -2,7 +2,6 @@ package com.example.projectnewsbgn.ApiService;
 
 import com.example.projectnewsbgn.Models.NewsApiResponse;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

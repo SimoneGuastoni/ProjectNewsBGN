@@ -3,7 +3,6 @@ package com.example.projectnewsbgn.Source.AccountSource;
 import com.example.projectnewsbgn.Models.Account;
 
 import java.util.List;
-import java.util.Set;
 
 public abstract class BaseAccountInfoRemoteDataSource {
     protected AccountCallBack accountCallBack;

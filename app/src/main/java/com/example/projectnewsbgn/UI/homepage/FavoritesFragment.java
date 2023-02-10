@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,10 +30,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FavoritesFragment extends Fragment implements FavListener {
 
-    private MutableLiveData<Result> newsObtained;
     private FullNewsFragment fullNewsFragment;
     private RecyclerView recyclerViewFav;
     private List<News> newsFavList,controlList;
@@ -69,7 +68,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favorite");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(requireActivity())).getSupportActionBar()).setTitle("Favorite");
 
         buttonDeleteAll = view.findViewById(R.id.btnDeleteAll);
         recyclerViewFav = view.findViewById(R.id.recyclerViewFav);
@@ -84,7 +83,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
         recyclerViewFav.setLayoutManager(layoutManager);
         recyclerViewFav.setAdapter(newsFavAdapter);
 
-        newsObtained = newsViewModel.getAllFavNews();
+        MutableLiveData<Result> newsObtained = newsViewModel.getAllFavNews();
         newsObtained.observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
                 int initialSize = this.newsFavList.size();
@@ -99,7 +98,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 recyclerViewFav.setVisibility(View.VISIBLE);
             } else {
                 Snackbar.make(view, ((Result.Error)result).getMessage(), Snackbar.LENGTH_SHORT).show();
-                buttonDeleteAll.setVisibility(view.GONE);
+                buttonDeleteAll.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
                 iconNoFavNews.setVisibility(View.VISIBLE);
                 hintText.setVisibility(View.VISIBLE);

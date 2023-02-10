@@ -4,11 +4,7 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof NewsSuccess || this instanceof AccountSuccess) {
-            return true;
-        } else {
-            return false;
-        }
+        return this instanceof NewsSuccess || this instanceof AccountSuccess;
     }
 
     public static final class NewsSuccess extends Result {

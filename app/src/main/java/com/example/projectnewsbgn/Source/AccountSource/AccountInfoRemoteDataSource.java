@@ -1,15 +1,8 @@
 package com.example.projectnewsbgn.Source.AccountSource;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 
 import com.example.projectnewsbgn.Models.Account;
-import com.example.projectnewsbgn.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,11 +11,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource{
 
-    private static final String TAG = AccountInfoRemoteDataSource.class.getSimpleName();
 
     private final DatabaseReference databaseReference;
 
@@ -45,11 +36,10 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
                 else{
                     //Record non presente
                     databaseReference.child("account").child(account.getId()).setValue(account)
-                            .addOnSuccessListener(unused -> {
-                                accountCallBack.onSuccessFromRemoteDatabase(account);
-                            }).addOnFailureListener(e -> {
-                                accountCallBack.onFailureFromRemoteDatabase("Saving account error");
-                            });
+                            .addOnSuccessListener(unused -> accountCallBack.
+                                    onSuccessFromRemoteDatabase(account)).
+                            addOnFailureListener(e -> accountCallBack.
+                                    onFailureFromRemoteDatabase("Saving account error"));
                 }
             }
 

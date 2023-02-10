@@ -1,22 +1,17 @@
-package com.example.projectnewsbgn.Repository.AccountReposiroty;
+package com.example.projectnewsbgn.Repository.AccountRepository;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.projectnewsbgn.Models.Account;
-import com.example.projectnewsbgn.Models.News;
-import com.example.projectnewsbgn.Models.NewsApiResponse;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.Source.AccountSource.AccountCallBack;
 import com.example.projectnewsbgn.Source.AccountSource.BaseAccountAuthenticationRemoteDataSource;
 import com.example.projectnewsbgn.Source.AccountSource.BaseAccountInfoRemoteDataSource;
-import com.example.projectnewsbgn.Source.NewsSource.BaseNewsLocalDataSource;
-import com.example.projectnewsbgn.Source.NewsSource.NewsCallBack;
 
 import java.util.List;
 
 public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLiveData, AccountCallBack {
 
-    private static final String TAG = AccountRepositoryWithLiveData.class.getSimpleName();
 
     private final BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource;
     private final BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;

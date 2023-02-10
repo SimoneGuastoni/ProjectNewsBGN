@@ -22,9 +22,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.CustomViewHolderSmall> {
-    private Context context;
-    private List<News> newsList;
-    private SearchListener listener;
+    private final Context context;
+    private final List<News> newsList;
+    private final SearchListener listener;
 
     public NewsSearchAdapter(Context context, List<News> newsList, SearchListener listener) {
         this.context = context;
@@ -41,12 +41,7 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
         holder.text_date.setText(newsList.get(position).getPublishedAt());
         /*holder.text_description.setText(newsList.get(position).getDescription());*/
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.OnNewsClicked(newsList.get(position));
-            }
-        });
+        holder.linearLayout.setOnClickListener(v -> listener.OnNewsClicked(newsList.get(position)));
 
         if(newsList.get(position).getUrlToImage() != null){
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
@@ -74,7 +69,6 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
         public TextView text_title;
         public TextView text_source;
         public TextView text_date;
-        public TextView text_description;
         public ImageView img_headline;
         public LinearLayout linearLayout;
         public ImageButton btnFav,btnShare;
@@ -97,9 +91,7 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
                 listener.onFavButtonPressed(newsClicked);
             });
 
-            btnShare.setOnClickListener(v -> {
-                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
-            });
+            btnShare.setOnClickListener(v -> listener.onShareButtonPressed(newsList.get(getAdapterPosition())));
 
         }
 

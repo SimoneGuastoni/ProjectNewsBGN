@@ -1,11 +1,10 @@
-package com.example.projectnewsbgn.Repository.AccountReposiroty;
+package com.example.projectnewsbgn.Repository.AccountRepository;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.projectnewsbgn.Models.Result;
 
 import java.util.List;
-import java.util.Set;
 
 public interface IAccountRepositoryWithLiveData {
 

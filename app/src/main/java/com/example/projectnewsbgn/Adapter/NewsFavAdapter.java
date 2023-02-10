@@ -1,7 +1,6 @@
 package com.example.projectnewsbgn.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderFav> {
-    private List<News> newsList;
-    private FavListener listener;
+    private final List<News> newsList;
+    private  final FavListener listener;
 
     public NewsFavAdapter(List<News> newsList, FavListener listener) {
-        this.newsList = newsList;
+          this.newsList = newsList;
         this.listener = listener;
     }
 
@@ -46,12 +45,7 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.OnNewsClicked(newsList.get(position));
-            }
-        });
+        holder.linearLayout.setOnClickListener(v -> listener.OnNewsClicked(newsList.get(position)));
 
         if(newsList.get(position).getUrlToImage() != null){
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
@@ -90,12 +84,7 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
 
             cbDelete.setOnClickListener(v -> {
                 News newsChecked = newsList.get(getAdapterPosition());
-                if (cbDelete.isChecked()){
-                    listener.deleteNewsChecked(newsChecked,true);
-                }
-                else {
-                    listener.deleteNewsChecked(newsChecked,false);
-                }
+                listener.deleteNewsChecked(newsChecked, cbDelete.isChecked());
             });
 
             btnDelete.setOnClickListener(v -> {
@@ -105,9 +94,8 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
                 listener.onDeleteButtonPressed(newsClicked);
             });
 
-            btnShare.setOnClickListener(v -> {
-                listener.onShareButtonPressed(newsList.get(getAdapterPosition()));
-            });
+            btnShare.setOnClickListener(v -> listener.
+                    onShareButtonPressed(newsList.get(getAdapterPosition())));
         }
 
         @Override
