@@ -26,9 +26,8 @@ public class StartingAnimationActivity extends AppCompatActivity {
 
     private boolean logged;
 
-    private Animation topAnim,bottomAnim;
     private ImageView icon;
-    private TextView welcome,slogan;
+    private TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +38,11 @@ public class StartingAnimationActivity extends AppCompatActivity {
 
             icon = findViewById(R.id.icon);
             welcome = findViewById(R.id.welcome);
-            slogan = findViewById(R.id.slogan);
+        TextView slogan = findViewById(R.id.slogan);
 
-            topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-            bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        Animation topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
+        Animation bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+
 //Set animation to elements
             icon.setAnimation(topAnim);
             welcome.setAnimation(bottomAnim);
@@ -50,30 +50,27 @@ public class StartingAnimationActivity extends AppCompatActivity {
 
             loadData();
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            new Handler().postDelayed(() -> {
 
-                        Intent intent;
+                    Intent intent;
 
-                        if(logged){
-                             intent = new Intent(StartingAnimationActivity.this,
-                                     MainActivity.class);
-                        }
-                        else{
-                             intent = new Intent(StartingAnimationActivity.this,
-                                     UserAccessActivity.class);
-                        }
-
-                        Pair[] pairs = new Pair[2];
-                        pairs[0] = new Pair<View,String>(icon,"logo_image");
-                        pairs[1] = new Pair<View,String>(welcome,"logo_txt");
-
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation
-                                (StartingAnimationActivity.this,pairs);
-                        startActivity(intent,options.toBundle());
+                    if(logged){
+                         intent = new Intent(StartingAnimationActivity.this,
+                                 MainActivity.class);
                     }
-            },Splash_animation);
+                    else{
+                         intent = new Intent(StartingAnimationActivity.this,
+                                 UserAccessActivity.class);
+                    }
+
+                    Pair[] pairs = new Pair[2];
+                    pairs[0] = new Pair<View,String>(icon,"logo_image");
+                    pairs[1] = new Pair<View,String>(welcome,"logo_txt");
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation
+                            (StartingAnimationActivity.this,pairs);
+                    startActivity(intent,options.toBundle());
+                },Splash_animation);
 
         }
 

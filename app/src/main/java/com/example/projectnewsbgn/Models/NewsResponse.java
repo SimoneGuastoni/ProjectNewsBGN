@@ -29,8 +29,7 @@ public class NewsResponse implements Parcelable {
                 '}';
     }
 
-    protected NewsResponse(Parcel in) {
-    }
+    protected NewsResponse(Parcel in) {}
 
     public static final Creator<NewsResponse> CREATOR = new Creator<NewsResponse>() {
         @Override

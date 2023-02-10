@@ -9,27 +9,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +36,7 @@ public class SettingFragment extends Fragment {
     private Spinner countrySpinner;
     private TextInputEditText accountName,countryName;
     private CheckBox cb1,cb2,cb3,cb4,cb5,cb6;
-    private Button updateBtn;
     private AccountViewModel accountViewModel;
-    private MutableLiveData<Result> accountDataObtained;
     private List<String> topicList;
     private String accountId,copyEmail;
     private ProgressBar progressBar;
@@ -69,13 +62,13 @@ public class SettingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //TODO alternativa?
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.SettingsName);
 
         countrySpinner = view.findViewById(R.id.spinnerCountry);
         accountName = view.findViewById(R.id.accountName);
         countryName = view.findViewById(R.id.countryName);
         progressBar = view.findViewById(R.id.progressBar);
-        updateBtn = view.findViewById(R.id.updateBtn);
+        Button updateBtn = view.findViewById(R.id.updateBtn);
         cb1 = view.findViewById(R.id.cbTopic1);
         cb2 = view.findViewById(R.id.cbTopic2);
         cb3 = view.findViewById(R.id.cbTopic3);
@@ -89,7 +82,7 @@ public class SettingFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySpinner.setAdapter(adapter);
 
-        accountDataObtained = accountViewModel.getAccountData();
+        MutableLiveData<Result> accountDataObtained = accountViewModel.getAccountData();
         accountDataObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()) {
                 Account copyAccount = ((Result.AccountSuccess) result).getData();
@@ -122,7 +115,7 @@ public class SettingFragment extends Fragment {
                 }
 
             } else {
-                Toast.makeText(getContext(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, ((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -130,7 +123,7 @@ public class SettingFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
            String newCountry,newName;
            List<String> newTopicList = new ArrayList<>();
-           newTopicList.add("general");
+           newTopicList.add(getString(R.string.MustHaveTopic));
             if (cb1.isChecked() || cb2.isChecked() || cb3.isChecked() ||
                     cb4.isChecked() || cb5.isChecked() || cb6.isChecked() &&
                     !accountName.getText().toString().equals("")) {
@@ -152,27 +145,24 @@ public class SettingFragment extends Fragment {
                     newTopicList.add(cb6.getText().toString().toLowerCase(Locale.ROOT));
 
                 accountViewModel.changeAccountData(accountId,copyEmail,newName,newCountry,newTopicList)
-                        .observe(getViewLifecycleOwner(), new Observer<Result>() {
-                    @Override
-                    public void onChanged(Result result) {
-                        if (result.isSuccess()){
-                            Navigation.findNavController(requireView())
-                                    .navigate(R.id.action_settingFragment_to_accountFragment);
-                            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putLong(String.valueOf(MainActivity.TIME),0);
-                            editor.apply();
-                        }
-                        else {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), ((Result.Error)result).getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                        .observe(getViewLifecycleOwner(), result -> {
+                            if (result.isSuccess()){
+                                Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_settingFragment_to_accountFragment);
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putLong(String.valueOf(MainActivity.TIME),0);
+                                editor.apply();
+                            }
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Snackbar.make(view,((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
             }
             else {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), "Compile all forms", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view,R.string.SettingFragmentMsg,Snackbar.LENGTH_SHORT).show();
             }
         });
     }

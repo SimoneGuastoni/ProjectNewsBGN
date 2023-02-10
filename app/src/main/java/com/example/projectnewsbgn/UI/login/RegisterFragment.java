@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputLayout;
 public class RegisterFragment extends Fragment {
 
     private TextInputLayout accountName,email,psw,confirmPsw;
-    private Button registerBtn;
     private CheckBox rememberCb;
     private LinearProgressIndicator progressIndicator;
 
@@ -43,7 +42,7 @@ public class RegisterFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         View v = getView();
-        registerBtn = v.findViewById(R.id.registerBtn);
+        Button registerBtn = v.findViewById(R.id.registerBtn);
         rememberCb = v.findViewById(R.id.rememberCbRegister);
         accountName = v.findViewById(R.id.account);
         email = v.findViewById(R.id.email);
@@ -78,22 +77,22 @@ public class RegisterFragment extends Fragment {
                         }
                         else {
                             progressIndicator.setVisibility(View.GONE);
-                            confirmPsw.setError("Passwords doesn't match");
+                            confirmPsw.setError(getString(R.string.PasswordErrorMatch));
                         }
                         }
                     else {
                         progressIndicator.setVisibility(View.GONE);
-                        psw.setError("Invalid password,at least 6 characters");
+                        psw.setError(getString(R.string.InvalidPassword2));
                     }
                     }
                 else {
                     progressIndicator.setVisibility(View.GONE);
-                    email.setError("Invalid email");
+                    email.setError(getString(R.string.InvalidEmail2));
                 }
                 }
             else {
                 progressIndicator.setVisibility(View.GONE);
-                accountName.setError("Invalid account name");
+                accountName.setError(getString(R.string.InvalidName));
             }
         });
 
@@ -110,31 +109,19 @@ public class RegisterFragment extends Fragment {
     }
 
     private boolean comparePsw(String pswString, String pswStringConf) {
-        if (pswString.equals(pswStringConf))
-            return true;
-        else
-            return false;
+        return pswString.equals(pswStringConf);
     }
 
     private boolean controlPsw(String pswStringConf) {
-        if (pswStringConf.equals("") || pswStringConf.length()<6)
-            return false;
-        else
-            return true;
+        return !pswStringConf.equals("") && pswStringConf.length() >= 6;
     }
 
     private boolean controlEmailString(String emailString) {
-        if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS
-                .matcher(emailString).matches())
-            return true;
-        else
-            return false;
+        return !emailString.isEmpty() && Patterns.EMAIL_ADDRESS
+                .matcher(emailString).matches();
     }
 
     private boolean controlAccountString(String accountString) {
-        if(accountString.equals(""))
-            return false;
-        else
-            return true;
+        return !accountString.equals("");
     }
 }

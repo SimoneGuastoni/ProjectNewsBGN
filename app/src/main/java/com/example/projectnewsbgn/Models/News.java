@@ -39,7 +39,6 @@ public class News implements Serializable {
         this.content = content;
         this.favourite = favourite;
     }
-//TODO CONTROLLO
     @Override
     public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;

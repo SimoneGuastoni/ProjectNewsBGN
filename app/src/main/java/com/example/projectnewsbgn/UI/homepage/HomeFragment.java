@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment implements HomeListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("NewsBGN");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.AppTitle);
 
         progressBar = view.findViewById(R.id.progressBar);
         internetError = view.findViewById(R.id.iconInternetError);
@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                     newsObtained.observe(getViewLifecycleOwner(), resultNewsCall -> {
                         if (resultNewsCall.isSuccess()) {
                             int initialSize = HomeFragment.this.newsList.size();
-                            rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultNewsCall);
+                            rebuildList(initialSize, newsRecyclerViewAdapter,recyclerView,resultNewsCall);
                             progressBar.setVisibility(View.INVISIBLE);
                             internetError.setVisibility(View.GONE);
                         } else {
@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment implements HomeListener {
             }
             else{
                 Snackbar.make(view,((Result.Error)resultAccount).getMessage(),Snackbar.LENGTH_SHORT).show();
+                //TODO fetch locale
                 progressBar.setVisibility(View.INVISIBLE);
                 internetError.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -148,7 +149,7 @@ public class HomeFragment extends Fragment implements HomeListener {
                     .observe(getViewLifecycleOwner(), resultRefresh -> {
                         if(resultRefresh.isSuccess()){
                             int initialSize = HomeFragment.this.newsList.size();
-                            rebuildList(initialSize,newsList,newsRecyclerViewAdapter,recyclerView,resultRefresh);
+                            rebuildList(initialSize, newsRecyclerViewAdapter,recyclerView,resultRefresh);
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         else {
@@ -160,7 +161,7 @@ public class HomeFragment extends Fragment implements HomeListener {
         });
     }
 
-    private void rebuildList(int initialSize, List<News> newsList, NewsHomeAdapter newsRecyclerViewAdapter, RecyclerView recyclerView, Result result) {
+    private void rebuildList(int initialSize, NewsHomeAdapter newsRecyclerViewAdapter, RecyclerView recyclerView, Result result) {
         recyclerView.setVisibility(View.GONE);
         HomeFragment.this.newsList.clear();
         HomeFragment.this.newsList.addAll(((Result.NewsSuccess) result).getData().getNewsList());

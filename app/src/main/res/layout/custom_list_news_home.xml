@@ -3,7 +3,6 @@
     android:id="@+id/containerListNews"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="20sp"
@@ -22,7 +21,8 @@
                     android:layout_height="230dp"
                     android:scaleType="centerCrop"
                     android:background="@color/Cream"
-                    android:src="@drawable/not_found" />
+                    android:src="@drawable/not_found"
+                    android:contentDescription="@string/errorImage" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,8 +34,8 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Title"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/title"
                     android:textColor="@color/Charcoal"
                     android:textStyle="bold"
                     android:textSize="25sp" />
@@ -44,8 +44,8 @@
                     android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Author"
-                    android:layout_marginLeft="5dp"
+                    android:text="@string/author"
+                    android:layout_marginStart="5dp"
                     android:textColor="@color/Charcoal"
                     android:textStyle="italic"
                     android:textSize="15sp" />
@@ -53,19 +53,19 @@
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="__/__/____"
+                    android:text="@string/date"
                     android:textColor="@color/Charcoal"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="10sp" />
+                    android:layout_marginStart="5dp"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Description:"
+                    android:text="@string/description"
                     android:textColor="@color/Charcoal"
                     android:textSize="15sp" />
 
@@ -88,7 +88,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"
                         android:backgroundTint="@color/Cream"
-                        android:contentDescription="Share"
+                        android:contentDescription="@string/share"
                         style="@style/Theme.MaterialComponents"
                         android:src="@drawable/ic_baseline_share_24"
                         app:layout_constraintBottom_toBottomOf="parent"

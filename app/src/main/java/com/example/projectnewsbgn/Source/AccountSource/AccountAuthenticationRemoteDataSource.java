@@ -30,7 +30,7 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
                             (firebaseUser.getEmail(),firebaseUser.getUid());
                 }
                 else{
-                    accountCallBack.onFailureFromAuthentication("Account equal null");
+                    accountCallBack.onFailureFromAuthentication("Error, can't find account");
                 }
             }
             else {

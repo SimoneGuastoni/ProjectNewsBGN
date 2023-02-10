@@ -1,39 +1,30 @@
 package com.example.projectnewsbgn.UI.homepage;
 
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-
 import com.example.projectnewsbgn.Adapter.NewsSearchAdapter;
 import com.example.projectnewsbgn.Listener.SearchListener;
-import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.login.AccountViewModel;
-import com.example.projectnewsbgn.UI.login.UserAccessActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -42,17 +33,16 @@ import java.util.List;
 public class SearchFragment extends Fragment implements SearchListener {
 
     private NewsViewModel newsViewModel;
-    private MutableLiveData<Result> newsObtained,accountObtained;
+    private MutableLiveData<Result> newsObtained;
     private FullNewsFragment fullNewsFragment;
     private RecyclerView recyclerView;
     private NewsSearchAdapter newsSmallAdapter;
     private AccountViewModel accountViewModel;
-    private ImageView businessTopic,scienceTopic,generalTopic,
-            healthTopic,sportTopic,entertainmentTopic,technologyTopic,waitingImage,internetError;
+    private ImageView waitingImage;
+    private ImageView internetError;
     private ProgressBar progressBar;
     private String category,country,query,language;
     private TextView hintText;
-    private SearchView searchView;
     private List<News> newsList;
     private List<String> allTopic;
 
@@ -65,16 +55,16 @@ public class SearchFragment extends Fragment implements SearchListener {
         newsList = new ArrayList<>();
         fullNewsFragment = new FullNewsFragment();
 
-        country="general";
-        query="";
-        allTopic = new ArrayList<String>();
-        allTopic.add("general");
-        allTopic.add("sport");
-        allTopic.add("health");
-        allTopic.add("science");
-        allTopic.add("business");
-        allTopic.add("entertainment");
-        allTopic.add("technology");
+
+        query=getString(R.string.DefaultQuery);
+        allTopic = new ArrayList<>();
+        allTopic.add(getString(R.string.MustHaveTopic));
+        allTopic.add(getString(R.string.SportTopic));
+        allTopic.add(getString(R.string.HealthTopic));
+        allTopic.add(getString(R.string.ScienceTopic));
+        allTopic.add(getString(R.string.BusinessTopic));
+        allTopic.add(getString(R.string.EntertainmentTopic));
+        allTopic.add(getString(R.string.TechnologyTopic));
 
     }
 
@@ -89,25 +79,25 @@ public class SearchFragment extends Fragment implements SearchListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Search News");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.SearchTitle);
 
         recyclerView = view.findViewById(R.id.recyclerViewSearch);
         progressBar = view.findViewById(R.id.progressBar);
-        businessTopic = view.findViewById(R.id.businessTopic);
-        scienceTopic = view.findViewById(R.id.scienceTopic);
-        technologyTopic = view.findViewById(R.id.technologyTopic);
-        generalTopic = view.findViewById(R.id.generalTopic);
-        entertainmentTopic = view.findViewById(R.id.entertainmentTopic);
-        healthTopic = view.findViewById(R.id.healthTopic);
-        sportTopic = view.findViewById(R.id.sportTopic);
+        ImageView businessTopic = view.findViewById(R.id.businessTopic);
+        ImageView scienceTopic = view.findViewById(R.id.scienceTopic);
+        ImageView technologyTopic = view.findViewById(R.id.technologyTopic);
+        ImageView generalTopic = view.findViewById(R.id.generalTopic);
+        ImageView entertainmentTopic = view.findViewById(R.id.entertainmentTopic);
+        ImageView healthTopic = view.findViewById(R.id.healthTopic);
+        ImageView sportTopic = view.findViewById(R.id.sportTopic);
         waitingImage = view.findViewById(R.id.waitForInputImage);
-        searchView = view.findViewById(R.id.searchBar);
+        SearchView searchView = view.findViewById(R.id.searchBar);
         hintText = view.findViewById(R.id.hintText);
         internetError = view.findViewById(R.id.iconInternetError);
 
         internetError.setVisibility(View.GONE);
 
-        accountObtained = accountViewModel.getAccountData();
+        MutableLiveData<Result> accountObtained = accountViewModel.getAccountData();
         accountObtained.observe(getViewLifecycleOwner(), result -> {
             if (result.isSuccess()){
                 country = ((Result.AccountSuccess) result).getData().getCountry();

@@ -28,8 +28,8 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Title"
+                android:layout_marginStart="5dp"
+                android:text="@string/title"
                 android:textColor="@color/Charcoal"
                 android:textStyle="bold"
                 android:textSize="17sp" />
@@ -38,19 +38,19 @@
                 android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Author"
-                android:layout_marginLeft="5dp"
+                android:text="@string/author"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/Charcoal"
                 android:textStyle="italic"
-                android:textSize="10sp" />
+                android:textSize="11sp" />
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="__/__/____"
+                android:text="@string/date"
                 android:textColor="@color/Charcoal"
-                android:layout_marginLeft="5dp"
-                android:textSize="10sp" />
+                android:layout_marginStart="5dp"
+                android:textSize="11sp" />
 
         </LinearLayout>
         <LinearLayout
@@ -64,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/not_found" />
+                android:src="@drawable/not_found"
+                android:contentDescription="@string/errorImage" />
 
         </LinearLayout>
 
@@ -86,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/Cream"
-                android:contentDescription="Share"
+                android:contentDescription="@string/share"
                 android:src="@drawable/ic_baseline_share_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnFavourite"

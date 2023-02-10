@@ -118,7 +118,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
                 }
             }
             else {
-                Snackbar.make(view, "Check at least one news or click the delete icon",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.FavNewsMsg,Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -137,7 +137,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
     public void onDeleteButtonPressed(News news) {
         newsViewModel.updateNews(news).observe(getViewLifecycleOwner(), result -> {
             if (!result.isSuccess()){
-                Snackbar.make(requireView(),"Cancel error",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), R.string.FavCancelError,Snackbar.LENGTH_SHORT).show();
             }
         });
     }

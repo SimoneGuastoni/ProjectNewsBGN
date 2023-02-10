@@ -68,7 +68,7 @@ public class FullNewsFragment extends Fragment {
         Picasso.get().load(news.getUrlToImage()).into(iconNews);
 
         String text = text_content.getText().toString();
-        text = text.replaceAll("\\[\\+\\w+\\s+chars\\]", "clicca per continuare a leggere");
+        text = text.replaceAll("\\[\\+\\w+\\s+chars]", getString(R.string.FullNewsAdvice));
         text_content.setText(text);
 
         if (news.getFavourite()){

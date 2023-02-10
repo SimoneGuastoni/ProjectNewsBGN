@@ -16,7 +16,7 @@
         <FrameLayout
             android:id="@+id/containerFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -53,7 +53,8 @@
                         android:background="@color/Gold"
                         android:scaleType="centerCrop"
                         android:transitionName="profile_image"
-                        app:srcCompat="@drawable/compile" />
+                        app:srcCompat="@drawable/compile"
+                        android:contentDescription="@string/createAccountImage" />
 
                     <TextView
                         android:id="@+id/selectCountryTxt"
@@ -128,7 +129,7 @@
                                     android:id="@+id/toggleBtnTopic1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Business"
+                                    android:text="@string/business"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
@@ -137,7 +138,7 @@
                                     android:id="@+id/toggleBtnTopic2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Entertainment"
+                                    android:text="@string/entertainment"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
@@ -146,7 +147,7 @@
                                     android:id="@+id/toggleBtnTopic3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Health"
+                                    android:text="@string/health"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
@@ -169,7 +170,7 @@
                                     android:id="@+id/toggleBtnTopic4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Science"
+                                    android:text="@string/science"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
@@ -178,7 +179,7 @@
                                     android:id="@+id/toggleBtnTopic5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Sports"
+                                    android:text="@string/sports"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />
@@ -187,7 +188,7 @@
                                     android:id="@+id/toggleBtnTopic6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:text="Technology"
+                                    android:text="@string/technology"
                                     android:textStyle="bold"
                                     android:elevation="12dp"
                                     android:textColor="@color/Charcoal" />

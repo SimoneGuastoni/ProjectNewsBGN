@@ -23,6 +23,7 @@ public abstract class NewsDatabase extends RoomDatabase {
 
     /* Metodo per creare il dataBase,synchronized indica che solo un thread per
     volta piò accedere a questo metodo*/
+
     public static synchronized NewsDatabase getInstanceDatabase(Context context){
         if(instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),

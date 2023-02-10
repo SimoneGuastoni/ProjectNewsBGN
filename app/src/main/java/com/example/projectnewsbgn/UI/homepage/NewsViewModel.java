@@ -15,9 +15,6 @@ import java.util.List;
 
 
 public class NewsViewModel extends ViewModel {
-    //prende il nome della classe
-    private static final String TAG = NewsViewModel.class.getSimpleName();
-    //la prima volta che il viewmodel verrà lanciato il currentName sarà a null, ovviamente
 
     private final Application application;
     private final INewsRepositoryWithLiveData newsRepositoryWithLiveData;
@@ -26,7 +23,6 @@ public class NewsViewModel extends ViewModel {
     //tra parentesi angolari c'è il tipo di dato che noi ci aspettiamo venga restituito dal liveData
     private MutableLiveData<Result> favoriteNewsListLiveData;
     private MutableLiveData<Result> topicChoseNewsList;
-    private MutableLiveData<Result> resultNewsMutableLiveData;
 
     public NewsViewModel(INewsRepositoryWithLiveData iNewsRepositoryWithLiveData,Application application){
         this.newsRepositoryWithLiveData = iNewsRepositoryWithLiveData;
@@ -51,8 +47,6 @@ public class NewsViewModel extends ViewModel {
                 localFetch(lastUpdate);
             }
         }
-        /* operazione di controllo */
-        Result controlList = newsListLiveData.getValue();
         return newsListLiveData;
     }
 
@@ -76,7 +70,6 @@ public class NewsViewModel extends ViewModel {
         //Fetch eseguita dal Search fragment, più topic con una sola query
     public MutableLiveData<Result> getNews(String country,List<String> topicList,String query){
         fetchNewsWithTopicAndQuery(country,topicList,query);
-        Result controlList = topicChoseNewsList.getValue();
         return topicChoseNewsList;
     }
 
@@ -116,7 +109,6 @@ public class NewsViewModel extends ViewModel {
     }
 
     public MutableLiveData<Result> clearAllDatabase() {
-        resultNewsMutableLiveData = newsRepositoryWithLiveData.clearAllDb();
-        return resultNewsMutableLiveData;
+        return newsRepositoryWithLiveData.clearAllDb();
     }
 }

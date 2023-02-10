@@ -21,7 +21,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.R;
 import com.example.projectnewsbgn.Repository.AccountRepository.IAccountRepositoryWithLiveData;
@@ -36,18 +35,15 @@ public class LoginFragment extends Fragment {
 
     private TextInputLayout email, psw;
     private CheckBox rememberCb;
-    private Button loginBtn;
-    private TextView forgotPswTxt, createAccountTxt;
     private LinearProgressIndicator progressBar;
     private AccountViewModel accountViewModel;
-    private IAccountRepositoryWithLiveData accountRepository;
     private MutableLiveData<Result> accountMutableLiveData;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        accountRepository = ServiceLocator.getInstance().getAccountRepository
+        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
                 (requireActivity().getApplication());
 
         accountViewModel = new ViewModelProvider(requireActivity(),
@@ -72,9 +68,9 @@ public class LoginFragment extends Fragment {
         email = v.findViewById(R.id.emailLayout);
         psw = v.findViewById(R.id.pswLayout);
         rememberCb = v.findViewById(R.id.rememberCb);
-        loginBtn = v.findViewById(R.id.loginBtn);
-        forgotPswTxt = v.findViewById(R.id.forgotPswText);
-        createAccountTxt = v.findViewById(R.id.registerText);
+        Button loginBtn = v.findViewById(R.id.loginBtn);
+        TextView forgotPswTxt = v.findViewById(R.id.forgotPswText);
+        TextView createAccountTxt = v.findViewById(R.id.registerText);
         progressBar = v.findViewById(R.id.progressIndicator);
 
         createAccountTxt.setOnClickListener(view -> {
@@ -83,16 +79,14 @@ public class LoginFragment extends Fragment {
                     .navigate(R.id.action_loginFragment_to_registerFragment);
         });
 
-        forgotPswTxt.setOnClickListener(view -> {
-            Navigation.findNavController(requireView())
-                    .navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
-        });
+        forgotPswTxt.setOnClickListener(view -> Navigation.findNavController(requireView())
+                .navigate(R.id.action_loginFragment_to_forgotPasswordFragment));
 
         loginBtn.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
             String emailString = email.getEditText().getText().toString();
             String pswString = psw.getEditText().getText().toString();
-            Boolean booleanEmail = false, booleanPsw = false;
+            boolean booleanEmail, booleanPsw;
 
             booleanEmail = checkEmail(emailString);
             booleanPsw = checkPsw(pswString);
@@ -103,9 +97,8 @@ public class LoginFragment extends Fragment {
                     accountMutableLiveData.observe(
                             getViewLifecycleOwner(), result -> {
                                 if(result.isSuccess()){
-                                    Account account = ((Result.AccountSuccess) result).getData();
                                     if (rememberCb.isChecked()) {
-                                        Snackbar.make(view,"You will be remembered", Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(view, R.string.RememberTrue, Snackbar.LENGTH_SHORT).show();
                                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
                                         SharedPreferences sharedPreferences = getActivity()
                                                 .getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -115,7 +108,7 @@ public class LoginFragment extends Fragment {
                                         startActivity(goToHome);
                                         getActivity().finish();
                                     } else {
-                                        Snackbar.make(view,"You will not be remembered", Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(view, R.string.RememberFalse, Snackbar.LENGTH_SHORT).show();
                                         Intent goToHome = new Intent(getActivity(), MainActivity.class);
                                         startActivity(goToHome);
                                         getActivity().finish();
@@ -128,11 +121,11 @@ public class LoginFragment extends Fragment {
                                 }
                             });
                 } else {
-                    psw.setError("Invalid Password");
+                    psw.setError(getString(R.string.InvalidPassword));
                     progressBar.setVisibility(View.GONE);
                 }
             } else {
-                email.setError("Invalid E-mail");
+                email.setError(getString(R.string.InvalidMail));
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -141,18 +134,12 @@ public class LoginFragment extends Fragment {
     }
 
         private boolean checkPsw (String pswString){
-            if (pswString.equals("") || pswString.length()<6)
-                return false;
-            else
-                return true;
+            return !pswString.equals("") && pswString.length() >= 6;
         }
 
         private boolean checkEmail (String emailString){
-            if (!emailString.isEmpty() && Patterns.EMAIL_ADDRESS
-                    .matcher(emailString).matches())
-                return true;
-            else
-                return false;
+            return !emailString.isEmpty() && Patterns.EMAIL_ADDRESS
+                    .matcher(emailString).matches();
         }
 
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.News;
 import com.example.projectnewsbgn.R;
@@ -27,7 +28,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AccountFragment extends Fragment{
 
@@ -62,7 +62,7 @@ public class AccountFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(requireActivity())).getSupportActionBar()).setTitle("Account");
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Account");
 
         favouriteArticlesTot = view.findViewById(R.id.numberFavouriteArticles);
         accountNameTxt = view.findViewById(R.id.accountNametxt);
@@ -123,7 +123,7 @@ public class AccountFragment extends Fragment{
                 }
 
             } else {
-                Snackbar.make(view, ((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view,((Result.Error)result).getMessage(),Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -144,17 +144,17 @@ public class AccountFragment extends Fragment{
         String countryName = "";
         switch (countryId){
             case "it" : {
-                countryName = "Italy";
+                countryName = getString(R.string.Italy);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.italy,0,0,0);
                 break;
             }
             case "fr" : {
-                countryName = "France";
+                countryName = getString(R.string.France);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.france,0,0,0);
                 break;
             }
             case "gb" : {
-                countryName = "United kingdom";
+                countryName = getString(R.string.UnitedKingdom);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.england,0,0,0);
                 break;
             }

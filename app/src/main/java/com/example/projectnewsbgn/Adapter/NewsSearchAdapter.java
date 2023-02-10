@@ -33,14 +33,11 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
     }
 
 
-
+//TODO Sistemare riciclaggio della vista anche quì
     public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, @SuppressLint("RecyclerView") int position) {
-        /*holder.bind(newsList.get(position));*/
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
         holder.text_date.setText(newsList.get(position).getPublishedAt());
-        /*holder.text_description.setText(newsList.get(position).getDescription());*/
-
         holder.linearLayout.setOnClickListener(v -> listener.OnNewsClicked(newsList.get(position)));
 
         if(newsList.get(position).getUrlToImage() != null){
@@ -79,7 +76,6 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
             text_title = itemView.findViewById(R.id.title);
             text_source = itemView.findViewById(R.id.author);
             text_date = itemView.findViewById(R.id.date);
-            /*text_description = itemView.findViewById(R.id.description);*/
             img_headline = itemView.findViewById(R.id.newsPic);
             btnFav = itemView.findViewById(R.id.btnFavourite);
             btnShare = itemView.findViewById(R.id.btnShare);

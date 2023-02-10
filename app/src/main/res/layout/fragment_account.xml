@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -29,18 +29,19 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/ic_baseline_account_circle_24"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/accountAvatar" />
                 <TextView
                     android:id="@+id/accountNametxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Account name"
+                    android:text="@string/account_name"
                     android:textColor="@color/Charcoal"
                     android:textStyle="bold"
                     android:textSize="30sp"
                     android:layout_toEndOf="@id/profilePic"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginStart="10dp"/>
 
             </RelativeLayout>
 
@@ -67,7 +68,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_height="30dp"
                             android:layout_width="30dp"
-                            android:src="@drawable/ic_baseline_favorite_24" />
+                            android:src="@drawable/ic_baseline_favorite_24"
+                            android:contentDescription="@string/heartLike" />
 
                         <TextView
                             android:id="@+id/favouriteTxt"
@@ -75,7 +77,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:includeFontPadding="false"
-                            android:text="Favourite articles:"
+                            android:text="@string/favourite_articles"
                             android:textColor="@color/Charcoal"
                             android:textSize="20sp" />
 
@@ -86,7 +88,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero"
                             android:textColor="@color/Charcoal"
                             android:textSize="20sp" />
                     </RelativeLayout>
@@ -96,8 +98,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="15dp"
                 android:orientation="vertical"
                 android:elevation="12dp">
 
@@ -115,7 +117,7 @@
                         android:drawableStart="@drawable/ic_baseline_account_box_24"
                         android:drawablePadding="10dp"
                         android:editable="false"
-                        android:text="Account name"
+                        android:text="@string/account_name"
                         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +133,7 @@
                         android:id="@+id/emailTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="E-Mail"
+                        android:text="@string/e_mail"
                         android:editable="false"
                         android:drawableStart="@drawable/ic_baseline_alternate_email_24"
                         android:drawablePadding="10dp" />
@@ -142,7 +144,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Country"
+                    android:hint="@string/country"
                     android:layout_marginBottom="10dp"
                     android:elevation="14dp"
                     >
@@ -151,7 +153,7 @@
                         android:id="@+id/countryTxtEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Country"
+                        android:text="@string/country"
                         android:editable="false"
                         android:drawableStart="@drawable/flag"
                         android:drawablePadding="10dp" />
@@ -163,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Topic of interst"
+                    android:text="@string/topic_of_interest"
                     android:textSize="15sp"
                     android:textStyle="italic"
                     android:layout_gravity="center"
@@ -195,7 +197,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:enabled="false"
-                                android:text="Business"
+                                android:text="@string/business"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
                                 android:textColor="@color/Charcoal" />
@@ -208,7 +210,7 @@
                                 android:textColor="@color/Charcoal"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
-                                android:text="Entertainment"
+                                android:text="@string/entertainment"
                                 />
 
                             <CheckBox
@@ -219,7 +221,7 @@
                                 android:textColor="@color/Charcoal"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
-                                android:text="Health"
+                                android:text="@string/health"
                                 />
 
                         </LinearLayout>
@@ -237,7 +239,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
-                                android:text="Science"
+                                android:text="@string/science"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
                                 />
@@ -248,7 +250,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
-                                android:text="Sports"
+                                android:text="@string/sports"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
                                 />
@@ -259,7 +261,7 @@
                                 android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textColor="@color/Charcoal"
-                                android:text="Technology"
+                                android:text="@string/technology"
                                 android:textStyle="bold"
                                 android:elevation="14dp"
                                 />
@@ -274,7 +276,7 @@
                     android:id="@+id/updateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update"
+                    android:text="@string/update"
                     android:layout_marginTop="60sp"
                     android:textColor="@color/Cream"
                     style="@style/Theme.MaterialComponents"

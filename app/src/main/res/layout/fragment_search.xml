@@ -65,7 +65,7 @@
                 >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/Gold2"
@@ -83,7 +83,7 @@
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
                                 android:backgroundTint="#00000000"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 app:cardElevation="1dp">
 
                                 <FrameLayout
@@ -94,9 +94,9 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Business"
+                                        android:text="@string/business"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:layout_marginBottom="10dp"
                                         android:textStyle="bold"/>
 
@@ -106,7 +106,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:padding="20dp"
-                                        android:src="@drawable/dollar" />
+                                        android:src="@drawable/dollar"
+                                        android:contentDescription="@string/businessLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -114,7 +115,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
 
@@ -126,9 +127,9 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Science"
+                                        android:text="@string/science"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
 
                                     <ImageView
@@ -136,7 +137,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:padding="5dp"
-                                        android:src="@drawable/atom" />
+                                        android:src="@drawable/atom"
+                                        android:contentDescription="@string/scienceLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -144,7 +146,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
 
@@ -156,16 +158,17 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Entertainment"
+                                        android:text="@string/entertainment"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/entertainmentTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@drawable/camera"
-                                        android:padding="25dp"/>
+                                        android:padding="25dp"
+                                        android:contentDescription="@string/entertainmentLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -173,7 +176,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
                                 <FrameLayout
@@ -184,16 +187,17 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Health"
+                                        android:text="@string/health"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/healthTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@drawable/cross"
-                                        android:padding="20dp"/>
+                                        android:padding="20dp"
+                                        android:contentDescription="@string/healthLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -201,7 +205,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
 
@@ -213,16 +217,17 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Sport"
+                                        android:text="@string/sports"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/sportTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@drawable/sport"
-                                        android:padding="20dp"/>
+                                        android:padding="20dp"
+                                        android:contentDescription="@string/sportLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -230,7 +235,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
 
@@ -242,16 +247,17 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Technology"
+                                        android:text="@string/technology"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/technologyTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@drawable/tech"
-                                        android:padding="25dp"/>
+                                        android:padding="25dp"
+                                        android:contentDescription="@string/technologyLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -259,7 +265,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="140dp"
                                 android:layout_height="100dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginEnd="10dp"
                                 android:backgroundTint="#00000000"
                                 app:cardElevation="1dp">
 
@@ -271,16 +277,17 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="General"
+                                        android:text="@string/general"
                                         android:textColor="@color/Charcoal"
-                                        android:textSize="20dp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold"/>
                                     <ImageView
                                         android:id="@+id/generalTopic"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:src="@drawable/earth"
-                                        android:padding="25dp"/>
+                                        android:padding="25dp"
+                                        android:contentDescription="@string/generalLogo" />
 
                                 </FrameLayout>
                             </androidx.cardview.widget.CardView>
@@ -323,7 +330,7 @@
                 android:id="@+id/hintText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select a topic or make a request"
+                android:text="@string/select_a_topic_or_make_a_request"
                 android:layout_gravity="center"
                 android:layout_marginTop="50sp"
                 android:textStyle="bold"
@@ -334,7 +341,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:src="@drawable/ooops"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/errorImage" />
             <ImageView
                 android:id="@+id/waitForInputImage"
                 android:layout_width="wrap_content"
@@ -342,7 +350,8 @@
                 android:layout_gravity="center"
                 android:src="@drawable/search_news"
                 android:layout_marginTop="30dp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:contentDescription="@string/searchImage" />
 
         </LinearLayout>
     </ScrollView>

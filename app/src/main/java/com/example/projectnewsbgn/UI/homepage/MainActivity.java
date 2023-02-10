@@ -3,13 +3,13 @@ package com.example.projectnewsbgn.UI.homepage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,10 +28,8 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
-    private BottomNavigationView bottomNavigationView;
     private AccountViewModel accountViewModel;
     private NewsViewModel newsViewModel;
-    private MutableLiveData<Result> controlResult;
     public static final String SHARED_PREFS ="SharedPrefs";
     public static final String SHARED_PREFS_FETCH ="SharedPrefsFetch";
     public static final long TIME = 0;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 findFragmentById(R.id.containerFragment);
         navController = navHostFragment.getNavController();
 
-        bottomNavigationView = findViewById(R.id.bottomMenu);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment,R.id.searchFragment,R.id.favouritesFragment,R.id.accountFragment
@@ -86,19 +84,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         View view = findViewById(android.R.id.content);
         switch (item.getItemId()){
             case R.id.notification:
-                Snackbar.make(view,"Notifications", Snackbar.LENGTH_SHORT).show();
-                return true;
-            case R.id.settings:
-                Snackbar.make(view, "Settings",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.NotificationMessage, Snackbar.LENGTH_SHORT).show();
                 return true;
             case R.id.logout: {
-                controlResult = accountViewModel.logOut();
-                controlResult.observe(this, (Observer<Result>) result -> {
+                MutableLiveData<Result> controlResult = accountViewModel.logOut();
+                controlResult.observe(this, result -> {
                     if (result.isSuccess()){
                         newsViewModel.clearAllDatabase().observe(this, result1 -> {
                             if (result1.isSuccess()){

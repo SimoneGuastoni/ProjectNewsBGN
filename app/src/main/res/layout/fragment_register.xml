@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:textColor="@color/Charcoal"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:text="@string/welcome_here_you_can_create_an_account"
                         android:textStyle="bold"
                         android:layout_gravity="center"
@@ -61,7 +61,8 @@
                         android:layout_gravity="center"
                         android:transitionName="profile_image"
                         android:background="@color/Gold"
-                        app:srcCompat="@drawable/compile" />
+                        app:srcCompat="@drawable/compile"
+                        android:contentDescription="@string/profileSettingsImage" />
 
                     <TextView
                         android:id="@+id/avatarSelectTExt"
@@ -69,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/Charcoal"
-                        android:text="Please,write down your credentials "
+                        android:text="@string/please_write_down_your_credentials"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                         />

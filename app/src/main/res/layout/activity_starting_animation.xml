@@ -19,14 +19,15 @@
         android:elevation="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/logo" />
 
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Welcome to Homer"
+        android:text="@string/welcomeText2"
         android:transitionName="logo_txt"
         android:textColor="@color/Charcoal"
         android:textStyle="bold"
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Always updated"
+        android:text="@string/Catchphrase"
         android:textSize="18sp"
         android:textColor="@color/Charcoal"
         app:layout_constraintEnd_toEndOf="parent"

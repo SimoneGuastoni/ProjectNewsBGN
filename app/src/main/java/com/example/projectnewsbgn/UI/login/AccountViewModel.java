@@ -10,12 +10,10 @@ import java.util.List;
 
 public class AccountViewModel extends ViewModel {
 
-    private static final String TAG = AccountViewModel.class.getSimpleName();
 
     private final IAccountRepositoryWithLiveData accountRepository;
     private MutableLiveData<Result> accountMutableLiveData;
-    private MutableLiveData<Result> resultMutableLiveData;
-    private MutableLiveData<Result> accountPreferencesMutableLiveData;
+    //TODO Soluzione?
     private boolean authenticationError;
 
     public AccountViewModel(IAccountRepositoryWithLiveData accountRepository) {
@@ -62,7 +60,7 @@ public class AccountViewModel extends ViewModel {
     }
 
     public MutableLiveData<Result> logOut() {
-        resultMutableLiveData = accountRepository.logout();
+        MutableLiveData<Result> resultMutableLiveData = accountRepository.logout();
         return resultMutableLiveData;
     }
 }

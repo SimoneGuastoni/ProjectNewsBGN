@@ -22,10 +22,10 @@ import java.util.List;
 
 public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomViewHolderFav> {
     private final List<News> newsList;
-    private  final FavListener listener;
+    private final FavListener listener;
 
     public NewsFavAdapter(List<News> newsList, FavListener listener) {
-          this.newsList = newsList;
+        this.newsList = newsList;
         this.listener = listener;
     }
 
@@ -94,8 +94,7 @@ public class NewsFavAdapter extends RecyclerView.Adapter<NewsFavAdapter.CustomVi
                 listener.onDeleteButtonPressed(newsClicked);
             });
 
-            btnShare.setOnClickListener(v -> listener.
-                    onShareButtonPressed(newsList.get(getAdapterPosition())));
+            btnShare.setOnClickListener(v -> listener.onShareButtonPressed(newsList.get(getAdapterPosition())));
         }
 
         @Override

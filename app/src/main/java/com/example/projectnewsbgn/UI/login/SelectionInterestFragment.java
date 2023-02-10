@@ -4,9 +4,7 @@ import static com.example.projectnewsbgn.UI.login.UserAccessActivity.SHARED_PREF
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,14 +18,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.example.projectnewsbgn.Models.Account;
 import com.example.projectnewsbgn.Models.Result;
 import com.example.projectnewsbgn.UI.homepage.MainActivity;
 import com.example.projectnewsbgn.R;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +30,6 @@ import java.util.Locale;
 public class SelectionInterestFragment extends Fragment {
 
     private TextView selectTopicsTxt;
-    private Button completeRegistrationBtn;
     private Spinner countrySpinner;
     private CheckBox btnTopic1,btnTopic2,btnTopic3,btnTopic4,btnTopic5,btnTopic6;
     private String name,email,psw,country;
@@ -64,19 +58,17 @@ public class SelectionInterestFragment extends Fragment {
     @Override
     public void onViewCreated(View onCreateView,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requireActivity().getSupportFragmentManager().setFragmentResultListener("bundleKey", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(String requestKey, Bundle bundle) {
-                remember= bundle.getBoolean("booleankey");
-                name = bundle.getString("namekey");
-                email = bundle.getString("emailkey");
-                psw = bundle.getString("pswkey");
-            }
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("bundleKey", this, (requestKey, bundle) -> {
+            remember= bundle.getBoolean("booleankey");
+            name = bundle.getString("namekey");
+            email = bundle.getString("emailkey");
+            psw = bundle.getString("pswkey");
         });
 
         Activity act = getActivity();
 
-        completeRegistrationBtn = act.findViewById(R.id.completeRegisterBtn);
+        assert act != null;
+        Button completeRegistrationBtn = act.findViewById(R.id.completeRegisterBtn);
         progressIndicator = act.findViewById(R.id.progressIndicator);
         selectTopicsTxt = act.findViewById(R.id.selectInterestTxt);
         countrySpinner = act.findViewById(R.id.spinnerCountry);
@@ -122,15 +114,14 @@ public class SelectionInterestFragment extends Fragment {
                         .observe(getViewLifecycleOwner(), result -> {
                             if(result.isSuccess()){
                                 if(remember) {
-                                    Account account = ((Result.AccountSuccess) result).getData();
                                     getContext();
                                     SharedPreferences sharedPreferences = act.getSharedPreferences
                                             (SHARED_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("name", "true");
-                                    editor.commit();
+                                    editor.apply();
                                 }
-                                Snackbar.make(view,"You have been successfully registered",
+                                Snackbar.make(view, R.string.RegistrationSuccess,
                                         Snackbar.LENGTH_SHORT).show();
                                 startActivity(goToHome);
                                 getActivity().finish();
@@ -146,7 +137,7 @@ public class SelectionInterestFragment extends Fragment {
             else {
                 progressIndicator.setVisibility(View.GONE);
                 selectTopicsTxt.setText(R.string.notificationTopics);
-                selectTopicsTxt.setError("");
+                selectTopicsTxt.setError(getString(R.string.ErrorMessage));
             }
         });
     }
