@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -138,11 +139,20 @@ public class HomeFragment extends Fragment implements HomeListener {
 
             }
             else{
-                Snackbar.make(view,((Result.Error)resultAccount).getMessage(),Snackbar.LENGTH_SHORT).show();
-                //TODO fetch locale
-                progressBar.setVisibility(View.INVISIBLE);
-                internetError.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.VISIBLE);
+                newsViewModel.getNewsFromDatabase(timePassedFromFetch)
+                        .observe(getViewLifecycleOwner(), resultFromLocal -> {
+                    if(resultFromLocal.isSuccess()){
+                        int initialSize = HomeFragment.this.newsList.size();
+                        rebuildList(initialSize, newsRecyclerViewAdapter,recyclerView,resultFromLocal);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        internetError.setVisibility(View.GONE);                    }
+                    else {
+                        Snackbar.make(view,((Result.Error)resultFromLocal).getMessage(),Snackbar.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        internetError.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             swipeRefreshLayout.setOnRefreshListener(() -> newsViewModel.getNews(country,topicList,0)

@@ -103,6 +103,13 @@
     <string name="generalLogo">generalLogo</string>
     <string name="notifications">Notifications</string>
     <string name="logout">Logout</string>
+    <string name="italyCountry">Italy</string>
+    <string name="franceCountry">France</string>
+    <string name="unitedKingdomCountry">United kingdom</string>
+    <string name="empty" />
+    <string name="italyId">it</string>
+    <string name="franceId">fr</string>
+    <string name="unitedKingdomId">gb</string>
 
     <string-array name="CountryList">
         <item>England</item>

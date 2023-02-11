@@ -31,7 +31,15 @@ public class NewsLocalDataSource extends BaseNewsLocalDataSource{
 
     @Override
     public void getNewsFromDatabase(Long lastUpdate) {
-        NewsDatabase.dataBaseWriteExecutor.execute(() -> newsCallBack.onSuccessFromLocal(newsDao.getAll(),lastUpdate));
+        NewsDatabase.dataBaseWriteExecutor.execute(() ->{
+                List<News> newsSaved = newsDao.getAll();
+                if (newsSaved != null && newsSaved.size()>0){
+                    newsCallBack.onSuccessFromLocal(newsDao.getAll(), lastUpdate);
+                }
+                else {
+                    newsCallBack.onFailureFromLocal("Can't find any saved news");
+                }
+        });
     }
 
     //Metodi Update

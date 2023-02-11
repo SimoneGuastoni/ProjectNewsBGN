@@ -33,7 +33,6 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
     }
 
 
-//TODO Sistemare riciclaggio della vista anche quì
     public void onBindViewHolder(@NonNull CustomViewHolderSmall holder, @SuppressLint("RecyclerView") int position) {
         holder.text_title.setText(newsList.get(position).getTitle());
         holder.text_source.setText(newsList.get(position).getSource().getName());
@@ -42,6 +41,20 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
 
         if(newsList.get(position).getUrlToImage() != null){
             Picasso.get().load(newsList.get(position).getUrlToImage()).into(holder.img_headline);
+        }
+
+        setIconFav(newsList.get(position).getFavourite(),holder.btnFav);
+
+    }
+
+    private void setIconFav(boolean favourite, ImageButton btnFav) {
+        if(!favourite){
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (context,R.drawable.ic_baseline_favorite_border_24));
+        }
+        else{
+            btnFav.setImageDrawable(AppCompatResources.getDrawable
+                    (context,R.drawable.ic_baseline_favorite_24));
         }
     }
 
@@ -80,6 +93,13 @@ public class NewsSearchAdapter extends RecyclerView.Adapter<NewsSearchAdapter.Cu
             btnFav = itemView.findViewById(R.id.btnFavourite);
             btnShare = itemView.findViewById(R.id.btnShare);
             linearLayout = itemView.findViewById(R.id.containerListNewsSmall);
+
+            if (getAdapterPosition() > 0){
+                if(newsList.get(getAdapterPosition()).getFavourite()){
+                    btnFav.setImageDrawable(AppCompatResources.getDrawable
+                            (context,R.drawable.ic_baseline_favorite_24));
+                }
+            }
 
             btnFav.setOnClickListener(v -> {
                 News newsClicked = newsList.get(getAdapterPosition());

@@ -13,12 +13,9 @@ public class AccountViewModel extends ViewModel {
 
     private final IAccountRepositoryWithLiveData accountRepository;
     private MutableLiveData<Result> accountMutableLiveData;
-    //TODO Soluzione?
-    private boolean authenticationError;
 
     public AccountViewModel(IAccountRepositoryWithLiveData accountRepository) {
         this.accountRepository = accountRepository;
-        authenticationError = false;
     }
 
     public MutableLiveData<Result> authentication(String accountName, String emailString,
@@ -30,10 +27,6 @@ public class AccountViewModel extends ViewModel {
     private void getAccountFromRepository(String accountName,String emailString, String pswString,
                                           String country,List<String> topicList) {
         accountMutableLiveData = accountRepository.authentication(accountName,emailString,pswString,country,topicList);
-    }
-
-    public void setAuthenticationError(boolean authenticationErrorFromRegister) {
-        authenticationError = authenticationErrorFromRegister;
     }
 
     public void sendResetEmailPassword(String emailAddress)
@@ -60,7 +53,6 @@ public class AccountViewModel extends ViewModel {
     }
 
     public MutableLiveData<Result> logOut() {
-        MutableLiveData<Result> resultMutableLiveData = accountRepository.logout();
-        return resultMutableLiveData;
+        return accountRepository.logout();
     }
 }

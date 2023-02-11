@@ -61,7 +61,6 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO alternativa?
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.SettingsName);
 
         countrySpinner = view.findViewById(R.id.spinnerCountry);
@@ -172,39 +171,39 @@ public class SettingFragment extends Fragment {
 
         switch (selectedCountry){
             case "Italy" : {
-                countryId = "it";
+                countryId = getString(R.string.italyId);
                 break;
             }
             case "France" : {
-                countryId = "fr";
+                countryId = getString(R.string.franceId);
                 break;
             }
             case "England" : {
-                countryId = "gb";
+                countryId = getString(R.string.unitedKingdomId);
                 break;
             }
             default: {
-                countryId = "it";
+                countryId = getString(R.string.italyId);
             }
         }
         return countryId;
     }
 
     private String findCountryNameAndSetIcon(String countryId,TextInputEditText countryTxt) {
-        String countryName = "";
+        String countryName = getString(R.string.empty);
         switch (countryId){
             case "it" : {
-                countryName = "Italy";
+                countryName = getString(R.string.italyCountry);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.italy,0,0,0);
                 break;
             }
             case "fr" : {
-                countryName = "France";
+                countryName = getString(R.string.franceCountry);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.france,0,0,0);
                 break;
             }
             case "gb" : {
-                countryName = "United kingdom";
+                countryName = getString(R.string.unitedKingdomCountry);
                 countryTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.england,0,0,0);
                 break;
             }

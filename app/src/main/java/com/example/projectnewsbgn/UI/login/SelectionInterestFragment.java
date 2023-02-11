@@ -43,7 +43,6 @@ public class SelectionInterestFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         accountViewModel = new ViewModelProvider(requireActivity()).get(AccountViewModel.class);
-        accountViewModel.setAuthenticationError(false);
         topicList = new ArrayList<>();
         topicList.add("general");
     }

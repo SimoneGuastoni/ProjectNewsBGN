@@ -79,7 +79,6 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
         });
     }
 
-    //TODO firebase rilevare connessione  (OnConnectionChanged)
     @Override
     public void getAccountPreferences(String email,String id) {
         databaseReference.child("account").child(id).child("country")
