@@ -61,8 +61,7 @@ public class ServiceLocator {
     }
 
     //Creazione repository per gli account
-    //TODO rimuovere l'application dal metodo?
-    public IAccountRepositoryWithLiveData getAccountRepository(Application application){
+    public IAccountRepositoryWithLiveData getAccountRepository(){
         BaseAccountAuthenticationRemoteDataSource baseAccountAuthenticationRemoteDataSource;
         BaseAccountInfoRemoteDataSource baseAccountInfoRemoteDataSource;
 

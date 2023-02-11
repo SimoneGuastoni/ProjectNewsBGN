@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,8 +61,7 @@ public class HomeFragment extends Fragment implements HomeListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
-                (requireActivity().getApplication());
+        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository();
 
         accountViewModel = new ViewModelProvider(requireActivity(),
                 new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);

@@ -28,7 +28,7 @@ public class ForgotPasswordFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
-                (requireActivity().getApplication());
+                ();
         accountViewModel = new ViewModelProvider(requireActivity(),
                 new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
 

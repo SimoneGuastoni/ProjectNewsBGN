@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
-                (requireActivity().getApplication());
+                ();
 
         accountViewModel = new ViewModelProvider(requireActivity(),
                 new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
