@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -70,13 +71,6 @@ public class MainActivity extends AppCompatActivity {
        }
     }
 
-    private void changeRemember() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("name","false");
-        editor.apply();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         newsViewModel.clearAllDatabase().observe(this, result1 -> {
                             if (result1.isSuccess()){
                                 changeRemember();
+                                clearTimer();
                                 Intent intent = new Intent(MainActivity.this, UserAccessActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -116,5 +111,19 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void changeRemember() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name","false");
+        editor.apply();
+    }
+
+    private void clearTimer() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(String.valueOf(MainActivity.TIME),0);
+        editor.apply();
     }
 }
