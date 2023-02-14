@@ -69,7 +69,7 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
         return favoriteNewsMutableLiveData;
     }
 
-    //Metodi per modificare lo stato di favorite delle news
+    //Metodi per gestire le notizie preferite
     @Override
     public MutableLiveData<Result> updateNews(News news) {
         newsLocalDataSource.updateNews(news);
@@ -89,12 +89,12 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
     @Override
-    public MutableLiveData<Result> deleteAllFavoriteNews() {
+    public MutableLiveData<Result> deleteCheckedFavoriteNews() {
         newsLocalDataSource.deleteAllFavoriteNews();
         return favoriteNewsMutableLiveData;
     }
 
-    //Metodo per pulire il database da tutte le news che non hanno uno like
+    //Metodo per pulire il database da tutte le news che non sono identificate come preferite
     @Override
     public void clearDatabase() {
         newsLocalDataSource.clearDatabase();
@@ -147,8 +147,6 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     }
 
 
-
-
     @Override
     public void onFailureFromRemote(String message) {
         Result.Error result = new Result.Error("Api call fail");
@@ -166,10 +164,8 @@ public class NewsRepositoryWithLiveData implements INewsRepositoryWithLiveData, 
     //Metodi onSuccess dela modifica di stato di favorite
     @Override
     public void onNewsFavoriteStatusChanged(News news, List<News> favoriteNews) {
-        /*Result result = allNewsMutableLiveData.getValue();*/
         Result.NewsSuccess result = new Result.NewsSuccess(new NewsResponse(favoriteNews));
         favoriteNewsMutableLiveData.postValue(result);
-        /*favoriteNewsMutableLiveData.postValue(new Result.NewsSuccess(new NewsResponse(favoriteNews)));*/
     }
 
     @Override

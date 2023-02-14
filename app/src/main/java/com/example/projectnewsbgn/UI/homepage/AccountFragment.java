@@ -98,7 +98,6 @@ public class AccountFragment extends Fragment{
                 accountNameTxt.setText(copyAccount.getAccountName());
                 name.setText(copyAccount.getAccountName());
                 email.setText(copyAccount.getEmail());
-                /*topicList.clear();*/
                 topicList = ((Result.AccountSuccess) result).getData().getFavAccountTopics();
                 clearCb(cb1,cb2,cb3,cb4,cb5,cb6);
                 for(int i=0; i<topicList.size();i++){

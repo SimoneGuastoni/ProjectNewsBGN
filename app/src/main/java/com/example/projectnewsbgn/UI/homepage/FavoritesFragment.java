@@ -123,7 +123,7 @@ public class FavoritesFragment extends Fragment implements FavListener {
         });
     }
 
-    // Metodi del comportamenteo dell'adatper
+    // Metodi del comportamento dell'adatper
 
     @Override
     public void OnNewsClicked(News news) {

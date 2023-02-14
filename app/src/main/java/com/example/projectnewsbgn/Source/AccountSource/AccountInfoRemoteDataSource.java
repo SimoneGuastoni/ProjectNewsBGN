@@ -30,11 +30,11 @@ public class AccountInfoRemoteDataSource extends BaseAccountInfoRemoteDataSource
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    //Record già presente
+                    //Record già presente su RealtimeDatabase
                     accountCallBack.onSuccessFromRemoteDatabase(account);
                 }
                 else{
-                    //Record non presente
+                    //Record non presente su RealtimeDatabase
                     databaseReference.child("account").child(account.getId()).setValue(account)
                             .addOnSuccessListener(unused -> accountCallBack.
                                     onSuccessFromRemoteDatabase(account)).

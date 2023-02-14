@@ -16,7 +16,7 @@ public interface    INewsRepositoryWithLiveData {
 
     MutableLiveData<Result> getFavoriteNewsList();
 
-    MutableLiveData<Result> deleteAllFavoriteNews();
+    MutableLiveData<Result> deleteCheckedFavoriteNews();
 
     MutableLiveData<Result> localFetch(Long lastUpdate);
 

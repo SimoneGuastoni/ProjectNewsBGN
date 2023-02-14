@@ -20,7 +20,7 @@ public class NewsViewModel extends ViewModel {
     private final INewsRepositoryWithLiveData newsRepositoryWithLiveData;
     private final int page;
     private MutableLiveData<Result> newsListLiveData;
-    //tra parentesi angolari c'è il tipo di dato che noi ci aspettiamo venga restituito dal liveData
+    //tra parentesi angolari è presente il tipo di dato che noi ci aspettiamo venga restituito dal liveData
     private MutableLiveData<Result> favoriteNewsListLiveData;
     private MutableLiveData<Result> topicChoseNewsList;
 
@@ -31,10 +31,10 @@ public class NewsViewModel extends ViewModel {
     }
     //Metodi per eseguire il recupero delle news in locale o in remoto
 
-        //Fetch eseguita dal HomeFragment
+        //Fetch eseguita dal HomeFragment, al momento questa fetch viene effettuata ogni ora(3600000 ms)
     public MutableLiveData<Result> getNews(String country, List<String> topicList, long lastUpdate){
         long currentTime = System.currentTimeMillis();
-        if(lastUpdate == 0 || currentTime - lastUpdate > 30000) {
+        if(lastUpdate == 0 || currentTime - lastUpdate > 3600000) {
             SharedPreferences sharedPreferences = application.getSharedPreferences(MainActivity.SHARED_PREFS_FETCH, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong(String.valueOf(MainActivity.TIME), currentTime);
@@ -99,7 +99,7 @@ public class NewsViewModel extends ViewModel {
     }
 
     private void deleteAllFavoriteNews(){
-        favoriteNewsListLiveData = newsRepositoryWithLiveData.deleteAllFavoriteNews();
+        favoriteNewsListLiveData = newsRepositoryWithLiveData.deleteCheckedFavoriteNews();
     }
 
     //Metodo per andare a salvare news specifiche che non sono state salvate ma a cui metto like

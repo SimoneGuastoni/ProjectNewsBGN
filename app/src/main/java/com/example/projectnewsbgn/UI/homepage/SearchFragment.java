@@ -129,9 +129,9 @@ public class SearchFragment extends Fragment implements SearchListener {
                 recyclerView.setVisibility(View.GONE);
                 newsObtained = newsViewModel.getNews(language,allTopic,query);
                 rebuildNewsList(newsObtained);
-                if (newsList.size()==0){
+                /*if (newsList.size()==0){
                     Snackbar.make(requireView(), "Nothing found", Snackbar.LENGTH_SHORT).show();
-                }
+                }*/
                 return true;
             }
 
@@ -253,7 +253,7 @@ public class SearchFragment extends Fragment implements SearchListener {
 
         newsViewModel.updateNewsNotSaved(news).observe(getViewLifecycleOwner(), result -> {
             if(!result.isSuccess()){
-                Snackbar.make(requireView(), "Errore, news non salvata correttamente",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), R.string.ErrorFav2,Snackbar.LENGTH_SHORT).show();
             }
         });
     }

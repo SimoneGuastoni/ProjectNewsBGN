@@ -21,7 +21,7 @@ public abstract class NewsDatabase extends RoomDatabase {
     public static final ExecutorService dataBaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    /* Metodo per creare il dataBase,synchronized indica che solo un thread per
+    /* Metodo per creare il dataBase. Synchronized indica che solo un thread per
     volta piò accedere a questo metodo*/
 
     public static synchronized NewsDatabase getInstanceDatabase(Context context){

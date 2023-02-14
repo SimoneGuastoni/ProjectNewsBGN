@@ -74,6 +74,7 @@ public class AccountAuthenticationRemoteDataSource extends BaseAccountAuthentica
         });
     }
 
+    @Override
     public void sendPassword(String emailAddress)
     {
         firebaseAuth.sendPasswordResetEmail(emailAddress).

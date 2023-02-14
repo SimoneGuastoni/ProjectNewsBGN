@@ -72,7 +72,6 @@ public class AccountRepositoryWithLiveData implements IAccountRepositoryWithLive
     public void sendPasswordResetEmail(String emailAddress){
         baseAccountAuthenticationRemoteDataSource.sendPassword(emailAddress);
 
-
     }
 
     //Metodi onSuccess

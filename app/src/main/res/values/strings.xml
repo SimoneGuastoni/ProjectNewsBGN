@@ -110,6 +110,7 @@
     <string name="italyId">it</string>
     <string name="franceId">fr</string>
     <string name="unitedKingdomId">gb</string>
+    <string name="ErrorFav2">Error,unable to save the news</string>
 
     <string-array name="CountryList">
         <item>England</item>

@@ -27,8 +27,9 @@ public class ForgotPasswordFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository
-                ();
+
+        IAccountRepositoryWithLiveData accountRepository = ServiceLocator.getInstance().getAccountRepository();
+
         accountViewModel = new ViewModelProvider(requireActivity(),
                 new AccountViewModelFactory(accountRepository)).get(AccountViewModel.class);
 
@@ -47,10 +48,13 @@ public class ForgotPasswordFragment extends Fragment {
     @Override
     public void onViewCreated(View OnCreateView,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View v = getView();
+
         emailAddress = v.findViewById(R.id.emailLayout);
         Button sendBTN = v.findViewById((R.id.sendEmailBtn));
         progressIndicator = v.findViewById(R.id.progressIndicator);
+
         sendBTN.setOnClickListener(view -> {
             progressIndicator.setVisibility(View.VISIBLE);
             String emailString;
